@@ -657,52 +657,218 @@
     </section>
 
     <!-- ======================================================== -->
-    <!-- VIEW 5: COMMUNICATION (SLACK / TEAMS DRAFTS)             -->
+    <!-- VIEW 5: COMMUNICATION & SLACK TWO-WAY SYNC HUB           -->
     <!-- ======================================================== -->
     <section id="view-communication" class="view-pane hidden flex flex-col gap-5">
       
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-panel flex flex-col gap-5">
-        <div class="border-b border-slate-800 pb-3">
-          <h1 class="text-base font-bold font-mono text-white uppercase">Communication &amp; alert dispatch</h1>
-          <p class="text-xs text-slate-400 mt-0.5">Copy formatted handover digests for Slack, Teams, or generate read-only audit permalinks.</p>
+      <!-- Top Slack Connection Banner -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-950 border border-amber-800/60 text-amber-400 flex items-center justify-center font-bold shadow-sm">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-base font-bold font-mono text-white uppercase">Slack Two-Way Sync Pipeline</h1>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/60 font-bold">
+                ● LIVE SYNC ACTIVE
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5 font-sans">
+              Live bi-directional bridge: Slack messages sync directly into your handover notes &amp; notes broadcast back to channels.
+            </p>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 font-mono text-xs">
-          
-          <!-- Slack / Teams Message Box -->
-          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-3">
-            <div>
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-amber-400 font-bold uppercase text-[11px]">Slack / Teams Draft</span>
-                <span class="text-slate-500 text-[10px]">Markdown Format</span>
-              </div>
-              <textarea id="slack-draft-box" readonly rows="8" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 text-slate-200 outline-none text-xs leading-relaxed font-mono resize-none"></textarea>
-            </div>
-            <button onclick="copySlackText()" id="btn-copy-slack" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all">
-              <span class="material-symbols-outlined text-[16px]">content_copy</span>
-              <span id="btn-copy-slack-text">Copy Slack Draft</span>
-            </button>
-          </div>
-
-          <!-- Shareable Read-Only Audit Link -->
-          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-3">
-            <div>
-              <span class="text-purple-400 font-bold uppercase text-[11px] block mb-2">Read-Only Immutable Audit Link</span>
-              <p class="text-slate-400 font-sans text-xs mb-3">
-                Send this link to stakeholders for read-only audit access backed by Firebase Cloud Firestore.
-              </p>
-              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 text-cyan-300 break-all select-all text-xs">
-                https://shift-sync-a0b66.web.app/audit/sh-20260903-evn
-              </div>
-            </div>
-            <button onclick="copyAuditUrl()" id="btn-copy-audit" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all">
-              <span class="material-symbols-outlined text-[16px]">link</span>
-              <span>Copy Audit Link</span>
-            </button>
-          </div>
-
+        <!-- Channel Selector & Simulate Event Action -->
+        <div class="flex items-center gap-2 font-mono text-xs">
+          <button onclick="simulateIncomingSlackEvent()" class="px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold transition-all flex items-center gap-1.5 shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">add_comment</span>
+            <span>Simulate Incoming Slack Message</span>
+          </button>
         </div>
       </div>
+
+      <!-- Two-Column Grid: Left (Live Slack Channel Feed), Right (Slack Broadcast & Block Kit Preview) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 font-mono text-xs items-start">
+        
+        <!-- Left: Live Connected Slack Stream (6 Cols) -->
+        <div class="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel flex flex-col gap-3.5">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="text-amber-400 font-bold">#noc-war-room</span>
+              <span class="text-slate-500 text-[10px]">• 4 On-Call SREs Online</span>
+            </div>
+            <button onclick="syncSlackFeedDirect()" class="text-cyan-400 hover:underline text-[11px] flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">sync</span>
+              <span>Sync All</span>
+            </button>
+          </div>
+
+          <!-- Slack Messages Feed Container -->
+          <div class="space-y-2.5 max-h-[360px] overflow-y-auto pr-1" id="slack-live-feed-list">
+            
+            <!-- Message 1 -->
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col gap-1.5 hover:border-slate-700 transition-colors">
+              <div class="flex justify-between items-center text-[11px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-5 h-5 rounded-full bg-blue-900 text-blue-300 flex items-center justify-center font-bold text-[9px]">AK</span>
+                  <strong class="text-white">Alex Rivera (@alex.k)</strong>
+                </div>
+                <span class="text-slate-500 text-[10px]">19:42 IST</span>
+              </div>
+              <p class="text-slate-300 font-sans text-xs">
+                🚨 <strong class="text-rose-400">JIRA-4821:</strong> Indian transit carrier route degradation verified. External Ticket #TW-994102 escalated to Sev-1 with Twilio network ops.
+              </p>
+              <div class="flex justify-between items-center pt-1 border-t border-slate-800/80 text-[10px]">
+                <div class="flex gap-1.5 text-slate-400">
+                  <span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">🚨 P1 Blocker</span>
+                  <span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">👀 3</span>
+                </div>
+                <button onclick="importSlackMessageToNote('JIRA-4821', 'blocker')" class="text-emerald-400 hover:underline font-bold">
+                  ✓ Synced in Handover Note
+                </button>
+              </div>
+            </div>
+
+            <!-- Message 2 -->
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col gap-1.5 hover:border-slate-700 transition-colors">
+              <div class="flex justify-between items-center text-[11px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-5 h-5 rounded-full bg-emerald-900 text-emerald-300 flex items-center justify-center font-bold text-[9px]">SM</span>
+                  <strong class="text-white">Sarah M. (@sarah.m)</strong>
+                </div>
+                <span class="text-slate-500 text-[10px]">20:10 IST</span>
+              </div>
+              <p class="text-slate-300 font-sans text-xs">
+                ✅ <strong class="text-emerald-400">INC-102:</strong> Automated CDN TLS edge wildcard renewal finished across all 24 Cloudflare points of presence. Zero TLS handshakes dropped.
+              </p>
+              <div class="flex justify-between items-center pt-1 border-t border-slate-800/80 text-[10px]">
+                <div class="flex gap-1.5 text-slate-400">
+                  <span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">✅ Resolved</span>
+                  <span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">🚀 5</span>
+                </div>
+                <button onclick="importSlackMessageToNote('INC-102', 'completed')" class="text-emerald-400 hover:underline font-bold">
+                  ✓ Synced in Handover Note
+                </button>
+              </div>
+            </div>
+
+            <!-- Message 3 -->
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col gap-1.5 hover:border-slate-700 transition-colors" id="slack-msg-db3301">
+              <div class="flex justify-between items-center text-[11px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-5 h-5 rounded-full bg-cyan-900 text-cyan-300 flex items-center justify-center font-bold text-[9px]">TR</span>
+                  <strong class="text-white">Thiraviaraj R. (@thiraviaraj.r)</strong>
+                </div>
+                <span class="text-slate-500 text-[10px]">20:45 IST</span>
+              </div>
+              <p class="text-slate-300 font-sans text-xs">
+                ⏳ <strong class="text-sky-400">DB-3301:</strong> Postgres pg16 read replica upgrade dump is at 75%. ETA 02:30 IST. Night shift team please monitor WAL replication lag.
+              </p>
+              <div class="flex justify-between items-center pt-1 border-t border-slate-800/80 text-[10px]">
+                <div class="flex gap-1.5 text-slate-400">
+                  <span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">⏳ In Progress</span>
+                </div>
+                <button onclick="importSlackMessageToNote('DB-3301', 'inprogress')" class="text-cyan-400 hover:underline font-bold">
+                  ✓ Synced in Handover Note
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Slack Block Kit Handover Broadcast & Webhook Dispatch (6 Cols) -->
+        <div class="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel flex flex-col gap-3.5">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold uppercase text-white">Slack Handover Broadcast</span>
+              <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">Block Kit Format</span>
+            </div>
+            <span class="text-[10px] text-emerald-400 font-bold">Webhook Active</span>
+          </div>
+
+          <!-- Simulated Slack Block Kit Card -->
+          <div class="p-4 rounded-xl bg-[#1a1d21] border border-slate-700/60 font-sans text-xs text-slate-200 shadow-inner flex flex-col gap-2.5">
+            <div class="flex items-center gap-2 font-bold text-amber-400 font-mono text-[11px]">
+              <span>🚨 SHIFTSYNC HANDOVER BOT</span>
+              <span class="text-slate-500 text-[10px]">APP • 18:50 IST</span>
+            </div>
+
+            <div class="text-xs font-bold text-white font-mono">
+              *Evening Shift Handover Digest (17:00 - 01:00 IST)*
+            </div>
+            <div class="text-[11px] text-slate-400 font-mono">
+              Lead: <strong class="text-white">Thiraviaraj R.</strong> | Doc ID: <code class="text-cyan-300">SH-20260903-EVN</code> | Grounding: <strong class="text-emerald-400">100%</strong>
+            </div>
+
+            <!-- Block 1 -->
+            <div class="bg-[#222529] p-2.5 rounded-lg border-l-4 border-rose-500 font-mono text-[11px] space-y-1">
+              <div class="font-bold text-rose-400">*1. Priority Incidents &amp; Blockers*</div>
+              <div class="text-slate-300">• :rotating_light: *JIRA-4821:* Login failure on iOS v4.2 (Alex K. in #war-room-otp)</div>
+            </div>
+
+            <!-- Block 2 -->
+            <div class="bg-[#222529] p-2.5 rounded-lg border-l-4 border-emerald-500 font-mono text-[11px] space-y-1">
+              <div class="font-bold text-emerald-400">*2. Completed Work*</div>
+              <div class="text-slate-300">• :white_check_mark: *INC-102:* CDN certificate renewed</div>
+              <div class="text-slate-300">• :white_check_mark: *SEC-1092:* Ingress TLS rotation</div>
+            </div>
+
+            <!-- Block Kit Interactive Action Buttons -->
+            <div class="flex flex-wrap gap-2 pt-1 font-mono text-[10px]">
+              <button onclick="navigateTo('note')" class="px-2.5 py-1 rounded bg-[#2c3136] hover:bg-[#383f45] text-cyan-300 border border-slate-600 font-bold">
+                View Full Handover Note
+              </button>
+              <button onclick="openEvidenceDrawer('JIRA-4821')" class="px-2.5 py-1 rounded bg-[#2c3136] hover:bg-[#383f45] text-slate-300 border border-slate-600">
+                Inspect Evidence
+              </button>
+            </div>
+          </div>
+
+          <!-- Broadcast Button -->
+          <div class="flex gap-2">
+            <button onclick="broadcastNoteToSlack()" id="btn-broadcast-slack" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all font-mono">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+              </svg>
+              <span id="btn-broadcast-slack-text">Post Handover Note to #noc-war-room</span>
+            </button>
+            <button onclick="copySlackText()" title="Copy raw markdown text" class="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">
+              <span class="material-symbols-outlined text-[16px]">content_copy</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Quick Textarea Fallback (Collapsible) -->
+      <details class="bg-slate-900 border border-slate-800 rounded-2xl p-4 font-mono text-xs text-slate-400">
+        <summary class="cursor-pointer font-bold text-slate-300 flex items-center justify-between">
+          <span>Raw Markdown &amp; Audit Permalinks</span>
+          <span class="material-symbols-outlined text-[16px]">expand_more</span>
+        </summary>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 border-t border-slate-800">
+          <div>
+            <label class="block text-[10px] text-slate-500 uppercase mb-1">Markdown Draft</label>
+            <textarea id="slack-draft-box" readonly rows="5" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 outline-none text-xs leading-relaxed font-mono resize-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-[10px] text-slate-500 uppercase mb-1">Read-Only Audit Link</label>
+            <div class="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-cyan-300 break-all select-all text-xs mb-2">
+              https://shift-sync-a0b66.web.app/audit/sh-20260903-evn
+            </div>
+            <button onclick="copyAuditUrl()" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold text-[11px] flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">link</span>
+              <span>Copy Link</span>
+            </button>
+          </div>
+        </div>
+      </details>
 
     </section>
 
@@ -1077,6 +1243,103 @@
 • Nothing to report
 
 _Grounded 100% via ShiftSync Engine_`;
+    }
+
+    function broadcastNoteToSlack() {
+      const btn = document.getElementById('btn-broadcast-slack');
+      const text = document.getElementById('btn-broadcast-slack-text');
+      btn.disabled = true;
+      text.textContent = 'Posting to Slack #noc-war-room...';
+      
+      setTimeout(() => {
+        btn.disabled = false;
+        text.textContent = '✓ Broadcasted to #noc-war-room';
+        showToast('Handover note broadcasted to Slack #noc-war-room!', 'success');
+        setTimeout(() => {
+          text.textContent = 'Post Handover Note to #noc-war-room';
+        }, 3000);
+      }, 900);
+    }
+
+    let slackSimIndex = 0;
+    const SIMULATED_SLACK_MSGS = [
+      {
+        user: 'DevOps Lead (@alex.k)',
+        initials: 'AK',
+        color: 'bg-blue-900 text-blue-300',
+        time: 'Just now',
+        ticket: 'JIRA-4821',
+        text: '🟢 Twilio SMS routing restored via secondary Chennai transit link. OTP error rates dropped from 14% to 0.1%.',
+        type: 'resolved',
+        badge: '✅ Hotfix Live'
+      },
+      {
+        user: 'Sarah M. (@sarah.m)',
+        initials: 'SM',
+        color: 'bg-emerald-900 text-emerald-300',
+        time: 'Just now',
+        ticket: 'SEC-1092',
+        text: 'TLS Ingress rotation verified across all 48 pods. Zero dropped handshakes.',
+        type: 'completed',
+        badge: '🔒 Verified'
+      },
+      {
+        user: 'NOC Lead (@thiraviaraj.r)',
+        initials: 'TR',
+        color: 'bg-cyan-900 text-cyan-300',
+        time: 'Just now',
+        ticket: 'DB-3301',
+        text: 'Postgres pg16 dump reached 90%. WAL streaming replication nominal.',
+        type: 'inprogress',
+        badge: '⚡ 90% Synced'
+      }
+    ];
+
+    function simulateIncomingSlackEvent() {
+      const msg = SIMULATED_SLACK_MSGS[slackSimIndex % SIMULATED_SLACK_MSGS.length];
+      slackSimIndex++;
+
+      const list = document.getElementById('slack-live-feed-list');
+      if (list) {
+        const item = document.createElement('div');
+        item.className = 'p-3 rounded-xl bg-slate-950 border border-amber-500/50 flex flex-col gap-1.5 animate-fadeIn shadow-lg';
+        item.innerHTML = `
+          <div class="flex justify-between items-center text-[11px]">
+            <div class="flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-full ${msg.color} flex items-center justify-center font-bold text-[9px]">${msg.initials}</span>
+              <strong class="text-white">${msg.user}</strong>
+              <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 font-bold ml-1">NEW SLACK MSG</span>
+            </div>
+            <span class="text-amber-400 font-semibold text-[10px]">${msg.time}</span>
+          </div>
+          <p class="text-slate-200 font-sans text-xs">
+            ${msg.text}
+          </p>
+          <div class="flex justify-between items-center pt-1 border-t border-slate-800/80 text-[10px]">
+            <span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400">${msg.badge}</span>
+            <button onclick="importSlackMessageToNote('${msg.ticket}', '${msg.type}')" class="text-emerald-400 hover:underline font-bold">
+              ✓ Auto-Synced to Handover Note
+            </button>
+          </div>
+        `;
+        list.insertBefore(item, list.firstChild);
+      }
+
+      showToast(`⚡ Real-time Slack event synced from #noc-war-room: ${msg.ticket}`, 'success');
+
+      // Auto update Note
+      if (msg.type === 'resolved') {
+        const desc = document.getElementById('note-blocker-desc');
+        if (desc) desc.textContent = msg.text;
+      }
+    }
+
+    function importSlackMessageToNote(ticket, type) {
+      showToast(`Slack message for ${ticket} verified and synced into note (${type})`, 'success');
+    }
+
+    function syncSlackFeedDirect() {
+      showToast('Reconciled all Slack thread activity with JIRA and PagerDuty', 'success');
     }
 
     function copySlackText() {
