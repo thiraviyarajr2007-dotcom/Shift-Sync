@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>ShiftSync // Operations Console</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-on-surface": "#2a3043",
+                "secondary-container": "#00a572",
+                "error-container": "#93000a",
+                "surface-variant": "#2e3447",
+                "on-error": "#690005",
+                "on-primary-fixed": "#001f26",
+                "surface-container": "#191f31",
+                "on-primary-fixed-variant": "#004e5c",
+                "tertiary-fixed-dim": "#ffb95f",
+                "inverse-primary": "#00687a",
+                "primary-container": "#06b6d4",
+                "on-secondary": "#003824",
+                "secondary": "#4edea3",
+                "on-tertiary-fixed": "#2a1700",
+                "tertiary-fixed": "#ffddb8",
+                "on-tertiary": "#472a00",
+                "surface-container-highest": "#2e3447",
+                "outline": "#869397",
+                "surface-tint": "#4cd7f6",
+                "surface": "#0c1324",
+                "surface-bright": "#33394c",
+                "outline-variant": "#3d494c",
+                "on-tertiary-container": "#563400",
+                "surface-container-high": "#23293c",
+                "secondary-fixed": "#6ffbbe",
+                "on-secondary-fixed-variant": "#005236",
+                "on-primary": "#003640",
+                "surface-container-lowest": "#070d1f",
+                "primary-fixed": "#acedff",
+                "background": "#0c1324",
+                "on-surface-variant": "#bcc9cd",
+                "on-tertiary-fixed-variant": "#653e00",
+                "on-surface": "#dce1fb",
+                "tertiary-container": "#e79400",
+                "surface-dim": "#0c1324",
+                "primary-fixed-dim": "#4cd7f6",
+                "on-secondary-fixed": "#002113",
+                "error": "#ffb4ab",
+                "primary": "#4cd7f6",
+                "on-background": "#dce1fb",
+                "on-secondary-container": "#00311f",
+                "tertiary": "#ffb95f",
+                "inverse-surface": "#dce1fb",
+                "on-error-container": "#ffdad6",
+                "surface-container-low": "#151b2d",
+                "on-primary-container": "#00424f",
+                "secondary-fixed-dim": "#4edea3"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "gutter-console": "12px",
+                "space-md": "12px",
+                "space-lg": "16px",
+                "space-2xs": "2px",
+                "space-xs": "4px",
+                "space-sm": "8px",
+                "space-2xl": "24px",
+                "inset-panel": "16px",
+                "space-xl": "20px"
+        },
+        "fontFamily": {
+                "mono-md": [
+                        "JetBrains Mono"
+                ],
+                "label-caps": [
+                        "JetBrains Mono"
+                ],
+                "mono-sm": [
+                        "JetBrains Mono"
+                ],
+                "body-sm": [
+                        "Inter"
+                ],
+                "mono-lg": [
+                        "JetBrains Mono"
+                ],
+                "headline-sm": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-xl": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "mono-md": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "label-caps": [
+                        "10px",
+                        {
+                                "lineHeight": "12px",
+                                "letterSpacing": "0.08em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "mono-sm": [
+                        "11px",
+                        {
+                                "lineHeight": "14px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "mono-lg": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "26px",
+                                "letterSpacing": "-0.015em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-xl": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }</script></head><body class="bg-background font-body-md text-body-md text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="flex flex-col"><div class="h-14 px-inset-panel flex items-center gap-space-sm bg-surface-container-lowest"><div class="w-8 h-8 rounded bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">sync_saved_locally</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">ShiftSync</span><span class="font-label-caps text-label-caps text-primary tracking-wider uppercase mt-space-2xs">Operations Console</span></div></div><div class="px-space-md py-space-sm"><div class="bg-surface-container px-space-sm py-space-xs rounded flex items-center justify-between"><span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">ROTATION ACTIVE</span><span class="font-mono-sm text-mono-sm text-secondary flex items-center gap-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>SHIFT 04-B</span></div></div><nav class="flex flex-col gap-space-2xs px-space-sm mt-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="control-center" href="#"><span class="material-symbols-outlined text-[18px]">space_dashboard</span><span>Control Center</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity-pipeline" href="#"><span class="material-symbols-outlined text-[18px]">filter_alt</span><span>Activity Pipeline</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="note-review" href="#"><span class="material-symbols-outlined text-[18px]">rate_review</span><span>Note Review</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="document-publisher" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span>Document Publisher</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="fault-tolerance-and-errors" href="#"><span class="material-symbols-outlined text-[18px]">warning</span><span>Fault-Tolerance &amp; Errors</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reproducibility-diff" href="#"><span class="material-symbols-outlined text-[18px]">difference</span><span>Reproducibility Diff</span></a></nav></div><div class="p-space-md flex flex-col gap-space-xs bg-surface-container-lowest"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-outline uppercase">ENGINE INTEGRITY</span><span class="font-mono-sm text-mono-sm text-secondary font-semibold">99.98%</span></div><div class="w-full bg-surface-container-highest h-1 rounded overflow-hidden"><div class="bg-secondary h-full w-[99.98%]"></div></div><div class="flex items-center justify-between text-outline mt-space-2xs"><span class="font-mono-sm text-mono-sm">v2.4.18-prod</span><span class="font-mono-sm text-mono-sm">INGEST: READY</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-14 bg-surface-container/90 backdrop-blur-xl z-40 px-gutter-console flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.3)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">terminal</span><span class="font-mono-md text-mono-md text-on-surface font-semibold tracking-wide">ShiftSync // Operations Console</span></div><div class="h-4 w-px bg-surface-container-highest"></div><div class="flex items-center gap-space-xs bg-secondary-container/20 text-secondary px-space-sm py-space-2xs rounded"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-mono-sm text-mono-sm font-semibold uppercase tracking-wider">All APIs Healthy</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-space-2xs rounded"><span class="font-label-caps text-label-caps text-outline uppercase">IST</span><span class="font-mono-sm text-mono-sm text-on-surface font-medium">16:42:08 (+05:30)</span><span class="text-outline-variant font-mono-sm text-mono-sm mx-space-2xs">|</span><span class="font-label-caps text-label-caps text-outline uppercase">UTC</span><span class="font-mono-sm text-mono-sm text-primary font-medium">11:12:08Z</span></div><div class="flex items-center gap-space-xs bg-surface-container-high px-space-sm py-space-2xs rounded"><span class="material-symbols-outlined text-tertiary text-[16px]">shield_person</span><span class="font-mono-sm text-mono-sm text-on-surface">Logged in: <strong class="text-on-surface font-semibold">Thiraviaraj R.</strong> (Lead SRE)</span></div><a class="flex items-center gap-space-2xs text-on-surface-variant hover:text-primary transition-colors text-body-sm font-body-sm" href="#"><span class="material-symbols-outlined text-[16px]">help</span><span>Docs</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Telemetry Sub-Bar & Showcase Mode Switcher -->
+<div class="px-space-xl py-space-md bg-surface-container-lowest flex flex-col xl:flex-row xl:items-center justify-between gap-space-md shadow-sm">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">verified_user</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Fault Tolerance &amp; Graceful Degradation Engine</span>
+<span class="font-mono-sm text-mono-sm bg-surface-container-high text-primary px-space-xs py-space-2xs rounded">ISO-22301 / RESIL-SPEC-08</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">
+        Strict fallback pipelines ensuring mission-critical handovers never fail silently, block shift transfers, or corrupt operational audits.
+      </p>
+</div>
+<!-- State Switcher Tabs -->
+<div class="flex items-center bg-surface-container-high p-space-2xs rounded gap-space-2xs overflow-x-auto" id="state-tabs">
+<button class="tab-btn flex items-center gap-space-xs px-space-md py-space-xs rounded bg-primary-container text-on-primary-container font-headline-sm text-headline-sm transition-all shadow-sm" id="btn-tab-quiet" onclick="switchTab('tab-quiet')">
+<span class="material-symbols-outlined text-[16px]">nightlight</span>
+<span>1. Quiet Shift (Zero Activity)</span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-lowest ml-space-2xs"></span>
+</button>
+<button class="tab-btn flex items-center gap-space-xs px-space-md py-space-xs rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest font-headline-sm text-headline-sm transition-all" id="btn-tab-degraded" onclick="switchTab('tab-degraded')">
+<span class="material-symbols-outlined text-[16px]">cloud_off</span>
+<span>2. Source API Degraded</span>
+<span class="w-2 h-2 rounded-full bg-tertiary ml-space-2xs"></span>
+</button>
+<button class="tab-btn flex items-center gap-space-xs px-space-md py-space-xs rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest font-headline-sm text-headline-sm transition-all" id="btn-tab-loud" onclick="switchTab('tab-loud')">
+<span class="material-symbols-outlined text-[16px]">emergency</span>
+<span>3. Loud Export Failure (Req 10)</span>
+<span class="w-2 h-2 rounded-full bg-error ml-space-2xs animate-pulse"></span>
+</button>
+</div>
+</div>
+<!-- Main Showcase Container -->
+<div class="p-space-xl flex flex-col gap-space-xl">
+<!-- TAB 1: QUIET SHIFT (ZERO IN-WINDOW ACTIVITY) -->
+<div class="tab-view flex flex-col gap-space-lg" id="tab-quiet">
+<!-- Informational Telemetry Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md">
+<div class="bg-surface-container-low p-space-md rounded flex flex-col gap-space-2xs">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Shift Window Span</span>
+<span class="font-mono-md text-mono-md text-on-surface font-semibold">01:00 AM - 09:00 AM IST</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">UTC: 19:30 - 03:30 (Graveyard)</span>
+</div>
+<div class="bg-surface-container-low p-space-md rounded flex flex-col gap-space-2xs">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">In-Window Activity</span>
+<div class="flex items-center gap-space-xs">
+<span class="font-mono-lg text-mono-lg text-secondary font-bold">0 Events Detected</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-outline">Jira: 0 | PagerDuty: 0 | Slack: 0</span>
+</div>
+<div class="bg-surface-container-low p-space-md rounded flex flex-col gap-space-2xs">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Parser Validation</span>
+<span class="font-mono-md text-mono-md text-secondary font-medium">CLEAN_SCHEMA_PASS</span>
+<span class="font-mono-sm text-mono-sm text-outline">Deterministic Zero-State Hash valid</span>
+</div>
+<div class="bg-surface-container-low p-space-md rounded flex flex-col gap-space-2xs">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Document Readiness</span>
+<span class="font-mono-md text-mono-md text-primary font-medium">Valid Export Candidate</span>
+<span class="font-mono-sm text-mono-sm text-outline">All 4 compliance sections sealed</span>
+</div>
+</div>
+<!-- Positive Zero-State Banner -->
+<div class="bg-surface-container px-space-lg py-space-md rounded flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md shadow-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Shift window processed successfully</span>
+<span class="font-mono-sm text-mono-sm bg-surface-container-highest text-secondary px-space-xs py-space-2xs rounded">ZERO-DIFF-CERTIFIED</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Zero telemetry spikes or incidents detected during window. Exportable as valid clean empty handover note without manual synthetic padding.
+            </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-space-md py-space-xs rounded font-headline-sm text-headline-sm transition-colors flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px]">raw_on</span>
+<span>Audit Ingestion Payload</span>
+</button>
+<button class="bg-primary hover:bg-surface-tint text-on-primary px-space-md py-space-xs rounded font-headline-sm text-headline-sm transition-colors flex items-center gap-space-2xs shadow-sm">
+<span class="material-symbols-outlined text-[16px]">publish</span>
+<span>Publish Clean Note</span>
+</button>
+</div>
+</div>
+<!-- Live Handover Document Form Container (Strict 4 Sections) -->
+<div class="bg-surface-container-lowest p-space-xl rounded flex flex-col gap-space-xl shadow-md">
+<!-- Document Meta Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-space-md bg-surface-container-low px-space-lg py-space-md rounded gap-space-sm">
+<div class="flex items-center gap-space-md">
+<span class="material-symbols-outlined text-primary text-[28px]">article</span>
+<div class="flex flex-col">
+<span class="font-headline-lg text-headline-lg text-on-surface font-semibold">HANDOVER NOTE #HN-2025-0518-Graveyard</span>
+<span class="font-mono-sm text-mono-sm text-outline">Target Shift Rotation: Shift 05-A // Author: Lead SRE T. R.</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-2xs rounded">
+<span class="font-label-caps text-label-caps text-outline uppercase">Schema Strictness</span>
+<span class="font-mono-sm text-mono-sm text-secondary font-semibold">STRICT_ZERO_FILL</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-2xs rounded">
+<span class="font-label-caps text-label-caps text-outline uppercase">Integrity Status</span>
+<span class="font-mono-sm text-mono-sm text-primary font-semibold">HASH-VERIFIED</span>
+</div>
+</div>
+</div>
+<!-- 4 Mandatory Sections Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+<!-- SECTION 1 -->
+<div class="bg-surface-container-low p-space-lg rounded flex flex-col gap-space-md transition-all hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded bg-secondary"></span>
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Mandatory Section 01</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Completed Work</span>
+</div>
+<span class="font-mono-sm text-mono-sm bg-surface-container-lowest text-outline px-space-xs py-space-2xs rounded">COUNT: 0</span>
+</div>
+<!-- Zero State Box -->
+<div class="bg-surface-container-lowest p-space-lg rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-outline text-[20px]">check_box_outline_blank</span>
+<span class="font-mono-md text-mono-md text-on-surface-variant italic font-normal">Nothing to report</span>
+</div>
+<span class="font-label-caps text-label-caps text-outline/80 uppercase">AUTOFILLED BY RESOLUTION PIPELINE</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">
+              No closed tickets, planned maintenance tasks, or patch completions marked in this 8-hour period.
+            </p>
+</div>
+<!-- SECTION 2 -->
+<div class="bg-surface-container-low p-space-lg rounded flex flex-col gap-space-md transition-all hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded bg-primary"></span>
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Mandatory Section 02</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">In Progress</span>
+</div>
+<span class="font-mono-sm text-mono-sm bg-surface-container-lowest text-outline px-space-xs py-space-2xs rounded">COUNT: 0</span>
+</div>
+<!-- Zero State Box -->
+<div class="bg-surface-container-lowest p-space-lg rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-outline text-[20px]">sync</span>
+<span class="font-mono-md text-mono-md text-on-surface-variant italic font-normal">Nothing to report</span>
+</div>
+<span class="font-label-caps text-label-caps text-outline/80 uppercase">AUTOFILLED BY ACTIVE PIPELINE</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">
+              No active deployments, staging dry-runs, or active investigation threads logged across clusters.
+            </p>
+</div>
+<!-- SECTION 3 -->
+<div class="bg-surface-container-low p-space-lg rounded flex flex-col gap-space-md transition-all hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded bg-secondary"></span>
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Mandatory Section 03</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Blockers &amp; Escalations</span>
+</div>
+<span class="font-mono-sm text-mono-sm bg-secondary-container/20 text-secondary px-space-xs py-space-2xs rounded">ZERO P0/P1</span>
+</div>
+<!-- Zero State Box -->
+<div class="bg-surface-container-lowest p-space-lg rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">verified</span>
+<span class="font-mono-md text-mono-md text-on-surface-variant italic font-normal">Nothing to report</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary uppercase">UNBLOCKED PATH CLEAR</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">
+              Zero unassigned alerts, third-party vendor outages, or escalation bridges triggered during shift window.
+            </p>
+</div>
+<!-- SECTION 4 -->
+<div class="bg-surface-container-low p-space-lg rounded flex flex-col gap-space-md transition-all hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded bg-tertiary"></span>
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Mandatory Section 04</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Watch-list</span>
+</div>
+<span class="font-mono-sm text-mono-sm bg-surface-container-lowest text-outline px-space-xs py-space-2xs rounded">COUNT: 0</span>
+</div>
+<!-- Zero State Box -->
+<div class="bg-surface-container-lowest p-space-lg rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-outline text-[20px]">visibility</span>
+<span class="font-mono-md text-mono-md text-on-surface-variant italic font-normal">Nothing to report</span>
+</div>
+<span class="font-label-caps text-label-caps text-outline/80 uppercase">NOMINAL HEALTH</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">
+              Zero anomalous memory leaks, flapping synthetic probes, or degraded database replica nodes flagged.
+            </p>
+</div>
+</div>
+<!-- Verification Seal Strip -->
+<div class="bg-surface-container p-space-md rounded flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">fingerprint</span>
+<span class="font-mono-sm text-mono-sm text-outline">Compliance Sign-off Hash: <code class="text-on-surface">88f0a21d51c72bb40621ee904bf</code></span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-mono-sm text-mono-sm text-secondary font-medium">Ready to transfer to Shift 05-A (Day rotation)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 2: SOURCE API UNREACHABLE (GRACEFUL DEGRADATION) -->
+<div class="tab-view hidden flex flex-col gap-space-lg" id="tab-degraded">
+<!-- High Priority Sticky Warning Banner -->
+<div class="sticky top-14 z-30 bg-tertiary-container/30 text-on-surface p-space-lg rounded backdrop-blur-xl shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded bg-tertiary text-on-tertiary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[24px]">warning</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-tertiary-fixed font-bold tracking-tight">Warning: Incident Log API (PagerDuty) Timed Out</span>
+<span class="font-mono-sm text-mono-sm bg-surface-container-lowest text-tertiary px-space-xs py-space-2xs rounded">HTTP 504 GATEWAY TIMEOUT</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mt-space-2xs leading-relaxed">
+              Source API unreachable after 3 consecutive exponential retries (total backoff 45s). Source skipped and logged to shift audit trail. Handover note generated using available <strong>Ticketing (Jira Core)</strong> and <strong>Chat (Slack Handoff)</strong> sources only.
+            </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0 w-full md:w-auto justify-end">
+<button class="bg-surface-container-highest hover:bg-surface-bright text-tertiary-fixed font-headline-sm text-headline-sm px-space-md py-space-xs rounded flex items-center gap-space-2xs transition-colors shadow-sm" onclick="toggleSkipLogs()">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span id="skip-logs-btn-text">View Skip Logs</span>
+</button>
+<button class="bg-tertiary text-on-tertiary hover:bg-tertiary-fixed font-headline-sm text-headline-sm px-space-md py-space-xs rounded flex items-center gap-space-2xs transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+<span>Force Re-Poll</span>
+</button>
+</div>
+</div>
+<!-- Collapsible Audit Skip Trace Log -->
+<div class="hidden bg-surface-container-lowest p-space-lg rounded flex flex-col gap-space-md shadow-inner" id="skip-logs-drawer">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[18px]">history_edu</span>
+<span class="font-mono-md text-mono-md text-on-surface font-semibold">Audit Event Log // Ingestion Resilience Dispatcher</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-outline">TRACE ID: req-resilience-pagerduty-retry-88190</span>
+</div>
+<div class="bg-surface-container-low p-space-md rounded font-mono-sm text-mono-sm text-on-surface-variant flex flex-col gap-space-xs overflow-x-auto">
+<div class="flex items-center gap-space-sm"><span class="text-outline">16:38:02.102Z</span> <span class="text-primary">[DISPATCH]</span> Initiated GET /api/v2/incidents?window_start=1716000000 -&gt; PagerDuty Cluster EU-1</div>
+<div class="flex items-center gap-space-sm"><span class="text-outline">16:38:12.115Z</span> <span class="text-tertiary">[ATTEMPT 1]</span> Connection timeout after 10000ms. Backoff delay: 5000ms.</div>
+<div class="flex items-center gap-space-sm"><span class="text-outline">16:38:27.121Z</span> <span class="text-tertiary">[ATTEMPT 2]</span> Upstream returned 504 Gateway Timeout. Backoff delay: 15000ms.</div>
+<div class="flex items-center gap-space-sm"><span class="text-outline">16:38:52.128Z</span> <span class="text-error">[ATTEMPT 3 FAILED]</span> Connection aborted. Maximum retry limit (3) exhausted.</div>
+<div class="flex items-center gap-space-sm"><span class="text-outline">16:38:52.130Z</span> <span class="text-secondary">[GRACEFUL DEGRADE]</span> Triggered FallbackPolicy: PASS_THROUGH_WITH_ANNOTATION. PagerDuty marked as SKIPPED.</div>
+<div class="flex items-center gap-space-sm"><span class="text-outline">16:38:52.140Z</span> <span class="text-on-surface font-bold">[AUDIT COMMITTED]</span> Handover note compile completed with 2/3 active upstream connectors. SHA256 sealed.</div>
+</div>
+</div>
+<!-- Ingestion Matrix & Upstream Source Health -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Source 1: PagerDuty (Skipped) -->
+<div class="bg-surface-container p-space-lg rounded flex flex-col justify-between gap-space-md shadow-sm">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">notifications_active</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Incident Log (PagerDuty)</span>
+</div>
+<span class="font-mono-sm text-mono-sm bg-tertiary-container/40 text-tertiary-fixed font-semibold px-space-xs py-space-2xs rounded flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Skipped (Unreachable)
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Telemetry feed unavailable. Handover document generated with degraded tag. Incoming shift lead notified to manually review PagerDuty dashboard.
+            </p>
+</div>
+<div class="pt-space-sm flex items-center justify-between bg-surface-container-high p-space-sm rounded">
+<span class="font-mono-sm text-mono-sm text-outline">HTTP 504 // 3 Retries</span>
+<button class="font-mono-sm text-mono-sm text-primary hover:underline flex items-center gap-space-2xs" onclick="toggleSkipLogs()">
+<span>View Skip Logs</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Source 2: Jira (Healthy) -->
+<div class="bg-surface-container-low p-space-lg rounded flex flex-col justify-between gap-space-md shadow-sm">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">task_alt</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Ticket Tracker (Jira)</span>
+</div>
+<span class="font-mono-sm text-mono-sm bg-secondary-container/20 text-secondary font-semibold px-space-xs py-space-2xs rounded flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Ingested (14 Tickets)
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Complete payload synchronized. 4 completed deployments, 8 ongoing sprint tasks, and 2 blocked tickets parsed successfully.
+            </p>
+</div>
+<div class="pt-space-sm flex items-center justify-between bg-surface-container p-space-sm rounded">
+<span class="font-mono-sm text-mono-sm text-outline">HTTP 200 // Latency 142ms</span>
+<span class="font-mono-sm text-mono-sm text-secondary">Ready &amp; Included</span>
+</div>
+</div>
+<!-- Source 3: Slack (Healthy) -->
+<div class="bg-surface-container-low p-space-lg rounded flex flex-col justify-between gap-space-md shadow-sm">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">forum</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Ops Chat (#sre-ops)</span>
+</div>
+<span class="font-mono-sm text-mono-sm bg-secondary-container/20 text-secondary font-semibold px-space-xs py-space-2xs rounded flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Ingested (6 Pins)
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Conversation digest active. Key engineering consensus on DB connection pool size adjustment captured and attached to Section 2.
+            </p>
+</div>
+<div class="pt-space-sm flex items-center justify-between bg-surface-container p-space-sm rounded">
+<span class="font-mono-sm text-mono-sm text-outline">HTTP 200 // Latency 88ms</span>
+<span class="font-mono-sm text-mono-sm text-secondary">Ready &amp; Included</span>
+</div>
+</div>
+</div>
+<!-- Degraded Document Preview Notice -->
+<div class="bg-surface-container-lowest p-space-lg rounded flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Assembled Document State with Degraded Watermark</span>
+</div>
+<span class="font-label-caps text-label-caps text-tertiary bg-surface-container px-space-sm py-space-2xs rounded">NON-BLOCKING DEGRADATION</span>
+</div>
+<div class="bg-surface-container-low p-space-md rounded flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[20px]">info</span>
+<span class="font-body-sm text-body-sm text-on-surface">
+              The compiled PDF / Markdown export includes a formalized header warning: <em>"[DATA SOURCE DEGRADATION: INCIDENTS FROM PAGERDUTY EXCLUDED DUE TO 504 GATEWAY TIMEOUT]"</em>
+</span>
+</div>
+<button class="bg-primary hover:bg-surface-tint text-on-primary font-headline-sm text-headline-sm px-space-md py-space-xs rounded whitespace-nowrap shadow-sm">
+            Proceed with Degraded Export
+          </button>
+</div>
+</div>
+</div>
+<!-- TAB 3: CRITICAL EXPORT FAILURE LOUD MODAL (REQ 10) -->
+<div class="tab-view hidden flex flex-col gap-space-lg" id="tab-loud">
+<!-- Context Explanation Banner -->
+<div class="bg-surface-container-low p-space-md rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-error text-[20px]">report</span>
+<span class="font-body-sm text-body-sm text-on-surface">
+<strong>Requirement 10 Specification:</strong> Export operations that encounter compiler segfaults, missing binary dependencies, or corrupted font caches must present a loud, non-dismissible modal with deterministic exit codes and instantaneous recovery fallbacks.
+          </span>
+</div>
+<button class="bg-error hover:bg-on-error text-on-error hover:text-error-container font-headline-sm text-headline-sm px-space-md py-space-xs rounded flex items-center gap-space-2xs transition-colors shadow-sm" onclick="triggerSimulatedModal()">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+<span>Re-Simulate Failure</span>
+</button>
+</div>
+<!-- Centerpiece Loud Alert Card / Simulated Modal (Full Visual Impact) -->
+<div class="relative bg-surface-container-lowest p-space-2xl rounded shadow-2xl flex flex-col items-center justify-center min-h-[460px]">
+<!-- Subtle Red Ambient Glow behind card -->
+<div class="absolute inset-0 bg-error-container/10 rounded pointer-events-none"></div>
+<!-- The Modal Card -->
+<div class="relative max-w-2xl w-full bg-surface-container p-space-xl rounded shadow-2xl flex flex-col gap-space-lg">
+<!-- Modal Header -->
+<div class="flex items-start gap-space-md">
+<!-- Icon in loud red ring -->
+<div class="w-12 h-12 rounded bg-error-container/30 flex items-center justify-center text-error shrink-0">
+<span class="material-symbols-outlined text-[28px] animate-bounce">warning</span>
+</div>
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-label-caps text-error bg-error-container/20 px-space-xs py-space-2xs rounded">CRITICAL SUBSYSTEM FAULT</span>
+<span class="font-mono-sm text-mono-sm text-outline">EXIT CODE: 127</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">
+                Critical Export Failure: Non-Zero Exit Status
+              </h2>
+</div>
+</div>
+<!-- Error Details Callout -->
+<div class="bg-surface-container-lowest p-space-md rounded flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Compiler Diagnostic Output</span>
+<p class="font-mono-md text-mono-md text-error font-medium">
+              PDF Compiler worker exited with code 127: Missing font library or corrupted buffer.
+            </p>
+<p class="font-mono-sm text-mono-sm text-on-surface-variant">
+              Worker container <code class="text-on-surface">worker-pdf-render-09b</code> crashed while loading binary library: <code class="text-error">libfontconfig.so.1: cannot open shared object file: No such file or directory</code>.
+            </p>
+</div>
+<!-- Terminal Diagnostics Trace Preview -->
+<div class="bg-surface-container-lowest p-space-sm rounded font-mono-sm text-mono-sm text-outline flex flex-col gap-space-2xs max-h-32 overflow-y-auto">
+<div class="text-outline-variant">&gt; [PDF-ENGINE] Spawning /usr/bin/typst-compiler-x64 --format=pdf</div>
+<div class="text-outline-variant">&gt; [PDF-ENGINE] Ingesting schema #HN-2025-0518-Graveyard</div>
+<div class="text-error">&gt; [CRITICAL_FATAL] dynamic linker: typst-compiler: symbol lookup error</div>
+<div class="text-error">&gt; [CRITICAL_FATAL] Process terminated with SIGABRT (Exit status 127)</div>
+<div class="text-on-surface">&gt; Handover lock maintained. No corrupted artifacts published to S3 storage bucket.</div>
+</div>
+<!-- Action Buttons Strip -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-xs w-full sm:w-auto">
+<button class="w-full sm:w-auto bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-space-md py-space-xs rounded font-headline-sm text-headline-sm transition-colors flex items-center justify-center gap-space-2xs shadow-sm" onclick="alert('Raw Stacktrace Copied to Clipboard.')">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span>View Raw Stacktrace</span>
+</button>
+<button class="w-full sm:w-auto bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-space-md py-space-xs rounded font-headline-sm text-headline-sm transition-colors flex items-center justify-center gap-space-2xs shadow-sm" onclick="alert('Downloading Diagnostic Archive (dump-HN-2025-0518.tar.gz)...')">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Download Debug Dump</span>
+</button>
+</div>
+<button class="w-full sm:w-auto bg-primary hover:bg-surface-tint text-on-primary font-headline-sm text-headline-sm px-space-lg py-space-xs rounded transition-colors flex items-center justify-center gap-space-2xs shadow-md" id="btn-fallback-export" onclick="handleFallbackSuccess()">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span>Retry with Fallback Renderer</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Recovery Policy Metadata Note -->
+<div class="bg-surface-container-low p-space-md rounded flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">security</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+<strong>System Safeguard Guarantee:</strong> If the primary typst-compiler engine fails, the fallback HTML5 Canvas headless renderer automatically generates standard vector-compatible handover reports without SRE intervention.
+          </span>
+</div>
+<span class="font-mono-sm text-mono-sm text-secondary font-medium shrink-0">FALLBACK_ENGINE: READY</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function switchTab(targetId) {
+    // Hide all views
+    document.querySelectorAll('.tab-view').forEach(el => {
+      el.classList.add('hidden');
+    });
+
+    // Reset button styles
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove('bg-primary-container', 'text-on-primary-container');
+      btn.classList.add('text-on-surface-variant');
+    });
+
+    // Show selected view
+    const targetView = document.getElementById(targetId);
+    if (targetView) {
+      targetView.classList.remove('hidden');
+    }
+
+    // Set active button style
+    const activeBtn = document.getElementById('btn-' + targetId);
+    if (activeBtn) {
+      activeBtn.classList.remove('text-on-surface-variant');
+      activeBtn.classList.add('bg-primary-container', 'text-on-primary-container');
+    }
+  }
+
+  function toggleSkipLogs() {
+    const drawer = document.getElementById('skip-logs-drawer');
+    const btnText = document.getElementById('skip-logs-btn-text');
+    if (drawer.classList.contains('hidden')) {
+      drawer.classList.remove('hidden');
+      if (btnText) btnText.textContent = 'Hide Skip Logs';
+    } else {
+      drawer.classList.add('hidden');
+      if (btnText) btnText.textContent = 'View Skip Logs';
+    }
+  }
+
+  function handleFallbackSuccess() {
+    const btn = document.getElementById('btn-fallback-export');
+    btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span> <span>Compiling Fallback...</span>';
+    setTimeout(() => {
+      btn.className = 'w-full sm:w-auto bg-secondary hover:bg-secondary-fixed text-on-secondary font-headline-sm text-headline-sm px-space-lg py-space-xs rounded transition-colors flex items-center justify-center gap-space-2xs shadow-md';
+      btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">done_all</span> <span>Fallback Success: PDF Ready!</span>';
+    }, 1100);
+  }
+
+  function triggerSimulatedModal() {
+    const btn = document.getElementById('btn-fallback-export');
+    btn.className = 'w-full sm:w-auto bg-primary hover:bg-surface-tint text-on-primary font-headline-sm text-headline-sm px-space-lg py-space-xs rounded transition-colors flex items-center justify-center gap-space-2xs shadow-md';
+    btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">restart_alt</span> <span>Retry with Fallback Renderer</span>';
+    alert('Simulating cold crash: Exit code 127 restored.');
+  }
+</script></main></div></body></html>

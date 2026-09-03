@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>ShiftSync // Operations Console</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-on-surface": "#2a3043",
+                "secondary-container": "#00a572",
+                "error-container": "#93000a",
+                "surface-variant": "#2e3447",
+                "on-error": "#690005",
+                "on-primary-fixed": "#001f26",
+                "surface-container": "#191f31",
+                "on-primary-fixed-variant": "#004e5c",
+                "tertiary-fixed-dim": "#ffb95f",
+                "inverse-primary": "#00687a",
+                "primary-container": "#06b6d4",
+                "on-secondary": "#003824",
+                "secondary": "#4edea3",
+                "on-tertiary-fixed": "#2a1700",
+                "tertiary-fixed": "#ffddb8",
+                "on-tertiary": "#472a00",
+                "surface-container-highest": "#2e3447",
+                "outline": "#869397",
+                "surface-tint": "#4cd7f6",
+                "surface": "#0c1324",
+                "surface-bright": "#33394c",
+                "outline-variant": "#3d494c",
+                "on-tertiary-container": "#563400",
+                "surface-container-high": "#23293c",
+                "secondary-fixed": "#6ffbbe",
+                "on-secondary-fixed-variant": "#005236",
+                "on-primary": "#003640",
+                "surface-container-lowest": "#070d1f",
+                "primary-fixed": "#acedff",
+                "background": "#0c1324",
+                "on-surface-variant": "#bcc9cd",
+                "on-tertiary-fixed-variant": "#653e00",
+                "on-surface": "#dce1fb",
+                "tertiary-container": "#e79400",
+                "surface-dim": "#0c1324",
+                "primary-fixed-dim": "#4cd7f6",
+                "on-secondary-fixed": "#002113",
+                "error": "#ffb4ab",
+                "primary": "#4cd7f6",
+                "on-background": "#dce1fb",
+                "on-secondary-container": "#00311f",
+                "tertiary": "#ffb95f",
+                "inverse-surface": "#dce1fb",
+                "on-error-container": "#ffdad6",
+                "surface-container-low": "#151b2d",
+                "on-primary-container": "#00424f",
+                "secondary-fixed-dim": "#4edea3"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "gutter-console": "12px",
+                "space-md": "12px",
+                "space-lg": "16px",
+                "space-2xs": "2px",
+                "space-xs": "4px",
+                "space-sm": "8px",
+                "space-2xl": "24px",
+                "inset-panel": "16px",
+                "space-xl": "20px"
+        },
+        "fontFamily": {
+                "mono-md": [
+                        "JetBrains Mono"
+                ],
+                "label-caps": [
+                        "JetBrains Mono"
+                ],
+                "mono-sm": [
+                        "JetBrains Mono"
+                ],
+                "body-sm": [
+                        "Inter"
+                ],
+                "mono-lg": [
+                        "JetBrains Mono"
+                ],
+                "headline-sm": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-xl": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "mono-md": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "label-caps": [
+                        "10px",
+                        {
+                                "lineHeight": "12px",
+                                "letterSpacing": "0.08em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "mono-sm": [
+                        "11px",
+                        {
+                                "lineHeight": "14px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "mono-lg": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "26px",
+                                "letterSpacing": "-0.015em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-xl": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }</script></head><body class="bg-background font-body-md text-body-md text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="flex flex-col"><div class="h-14 px-inset-panel flex items-center gap-space-sm bg-surface-container-lowest"><div class="w-8 h-8 rounded bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">sync_saved_locally</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">ShiftSync</span><span class="font-label-caps text-label-caps text-primary tracking-wider uppercase mt-space-2xs">Operations Console</span></div></div><div class="px-space-md py-space-sm"><div class="bg-surface-container px-space-sm py-space-xs rounded flex items-center justify-between"><span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">ROTATION ACTIVE</span><span class="font-mono-sm text-mono-sm text-secondary flex items-center gap-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>SHIFT 04-B</span></div></div><nav class="flex flex-col gap-space-2xs px-space-sm mt-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="control-center" href="#"><span class="material-symbols-outlined text-[18px]">space_dashboard</span><span>Control Center</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity-pipeline" href="#"><span class="material-symbols-outlined text-[18px]">filter_alt</span><span>Activity Pipeline</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="note-review" href="#"><span class="material-symbols-outlined text-[18px]">rate_review</span><span>Note Review</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded transition-colors bg-primary-container text-on-primary-container font-semibold" data-path="document-publisher" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span>Document Publisher</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="fault-tolerance-and-errors" href="#"><span class="material-symbols-outlined text-[18px]">warning</span><span>Fault-Tolerance &amp; Errors</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reproducibility-diff" href="#"><span class="material-symbols-outlined text-[18px]">difference</span><span>Reproducibility Diff</span></a></nav></div><div class="p-space-md flex flex-col gap-space-xs bg-surface-container-lowest"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-outline uppercase">ENGINE INTEGRITY</span><span class="font-mono-sm text-mono-sm text-secondary font-semibold">99.98%</span></div><div class="w-full bg-surface-container-highest h-1 rounded overflow-hidden"><div class="bg-secondary h-full w-[99.98%]"></div></div><div class="flex items-center justify-between text-outline mt-space-2xs"><span class="font-mono-sm text-mono-sm">v2.4.18-prod</span><span class="font-mono-sm text-mono-sm">INGEST: READY</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-14 bg-surface-container/90 backdrop-blur-xl z-40 px-gutter-console flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.3)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">terminal</span><span class="font-mono-md text-mono-md text-on-surface font-semibold tracking-wide">ShiftSync // Operations Console</span></div><div class="h-4 w-px bg-surface-container-highest"></div><div class="flex items-center gap-space-xs bg-secondary-container/20 text-secondary px-space-sm py-space-2xs rounded"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-mono-sm text-mono-sm font-semibold uppercase tracking-wider">All APIs Healthy</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-space-2xs rounded"><span class="font-label-caps text-label-caps text-outline uppercase">IST</span><span class="font-mono-sm text-mono-sm text-on-surface font-medium">16:42:08 (+05:30)</span><span class="text-outline-variant font-mono-sm text-mono-sm mx-space-2xs">|</span><span class="font-label-caps text-label-caps text-outline uppercase">UTC</span><span class="font-mono-sm text-mono-sm text-primary font-medium">11:12:08Z</span></div><div class="flex items-center gap-space-xs bg-surface-container-high px-space-sm py-space-2xs rounded"><span class="material-symbols-outlined text-tertiary text-[16px]">shield_person</span><span class="font-mono-sm text-mono-sm text-on-surface">Logged in: <strong class="text-on-surface font-semibold">Thiraviaraj R.</strong> (Lead SRE)</span></div><a class="flex items-center gap-space-2xs text-on-surface-variant hover:text-primary transition-colors text-body-sm font-body-sm" href="#"><span class="material-symbols-outlined text-[16px]">help</span><span>Docs</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Subtle Ambient Glow Canvas Decorator -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-32 left-1/3 w-[520px] h-[520px] bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-96 right-16 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Top Command Strip / Compliance Bar -->
+<section class="w-full bg-surface-container-low px-gutter-console py-space-md shadow-md flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center gap-space-md">
+<div class="flex items-center gap-space-sm bg-surface-container-lowest px-space-md py-space-xs rounded">
+<span class="material-symbols-outlined text-primary text-[20px]">picture_as_pdf</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">TARGET ARTIFACT</span>
+<span class="font-mono-md text-mono-md text-on-surface font-semibold tracking-wide">Handover-Note-2026-09-03-Evening-Shift.pdf</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded">
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">MONOLITHIC RUN</span>
+<span class="text-outline-variant font-mono-sm text-mono-sm">/</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">v2.4-deterministic</span>
+</div>
+</div>
+<!-- Compliance Check Badges -->
+<div class="flex flex-wrap items-center gap-space-xs">
+<div class="flex items-center gap-space-2xs bg-surface-container-highest px-space-sm py-space-xs rounded shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[15px]">check_circle</span>
+<span class="font-mono-sm text-mono-sm text-secondary font-medium">Bounded to Window</span>
+</div>
+<div class="flex items-center gap-space-2xs bg-surface-container-highest px-space-sm py-space-xs rounded shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[15px]">verified</span>
+<span class="font-mono-sm text-mono-sm text-secondary font-medium">Zero Duplicates</span>
+</div>
+<div class="flex items-center gap-space-2xs bg-surface-container-highest px-space-sm py-space-xs rounded shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[15px]">splitscreen</span>
+<span class="font-mono-sm text-mono-sm text-secondary font-medium">4 Sections Present</span>
+</div>
+<div class="flex items-center gap-space-2xs bg-surface-container-highest px-space-sm py-space-xs rounded shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[15px]">sell</span>
+<span class="font-mono-sm text-mono-sm text-secondary font-medium">All Sources Tagged</span>
+</div>
+</div>
+</section>
+<!-- Operational Viewport: Centered Sheet + Control Rail -->
+<div class="w-full px-gutter-console py-space-lg grid grid-cols-1 xl:grid-cols-12 gap-space-xl items-start">
+<!-- Central Document Preview Area (Cols 1-8) -->
+<div class="xl:col-span-8 flex flex-col items-center">
+<!-- Viewer Top Bar Controls -->
+<div class="w-full max-w-[820px] mb-space-sm bg-surface-container-high px-space-md py-space-xs rounded flex items-center justify-between text-on-surface-variant shadow-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+<span class="font-mono-sm text-mono-sm text-on-surface">100% (Fit A4)</span>
+<span class="text-outline-variant font-mono-sm text-mono-sm">|</span>
+<span class="font-mono-sm text-mono-sm">Page 1 / 1</span>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-label-caps text-label-caps text-outline uppercase flex items-center gap-space-2xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+              PRINT READY ENGINE
+            </span>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-space-2xs" id="fullscreenToggle">
+<span class="material-symbols-outlined text-[16px]">fullscreen</span>
+</button>
+</div>
+</div>
+<!-- Simulated A4 Paper Canvas -->
+<div class="w-full max-w-[820px] bg-[#ffffff] text-[#0f172a] rounded shadow-2xl p-10 md:p-14 relative transition-all duration-300">
+<!-- Document Header -->
+<div class="flex flex-col md:flex-row md:items-start justify-between pb-6 mb-6">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded bg-[#0c1324] text-[#4cd7f6] flex items-center justify-center font-mono-lg font-bold shadow-sm">
+<span class="material-symbols-outlined text-[24px]">sync_saved_locally</span>
+</div>
+<div class="flex flex-col">
+<span class="font-mono-md text-[11px] uppercase tracking-widest text-[#64748b] font-semibold">SHIFTSYNC OPERATIONS COMMAND</span>
+<span class="font-headline-lg text-[20px] font-bold text-[#090d16] tracking-tight leading-tight">SHIFT HANDOVER NOTE</span>
+<span class="font-mono-sm text-[11px] text-[#0284c7] font-medium">STANDALONE MONOLITHIC COMPILATION</span>
+</div>
+</div>
+<div class="mt-4 md:mt-0 flex flex-col items-start md:items-end">
+<div class="bg-[#f1f5f9] text-[#0f172a] px-3 py-1 rounded font-mono-sm text-[11px] font-semibold flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[#16a34a] text-[14px]">task_alt</span>
+                STATUS: CERTIFIED FINAL
+              </div>
+<span class="font-mono-sm text-[10px] text-[#64748b] mt-1 tracking-wider uppercase">Doc-UID: SS-20260903-EVE-004</span>
+</div>
+</div>
+<!-- Metadata Ribbon inside Document -->
+<div class="bg-[#f8fafc] rounded p-3 mb-8 shadow-sm flex flex-col md:flex-row md:items-center justify-between text-[11px] font-mono-sm gap-2">
+<div class="flex items-center gap-2">
+<span class="text-[#64748b] font-semibold uppercase text-[9px] tracking-widest">SHIFT WINDOW:</span>
+<span class="font-bold text-[#0f172a]">Sep 03, 2026, 17:00 – 20:00 IST</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[#64748b] font-semibold uppercase text-[9px] tracking-widest">SHIFT LEAD:</span>
+<span class="font-semibold text-[#0f172a]">T. Raj (Lead SRE)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[#64748b] font-semibold uppercase text-[9px] tracking-widest">SLOT:</span>
+<span class="bg-[#e0f2fe] text-[#0369a1] font-semibold px-1.5 py-0.5 rounded text-[10px]">17:00 – 20:00 Evening</span>
+</div>
+</div>
+<!-- Section 1: Completed Work -->
+<div class="mb-7">
+<div class="flex items-center justify-between pb-1.5 mb-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#10b981]"></span>
+<h2 class="font-headline-sm text-[13px] font-bold tracking-wide uppercase text-[#0f172a]">1. COMPLETED WORK</h2>
+</div>
+<span class="font-mono-sm text-[10px] text-[#64748b] font-medium uppercase">3 Resolved Records</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Item 1.1 -->
+<div class="bg-[#f8fafc] p-3 rounded shadow-sm">
+<div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+<div class="flex items-center gap-1.5">
+<span class="font-mono-sm text-[10px] bg-[#dcfce7] text-[#15803d] px-1.5 py-0.5 rounded font-bold">[ticketing: OPS-4819]</span>
+<span class="font-mono-sm text-[10px] bg-[#e2e8f0] text-[#334155] px-1.5 py-0.5 rounded font-medium">[service: auth-proxy]</span>
+<span class="font-body-md text-[12px] font-semibold text-[#0f172a]">Certificate rotation on eu-central ingress completed</span>
+</div>
+<span class="font-mono-sm text-[11px] text-[#64748b]">17:42 IST</span>
+</div>
+<p class="font-body-sm text-[12px] text-[#334155] leading-relaxed">
+                  Renewed Let's Encrypt wildcard keys on Envoy ingress cluster. Verified zero dropped TLS handshakes across 4,200 concurrent connections.
+                </p>
+<div class="mt-2 flex items-center justify-between font-mono-sm text-[10px] text-[#64748b]">
+<span>Owner: <strong class="text-[#0f172a]">T. Raj</strong></span>
+<span class="text-[#16a34a] font-semibold">Verification: HTTP 200 Healthcheck 100%</span>
+</div>
+</div>
+<!-- Item 1.2 -->
+<div class="bg-[#f8fafc] p-3 rounded shadow-sm">
+<div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+<div class="flex items-center gap-1.5">
+<span class="font-mono-sm text-[10px] bg-[#fee2e2] text-[#b91c1c] px-1.5 py-0.5 rounded font-bold">[pagerduty: INC-102]</span>
+<span class="font-mono-sm text-[10px] bg-[#f1f5f9] text-[#475569] px-1.5 py-0.5 rounded font-medium">[db: billing-primary]</span>
+<span class="font-body-md text-[12px] font-semibold text-[#0f172a]">Spike in write deadlocks throttled via connection pooler</span>
+</div>
+<span class="font-mono-sm text-[11px] text-[#64748b]">18:15 IST</span>
+</div>
+<p class="font-body-sm text-[12px] text-[#334155] leading-relaxed">
+                  PgBouncer pool saturation hit 96%. Evicted hung background retry worker session #88219. Latency recovered to 4ms baseline.
+                </p>
+<div class="mt-2 flex items-center justify-between font-mono-sm text-[10px] text-[#64748b]">
+<span>Owner: <strong class="text-[#0f172a]">K. Arisawa (DBA On-call)</strong></span>
+<span class="text-[#16a34a] font-semibold">Root cause documented in incident portal</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: In Progress -->
+<div class="mb-7">
+<div class="flex items-center justify-between pb-1.5 mb-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#f59e0b]"></span>
+<h2 class="font-headline-sm text-[13px] font-bold tracking-wide uppercase text-[#0f172a]">2. IN PROGRESS (HANDOFF REQUIRED)</h2>
+</div>
+<span class="font-mono-sm text-[10px] text-[#64748b] font-medium uppercase">1 Active Task</span>
+</div>
+<div class="bg-[#fffbeb] p-3 rounded shadow-sm">
+<div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+<div class="flex items-center gap-1.5">
+<span class="font-mono-sm text-[10px] bg-[#fef3c7] text-[#92400e] px-1.5 py-0.5 rounded font-bold">[ticketing: OPS-4820]</span>
+<span class="font-body-md text-[12px] font-semibold text-[#78350f]">ElasticSearch Node Migration (es-data-04 -&gt; es-data-09)</span>
+</div>
+<span class="font-mono-sm text-[11px] text-[#92400e]">78% Synced</span>
+</div>
+<p class="font-body-sm text-[12px] text-[#78350f] leading-relaxed">
+                Shard relocation in progress. Shards 4 and 11 syncing at 140 MB/s. Do NOT initiate cluster restart until green health state is confirmed.
+              </p>
+<div class="mt-2 flex items-center justify-between font-mono-sm text-[10px] text-[#92400e]">
+<span>Incoming Lead Action: <strong class="text-[#451a03]">Monitor completion around 20:30 IST</strong></span>
+<span class="underline decoration-[#d97706]">Dashboard: /grafana/es-cluster-live</span>
+</div>
+</div>
+</div>
+<!-- Section 3: Blockers & Escalations -->
+<div class="mb-7">
+<div class="flex items-center justify-between pb-1.5 mb-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#ef4444] animate-pulse"></span>
+<h2 class="font-headline-sm text-[13px] font-bold tracking-wide uppercase text-[#991b1b]">3. BLOCKERS &amp; ESCALATIONS</h2>
+</div>
+<span class="font-mono-sm text-[10px] bg-[#fee2e2] text-[#991b1b] font-bold px-1.5 py-0.5 rounded">URGENT ACTION</span>
+</div>
+<!-- Highlighted Light-Red Warning Box -->
+<div class="bg-[#fef2f2] p-4 rounded shadow-sm">
+<div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#dc2626] text-[18px]">warning</span>
+<span class="font-mono-sm text-[10px] bg-[#dc2626] text-[#ffffff] px-2 py-0.5 rounded font-bold tracking-wide">P1 STATUS</span>
+<span class="font-mono-sm text-[10px] bg-[#fee2e2] text-[#991b1b] px-1.5 py-0.5 rounded font-bold">[ticketing: OPS-4821]</span>
+<span class="font-body-md text-[12px] font-bold text-[#991b1b]">Payment Gateway 3DS Latency Anomaly</span>
+</div>
+<span class="font-mono-sm text-[10px] text-[#dc2626] font-semibold uppercase">Triggered 19:14 IST</span>
+</div>
+<p class="font-body-sm text-[12px] text-[#7f1d1d] leading-relaxed mb-3">
+                Provider reported edge fiber degradation in South Asia corridor. 3DS verification latency spiking to 8.4 seconds (SLA threshold: 2.5s). Secondary failover pipeline partially configured.
+              </p>
+<div class="bg-[#ffffff] p-2.5 rounded text-[11px] font-mono-sm text-[#991b1b] flex flex-col md:flex-row md:items-center justify-between gap-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">phone_in_talk</span>
+<span>On-call Paging: <strong class="text-[#0f172a]">Finance Eng Bridge #bridge-checkout-live</strong></span>
+</div>
+<span class="font-bold text-[#b91c1c]">Incoming shift MUST sit in bridge till resolution.</span>
+</div>
+</div>
+</div>
+<!-- Section 4: Watch-List -->
+<div class="mb-8">
+<div class="flex items-center justify-between pb-1.5 mb-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#64748b]"></span>
+<h2 class="font-headline-sm text-[13px] font-bold tracking-wide uppercase text-[#0f172a]">4. WATCH-LIST</h2>
+</div>
+<span class="font-mono-sm text-[10px] text-[#16a34a] font-medium">Clear State</span>
+</div>
+<div class="bg-[#f8fafc] p-4 rounded text-center">
+<div class="flex items-center justify-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[#10b981] text-[18px]">verified_user</span>
+<span class="font-headline-sm text-[13px] font-bold text-[#0f172a]">Nothing to report</span>
+</div>
+<p class="font-body-sm text-[12px] text-[#64748b]">
+                No monitored thresholds breached during shift window. All SLO error budgets remain above 99.8% nominal margin.
+              </p>
+</div>
+</div>
+<!-- Document Footer -->
+<div class="pt-6 text-[#64748b] font-mono-sm text-[10px] flex flex-col md:flex-row items-center justify-between gap-3">
+<div class="flex flex-col">
+<div class="flex items-center gap-1 text-[#334155]">
+<span class="material-symbols-outlined text-[13px] text-[#0284c7]">lock</span>
+<span>Generated automatically by ShiftSync Engine.</span>
+</div>
+<span class="text-[9px] text-[#64748b] mt-0.5">Cryptographic Checksum: <strong class="text-[#0f172a]">8f9b4c27a912e3f88bc03d11b22e0a4f</strong> (Reproducible run)</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="bg-[#e2e8f0] text-[#0f172a] px-2 py-0.5 rounded font-bold">Page 1 of 1</span>
+<span class="text-[9px] uppercase tracking-wider text-[#64748b]">Single Monolithic File</span>
+</div>
+</div>
+</div>
+<!-- Simulated Document Pagination / Paper Shadow Floor -->
+<div class="w-[96%] max-w-[780px] h-3 bg-surface-container-lowest rounded-b mx-auto blur-[2px] opacity-70"></div>
+</div>
+<!-- Right Action & Export Inspector Sidebar (Cols 9-12) -->
+<div class="xl:col-span-4 flex flex-col gap-space-md">
+<!-- Primary Action Card -->
+<div class="bg-surface-container-low p-space-md rounded shadow-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">PRIMARY DISPATCH</span>
+<span class="font-mono-sm text-mono-sm text-secondary flex items-center gap-space-2xs">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Ready
+            </span>
+</div>
+<!-- Download PDF -->
+<button class="w-full h-11 bg-primary text-on-primary rounded font-headline-sm text-headline-sm flex items-center justify-center gap-space-sm hover:bg-primary-container hover:text-on-primary-container transition-all shadow-md active:scale-[0.99]" id="downloadPdfBtn">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Download Final PDF (.pdf)</span>
+</button>
+<!-- Export DOCX -->
+<button class="w-full h-9 bg-surface-container-high text-on-surface hover:bg-surface-container-highest rounded font-headline-sm text-body-md flex items-center justify-center gap-space-sm transition-colors shadow-sm" id="exportDocxBtn">
+<span class="material-symbols-outlined text-primary text-[18px]">description</span>
+<span>Export Microsoft Word (.docx)</span>
+</button>
+<!-- Copy Markdown Block -->
+<button class="w-full h-9 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded font-mono-sm text-mono-sm flex items-center justify-center gap-space-sm transition-colors" id="copySlackBtn">
+<span class="material-symbols-outlined text-tertiary text-[16px]">content_copy</span>
+<span>Copy Slack / Markdown Block</span>
+</button>
+</div>
+<!-- Reproducibility & Integrity Card -->
+<div class="bg-surface-container-low p-space-md rounded shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">RE-RUN VERIFICATION</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">security</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between font-mono-sm text-mono-sm">
+<span class="text-outline">SHA256 CHECKSUM</span>
+<span class="text-secondary font-semibold flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[13px]">done_all</span> MATCHED
+              </span>
+</div>
+<code class="font-mono-sm text-[10px] text-on-surface-variant break-all select-all">8f9b4c27a912e3f88bc03d11b22e0a4f</code>
+</div>
+<button class="w-full h-8 bg-surface-container-high text-on-surface hover:bg-surface-bright rounded font-mono-sm text-mono-sm flex items-center justify-center gap-space-xs transition-colors mt-space-xs" id="regenerateBtn">
+<span class="material-symbols-outlined text-[16px] text-primary">restart_alt</span>
+<span>Regenerate &amp; Check Match</span>
+</button>
+<span class="font-mono-sm text-[10px] text-outline text-center mt-space-2xs">
+            Output is byte-for-byte identical across repeated compiles.
+          </span>
+</div>
+<!-- Print & Layout Presets -->
+<div class="bg-surface-container-low p-space-md rounded shadow-md flex flex-col gap-space-md">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">DOCUMENT SPECIFICATIONS</span>
+<div class="flex flex-col gap-space-xs">
+<label class="font-mono-sm text-mono-sm text-on-surface-variant">Page Sheet Geometry</label>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="px-space-sm py-space-xs rounded font-mono-sm text-mono-sm bg-primary-container text-on-primary-container font-semibold text-center">
+                A4 (ISO 216)
+              </button>
+<button class="px-space-sm py-space-xs rounded font-mono-sm text-mono-sm bg-surface-container text-on-surface-variant hover:text-on-surface text-center">
+                US Letter
+              </button>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-mono-sm text-mono-sm text-on-surface-variant">Print Margins</label>
+<div class="grid grid-cols-3 gap-space-xs">
+<button class="px-space-xs py-space-xs rounded font-mono-sm text-mono-sm bg-surface-container text-on-surface-variant text-center">
+                Narrow (8mm)
+              </button>
+<button class="px-space-xs py-space-xs rounded font-mono-sm text-mono-sm bg-primary-container text-on-primary-container font-semibold text-center">
+                Normal (15mm)
+              </button>
+<button class="px-space-xs py-space-xs rounded font-mono-sm text-mono-sm bg-surface-container text-on-surface-variant text-center">
+                Wide (25mm)
+              </button>
+</div>
+</div>
+<div class="bg-surface-container px-space-sm py-space-sm rounded flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Embed Cryptographic Key</span>
+<span class="font-mono-sm text-[10px] text-outline">Appends signed tamper seal</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface peer-checked:bg-primary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-primary after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+</div>
+<!-- Telemetry & Distribution Log -->
+<div class="bg-surface-container-low p-space-md rounded shadow-md flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">AUTO-DISPATCH TARGETS</span>
+<span class="material-symbols-outlined text-[15px] text-outline">hub</span>
+</div>
+<div class="flex flex-col gap-space-2xs mt-space-2xs">
+<div class="flex items-center justify-between py-1 font-mono-sm text-mono-sm">
+<span class="text-on-surface flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                #ops-handover-channel
+              </span>
+<span class="text-outline">SLACK WEBHOOK</span>
+</div>
+<div class="flex items-center justify-between py-1 font-mono-sm text-mono-sm">
+<span class="text-on-surface flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                sre-archive-vault/2026/09
+              </span>
+<span class="text-outline">S3 BUCKET</span>
+</div>
+<div class="flex items-center justify-between py-1 font-mono-sm text-mono-sm">
+<span class="text-on-surface flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                oncall-leads@internal
+              </span>
+<span class="text-outline">EMAIL DIGEST</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Notification Toast Layer -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none" id="toastNotification">
+<div class="bg-surface-container-highest text-on-surface px-space-md py-space-sm rounded shadow-2xl flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]" id="toastIcon">check_circle</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface" id="toastTitle">Action Performed</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant" id="toastDesc">Payload compiled successfully.</span>
+</div>
+</div>
+</div>
+<script>
+    // Document Publisher Interactivity
+    const toast = document.getElementById('toastNotification');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastDesc = document.getElementById('toastDesc');
+    const toastIcon = document.getElementById('toastIcon');
+
+    function triggerToast(title, desc, icon = 'check_circle', iconColor = 'text-secondary') {
+      toastTitle.textContent = title;
+      toastDesc.textContent = desc;
+      toastIcon.textContent = icon;
+      toastIcon.className = `material-symbols-outlined text-[20px] ${iconColor}`;
+      
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3200);
+    }
+
+    document.getElementById('downloadPdfBtn')?.addEventListener('click', () => {
+      triggerToast('Downloading Monolith PDF', 'Handover-Note-2026-09-03-Evening-Shift.pdf starting...', 'download', 'text-primary');
+    });
+
+    document.getElementById('exportDocxBtn')?.addEventListener('click', () => {
+      triggerToast('Word Document Rendered', 'Saved as formatted .docx template with layout preservation.', 'description', 'text-primary');
+    });
+
+    document.getElementById('copySlackBtn')?.addEventListener('click', () => {
+      const markdownPayload = `*SHIFTSYNC HANDOVER NOTE*\\n*Window:* Sep 03, 2026, 17:00 - 20:00 IST | *Lead:* T. Raj\\n\\n*1. COMPLETED WORK*\\n- OPS-4819: Certificate rotation on eu-central ingress completed\\n- INC-102: Spike in write deadlocks throttled via connection pooler\\n\\n*2. IN PROGRESS*\\n- OPS-4820: ElasticSearch Node Migration (78% Synced)\\n\\n*3. BLOCKERS & ESCALATIONS*\\n- OPS-4821 [P1]: Payment Gateway 3DS Latency Anomaly. In bridge #bridge-checkout-live.\\n\\n*4. WATCH-LIST*\\n- Nothing to report. All SLO error budgets > 99.8%.`;
+      navigator.clipboard?.writeText(markdownPayload);
+      triggerToast('Slack Block Copied!', 'Markdown with rich blocks placed onto clipboard.', 'content_copy', 'text-tertiary');
+    });
+
+    document.getElementById('regenerateBtn')?.addEventListener('click', () => {
+      triggerToast('Checksum Verified (100% Match)', 'SHA256: 8f9b4c27a912e3f88bc03d11b22e0a4f validated identical.', 'verified', 'text-secondary');
+    });
+
+    document.getElementById('fullscreenToggle')?.addEventListener('click', () => {
+      triggerToast('Canvas Focus Toggled', 'Viewing at native resolution without scaling.', 'aspect_ratio', 'text-primary');
+    });
+  </script>
+</div></main></div></body></html>

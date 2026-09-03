@@ -1,0 +1,29 @@
+{
+  "name": "shift-sync",
+  "version": "2.5.0",
+  "description": "ShiftSync - Grounded SRE & NOC Automated Handover Note Generator",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve .",
+    "firebase:deploy": "npx -y firebase-tools@latest deploy --project shift-sync-a0b66",
+    "firebase:auth": "npx -y firebase-tools@latest deploy --only auth --project shift-sync-a0b66",
+    "firebase:firestore": "npx -y firebase-tools@latest deploy --only firestore --project shift-sync-a0b66"
+  },
+  "dependencies": {
+    "firebase": "^10.12.2"
+  },
+  "devDependencies": {
+    "firebase-tools": "^15.29.0"
+  },
+  "keywords": [
+    "shiftsync",
+    "sre",
+    "noc",
+    "handover",
+    "firebase",
+    "firestore",
+    "authentication"
+  ],
+  "author": "Thiraviaraj R.",
+  "license": "MIT"
+}

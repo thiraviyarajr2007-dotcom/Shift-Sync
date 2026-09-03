@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>ShiftSync // Operations Console</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-on-surface": "#2a3043",
+                "secondary-container": "#00a572",
+                "error-container": "#93000a",
+                "surface-variant": "#2e3447",
+                "on-error": "#690005",
+                "on-primary-fixed": "#001f26",
+                "surface-container": "#191f31",
+                "on-primary-fixed-variant": "#004e5c",
+                "tertiary-fixed-dim": "#ffb95f",
+                "inverse-primary": "#00687a",
+                "primary-container": "#06b6d4",
+                "on-secondary": "#003824",
+                "secondary": "#4edea3",
+                "on-tertiary-fixed": "#2a1700",
+                "tertiary-fixed": "#ffddb8",
+                "on-tertiary": "#472a00",
+                "surface-container-highest": "#2e3447",
+                "outline": "#869397",
+                "surface-tint": "#4cd7f6",
+                "surface": "#0c1324",
+                "surface-bright": "#33394c",
+                "outline-variant": "#3d494c",
+                "on-tertiary-container": "#563400",
+                "surface-container-high": "#23293c",
+                "secondary-fixed": "#6ffbbe",
+                "on-secondary-fixed-variant": "#005236",
+                "on-primary": "#003640",
+                "surface-container-lowest": "#070d1f",
+                "primary-fixed": "#acedff",
+                "background": "#0c1324",
+                "on-surface-variant": "#bcc9cd",
+                "on-tertiary-fixed-variant": "#653e00",
+                "on-surface": "#dce1fb",
+                "tertiary-container": "#e79400",
+                "surface-dim": "#0c1324",
+                "primary-fixed-dim": "#4cd7f6",
+                "on-secondary-fixed": "#002113",
+                "error": "#ffb4ab",
+                "primary": "#4cd7f6",
+                "on-background": "#dce1fb",
+                "on-secondary-container": "#00311f",
+                "tertiary": "#ffb95f",
+                "inverse-surface": "#dce1fb",
+                "on-error-container": "#ffdad6",
+                "surface-container-low": "#151b2d",
+                "on-primary-container": "#00424f",
+                "secondary-fixed-dim": "#4edea3"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "gutter-console": "12px",
+                "space-md": "12px",
+                "space-lg": "16px",
+                "space-2xs": "2px",
+                "space-xs": "4px",
+                "space-sm": "8px",
+                "space-2xl": "24px",
+                "inset-panel": "16px",
+                "space-xl": "20px"
+        },
+        "fontFamily": {
+                "mono-md": [
+                        "JetBrains Mono"
+                ],
+                "label-caps": [
+                        "JetBrains Mono"
+                ],
+                "mono-sm": [
+                        "JetBrains Mono"
+                ],
+                "body-sm": [
+                        "Inter"
+                ],
+                "mono-lg": [
+                        "JetBrains Mono"
+                ],
+                "headline-sm": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-xl": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "mono-md": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "label-caps": [
+                        "10px",
+                        {
+                                "lineHeight": "12px",
+                                "letterSpacing": "0.08em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "mono-sm": [
+                        "11px",
+                        {
+                                "lineHeight": "14px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "mono-lg": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "26px",
+                                "letterSpacing": "-0.015em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-xl": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }</script></head><body class="bg-background font-body-md text-body-md text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="flex flex-col"><div class="h-14 px-inset-panel flex items-center gap-space-sm bg-surface-container-lowest"><div class="w-8 h-8 rounded bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">sync_saved_locally</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">ShiftSync</span><span class="font-label-caps text-label-caps text-primary tracking-wider uppercase mt-space-2xs">Operations Console</span></div></div><div class="px-space-md py-space-sm"><div class="bg-surface-container px-space-sm py-space-xs rounded flex items-center justify-between"><span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">ROTATION ACTIVE</span><span class="font-mono-sm text-mono-sm text-secondary flex items-center gap-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>SHIFT 04-B</span></div></div><nav class="flex flex-col gap-space-2xs px-space-sm mt-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded transition-colors bg-primary-container text-on-primary-container font-semibold" data-path="control-center" href="#"><span class="material-symbols-outlined text-[18px]">space_dashboard</span><span>Control Center</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity-pipeline" href="#"><span class="material-symbols-outlined text-[18px]">filter_alt</span><span>Activity Pipeline</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="note-review" href="#"><span class="material-symbols-outlined text-[18px]">rate_review</span><span>Note Review</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="document-publisher" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span>Document Publisher</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="fault-tolerance-and-errors" href="#"><span class="material-symbols-outlined text-[18px]">warning</span><span>Fault-Tolerance &amp; Errors</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reproducibility-diff" href="#"><span class="material-symbols-outlined text-[18px]">difference</span><span>Reproducibility Diff</span></a></nav></div><div class="p-space-md flex flex-col gap-space-xs bg-surface-container-lowest"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-outline uppercase">ENGINE INTEGRITY</span><span class="font-mono-sm text-mono-sm text-secondary font-semibold">99.98%</span></div><div class="w-full bg-surface-container-highest h-1 rounded overflow-hidden"><div class="bg-secondary h-full w-[99.98%]"></div></div><div class="flex items-center justify-between text-outline mt-space-2xs"><span class="font-mono-sm text-mono-sm">v2.4.18-prod</span><span class="font-mono-sm text-mono-sm">INGEST: READY</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-14 bg-surface-container/90 backdrop-blur-xl z-40 px-gutter-console flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.3)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">terminal</span><span class="font-mono-md text-mono-md text-on-surface font-semibold tracking-wide">ShiftSync // Operations Console</span></div><div class="h-4 w-px bg-surface-container-highest"></div><div class="flex items-center gap-space-xs bg-secondary-container/20 text-secondary px-space-sm py-space-2xs rounded"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-mono-sm text-mono-sm font-semibold uppercase tracking-wider">All APIs Healthy</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-space-2xs rounded"><span class="font-label-caps text-label-caps text-outline uppercase">IST</span><span class="font-mono-sm text-mono-sm text-on-surface font-medium">16:42:08 (+05:30)</span><span class="text-outline-variant font-mono-sm text-mono-sm mx-space-2xs">|</span><span class="font-label-caps text-label-caps text-outline uppercase">UTC</span><span class="font-mono-sm text-mono-sm text-primary font-medium">11:12:08Z</span></div><div class="flex items-center gap-space-xs bg-surface-container-high px-space-sm py-space-2xs rounded"><span class="material-symbols-outlined text-tertiary text-[16px]">shield_person</span><span class="font-mono-sm text-mono-sm text-on-surface">Logged in: <strong class="text-on-surface font-semibold">Thiraviaraj R.</strong> (Lead SRE)</span></div><a class="flex items-center gap-space-2xs text-on-surface-variant hover:text-primary transition-colors text-body-sm font-body-sm" href="#"><span class="material-symbols-outlined text-[16px]">help</span><span>Docs</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Sub-Header Status Line / Audit Readiness Bar -->
+<div class="w-full bg-surface-container-low px-gutter-console py-space-sm flex flex-wrap items-center justify-between gap-space-md shadow-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">hub</span>
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Shift Control Center</span>
+<span class="text-outline font-mono-sm text-mono-sm">/</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Ingestion &amp; Handover Dispatcher</span>
+</div>
+<div class="hidden sm:flex items-center gap-space-2xs bg-surface-container-highest/60 px-space-sm py-space-2xs rounded">
+<span class="material-symbols-outlined text-primary text-[14px]">verified_user</span>
+<span class="font-label-caps text-label-caps text-on-surface uppercase tracking-wider">ISO-27001 SOC2 Type II Audit Ready</span>
+</div>
+</div>
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-mono-sm text-mono-sm text-secondary font-medium">PIPELINE IDLE: READY</span>
+</div>
+<div class="h-3 w-px bg-surface-container-highest"></div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="font-label-caps text-label-caps text-outline uppercase">ENGINE RUNTIME</span>
+<span class="font-mono-sm text-mono-sm text-on-surface">34d 14h 02m</span>
+</div>
+</div>
+</div>
+<!-- Main Grid Workspace -->
+<div class="p-gutter-console flex flex-col gap-gutter-console">
+<!-- Hero Boundary Configurator Card -->
+<div class="relative bg-surface-container-low rounded-lg p-inset-panel shadow-md overflow-hidden">
+<!-- Ambient Visual Ray Overlay -->
+<div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+<div class="absolute right-1/3 -bottom-20 w-80 h-80 rounded-full bg-secondary/5 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-lg">
+<!-- Top Title & Preset Selector Segment -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-wider">TELEMETRY BOUNDARY CONTROLLER</span>
+<span class="bg-surface-container-high text-primary font-mono-sm text-mono-sm px-space-xs py-space-2xs rounded">STRICT [Start, End)</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-space-2xs">Ingestion Window &amp; Active Rotation Scope</h1>
+</div>
+<!-- Quick Presets -->
+<div class="flex items-center flex-wrap gap-space-xs bg-surface-container-lowest p-space-xs rounded-lg">
+<span class="font-label-caps text-label-caps text-outline uppercase px-space-sm hidden md:inline-block">PRESETS</span>
+<button class="preset-btn px-space-sm py-space-xs rounded font-mono-sm text-mono-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+              Morning: 09:00 - 17:00
+            </button>
+<button class="preset-btn px-space-sm py-space-xs rounded font-mono-sm text-mono-sm bg-secondary text-on-secondary font-semibold shadow-[0_0_12px_rgba(78,222,163,0.35)] flex items-center gap-space-xs" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-on-secondary"></span>
+              Evening: 17:00 - 01:00
+            </button>
+<button class="preset-btn px-space-sm py-space-xs rounded font-mono-sm text-mono-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+              Night: 01:00 - 09:00
+            </button>
+</div>
+</div>
+<!-- Precise Coordinate Inputs & Timezone Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-12 gap-space-md items-end">
+<!-- Start Picker -->
+<div class="xl:col-span-4 flex flex-col gap-space-xs">
+<label class="font-label-caps text-label-caps text-outline uppercase flex items-center justify-between">
+<span>Shift Window Origin [t₀]</span>
+<span class="text-primary font-mono-sm text-mono-sm">INCLUSIVE START</span>
+</label>
+<div class="flex items-center bg-surface-container-lowest rounded px-space-sm py-space-xs shadow-inner">
+<span class="material-symbols-outlined text-outline text-[18px] mr-space-sm">calendar_month</span>
+<input class="w-full bg-transparent font-mono-md text-mono-md text-on-surface focus:outline-none tracking-wider" id="boundary-start" type="text" value="2026-09-03 17:00:00"/>
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="Pick timestamp">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+</button>
+</div>
+</div>
+<!-- End Picker -->
+<div class="xl:col-span-4 flex flex-col gap-space-xs">
+<label class="font-label-caps text-label-caps text-outline uppercase flex items-center justify-between">
+<span>Shift Window Horizon [t₁]</span>
+<span class="text-tertiary font-mono-sm text-mono-sm">EXCLUSIVE CUTOFF</span>
+</label>
+<div class="flex items-center bg-surface-container-lowest rounded px-space-sm py-space-xs shadow-inner">
+<span class="material-symbols-outlined text-outline text-[18px] mr-space-sm">timer</span>
+<input class="w-full bg-transparent font-mono-md text-mono-md text-on-surface focus:outline-none tracking-wider" id="boundary-end" type="text" value="2026-09-03 20:00:00"/>
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="Pick timestamp">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+</button>
+</div>
+</div>
+<!-- Timezone Dropdown -->
+<div class="xl:col-span-4 flex flex-col gap-space-xs">
+<label class="font-label-caps text-label-caps text-outline uppercase">Execution Timezone Anchor</label>
+<div class="relative bg-surface-container-lowest rounded flex items-center px-space-sm py-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px] mr-space-sm">public</span>
+<select class="w-full bg-transparent font-mono-sm text-mono-sm text-on-surface focus:outline-none appearance-none cursor-pointer">
+<option class="bg-surface-container-high text-on-surface" value="IST">Asia/Kolkata +05:30 (IST) - SRE Primary</option>
+<option class="bg-surface-container-high text-on-surface" value="UTC">Universal UTC +00:00 (Zulu)</option>
+<option class="bg-surface-container-high text-on-surface" value="PST">America/Los_Angeles -08:00 (PST)</option>
+<option class="bg-surface-container-high text-on-surface" value="CET">Europe/Berlin +01:00 (CET)</option>
+</select>
+<span class="material-symbols-outlined text-outline text-[16px] pointer-events-none">unfold_more</span>
+</div>
+</div>
+</div>
+<!-- Tooltip / Strict Policy Strip -->
+<div class="bg-surface-container-highest/50 rounded p-space-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[18px] flex-shrink-0">info</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">
+<strong class="text-tertiary font-semibold">Boundary Protection Active:</strong> Strict filtering bounded to <span class="text-on-surface font-mono-sm text-mono-sm">[Shift Start, Shift End)</span>. Inactive backlogs, stagnant epics, and out-of-band updates are mathematically purged.
+            </span>
+</div>
+<div class="flex items-center gap-space-xs text-outline font-mono-sm text-mono-sm flex-shrink-0">
+<span>DELTA RANGE:</span>
+<span class="text-on-surface font-semibold">03h 00m 00s</span>
+</div>
+</div>
+<!-- Action Tray -->
+<div class="flex flex-wrap items-center justify-between gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-space-sm bg-surface-container-high hover:bg-surface-variant text-on-surface font-headline-sm text-headline-sm rounded flex items-center gap-space-xs transition-colors shadow-sm" id="reset-boundary-btn">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span>Reset Boundary</span>
+</button>
+<button class="px-space-md py-space-sm bg-surface-container-high hover:bg-surface-variant text-on-surface font-headline-sm text-headline-sm rounded flex items-center gap-space-xs transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Filter Rules</span>
+</button>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant hidden md:inline">Shift Signature: <strong class="text-primary">0x9F42..C1A</strong></span>
+<button class="relative group overflow-hidden px-space-xl py-space-sm bg-secondary hover:bg-secondary-fixed text-on-secondary font-headline-sm text-headline-sm rounded flex items-center gap-space-sm font-semibold shadow-[0_0_20px_rgba(78,222,163,0.4)] hover:shadow-[0_0_28px_rgba(78,222,163,0.6)] transition-all transform active:scale-95" id="fetch-trigger-btn">
+<span class="material-symbols-outlined text-[20px] text-on-secondary">bolt</span>
+<span>Fetch Shift Activity &amp; Generate Note</span>
+<span class="material-symbols-outlined text-[16px] text-on-secondary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Telemetry Real-Time Source Ingestion Grid (3 Columns) -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between px-space-2xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[16px]">sensors</span>
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Live Pipeline Telemetry &amp; Ingestion Sync Status</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Next automatic polling tick: <strong class="text-on-surface">14s</strong></span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-console">
+<!-- Card 1: Jira Ticketing API -->
+<div class="bg-surface-container-low rounded-lg p-space-lg shadow-sm flex flex-col justify-between gap-space-md hover:bg-surface-container-low/90 transition-colors">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]">task_alt</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Jira / Ticketing API</div>
+<div class="font-mono-sm text-mono-sm text-outline">v3.cloud.atlassian.com</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-secondary-container/20 text-secondary px-space-xs py-space-2xs rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-caps text-label-caps uppercase font-semibold">24ms • Live</span>
+</div>
+</div>
+<!-- Quantitative Ingest Volume -->
+<div class="bg-surface-container-lowest p-space-sm rounded mt-space-2xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">In-Window Activity</span>
+<span class="font-mono-lg text-mono-lg text-on-surface font-semibold">12 Tickets Touched</span>
+</div>
+<!-- Mini Ingest Sparkline SVG -->
+<svg class="w-20 h-7 text-primary overflow-visible" fill="none" viewbox="0 0 80 28">
+<path d="M0 24L15 18L30 22L45 10L60 14L80 4" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M0 24L15 18L30 22L45 10L60 14L80 4V28H0Z" fill="currentColor" fill-opacity="0.12"></path>
+<circle cx="80" cy="4" fill="currentColor" r="2.5"></circle>
+</svg>
+</div>
+<!-- Breakdown Matrix -->
+<div class="grid grid-cols-3 gap-space-xs text-center pt-space-xs">
+<div class="bg-surface-container rounded p-space-xs flex flex-col">
+<span class="font-mono-lg text-mono-lg text-secondary font-bold">08</span>
+<span class="font-label-caps text-label-caps text-outline uppercase">Closed</span>
+</div>
+<div class="bg-surface-container rounded p-space-xs flex flex-col">
+<span class="font-mono-lg text-mono-lg text-primary font-bold">03</span>
+<span class="font-label-caps text-label-caps text-outline uppercase">In-Progress</span>
+</div>
+<div class="bg-surface-container rounded p-space-xs flex flex-col">
+<span class="font-mono-lg text-mono-lg text-error font-bold">01</span>
+<span class="font-label-caps text-label-caps text-error uppercase">P0 Blocker</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-outline font-mono-sm text-mono-sm">
+<span class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px] text-secondary">sync</span>
+<span>Sync: 16:41:55 IST</span>
+</span>
+<span class="text-primary hover:underline cursor-pointer">Inspect Payload</span>
+</div>
+</div>
+<!-- Card 2: PagerDuty Incident Logs -->
+<div class="bg-surface-container-low rounded-lg p-space-lg shadow-sm flex flex-col justify-between gap-space-md hover:bg-surface-container-low/90 transition-colors">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[18px]">notifications_active</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">PagerDuty / On-Call</div>
+<div class="font-mono-sm text-mono-sm text-outline">events.pagerduty.com</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-secondary-container/20 text-secondary px-space-xs py-space-2xs rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-label-caps uppercase font-semibold">Webhook Synced</span>
+</div>
+</div>
+<!-- Quantitative Ingest Volume -->
+<div class="bg-surface-container-lowest p-space-sm rounded mt-space-2xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">In-Window Incidents</span>
+<span class="font-mono-lg text-mono-lg text-on-surface font-semibold">2 Critical Events</span>
+</div>
+<!-- Sparkline Incident Bar -->
+<div class="flex items-end gap-1 h-7 pb-1">
+<div class="w-2.5 h-3 bg-surface-container-highest rounded-t"></div>
+<div class="w-2.5 h-4 bg-surface-container-highest rounded-t"></div>
+<div class="w-2.5 h-7 bg-error rounded-t animate-pulse"></div>
+<div class="w-2.5 h-5 bg-secondary rounded-t"></div>
+<div class="w-2.5 h-2 bg-surface-container-highest rounded-t"></div>
+</div>
+</div>
+<!-- Breakdown Matrix -->
+<div class="grid grid-cols-2 gap-space-xs text-center pt-space-xs">
+<div class="bg-surface-container rounded p-space-xs flex flex-col">
+<span class="font-mono-lg text-mono-lg text-secondary font-bold">01</span>
+<span class="font-label-caps text-label-caps text-outline uppercase">Resolved (MTTR 19m)</span>
+</div>
+<div class="bg-surface-container rounded p-space-xs flex flex-col">
+<span class="font-mono-lg text-mono-lg text-tertiary font-bold">01</span>
+<span class="font-label-caps text-label-caps text-tertiary uppercase">Active Triage</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-outline font-mono-sm text-mono-sm">
+<span class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px] text-secondary">wifi_channel</span>
+<span>Subscribed: #p1-war-room</span>
+</span>
+<span class="text-primary hover:underline cursor-pointer">Live Incident Page</span>
+</div>
+</div>
+<!-- Card 3: Slack NOC Channel Logs -->
+<div class="bg-surface-container-low rounded-lg p-space-lg shadow-sm flex flex-col justify-between gap-space-md hover:bg-surface-container-low/90 transition-colors">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-tertiary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-[18px]">forum</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Slack / NOC Stream</div>
+<div class="font-mono-sm text-mono-sm text-outline">slack.com/api/conversations</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-tertiary-container/20 text-tertiary px-space-xs py-space-2xs rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-label-caps text-label-caps uppercase font-semibold">Degraded (429)</span>
+</div>
+</div>
+<!-- Quantitative Ingest Volume -->
+<div class="bg-surface-container-lowest p-space-sm rounded mt-space-2xs flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">Captured Threads</span>
+<span class="font-mono-lg text-mono-lg text-on-surface font-semibold">5 Operational Threads</span>
+</div>
+<!-- Donut ratio graphic -->
+<svg class="w-8 h-8 text-tertiary" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4"></path>
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="60, 100" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+</div>
+<!-- Breakdown Matrix -->
+<div class="grid grid-cols-2 gap-space-xs text-center pt-space-xs">
+<div class="bg-surface-container rounded p-space-xs flex flex-col">
+<span class="font-mono-lg text-mono-lg text-secondary font-bold">02</span>
+<span class="font-label-caps text-label-caps text-outline uppercase">Handoffs Parsed</span>
+</div>
+<div class="bg-surface-container rounded p-space-xs flex flex-col">
+<span class="font-mono-lg text-mono-lg text-on-surface font-bold">03</span>
+<span class="font-label-caps text-label-caps text-outline uppercase">Noise Filtered</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-outline font-mono-sm text-mono-sm">
+<span class="flex items-center gap-space-2xs text-tertiary">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>Backoff delay: 18s</span>
+</span>
+<span class="text-primary hover:underline cursor-pointer">Retry Token</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Ingest Telemetry Mini Feed / Visual Ingestion Flow -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-sm flex flex-col lg:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md w-full lg:w-auto">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-[20px]">dynamic_feed</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Live Ingestion Buffer</span>
+<span class="font-mono-sm text-mono-sm text-secondary bg-secondary-container/20 px-space-xs rounded">99.4% Match Rate</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Last stream commit parsed: <code class="font-mono-sm text-mono-sm text-primary">PD-INC#8492 [Postgres Read Replica I/O Spike]</code> • deduplicated via cosine hash</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm w-full lg:w-auto justify-end">
+<div class="flex flex-col text-right">
+<span class="font-label-caps text-label-caps text-outline uppercase">BUFFER DEPTH</span>
+<span class="font-mono-sm text-mono-sm text-on-surface">19 KB / 4.2 MB</span>
+</div>
+<div class="h-6 w-px bg-surface-container-highest"></div>
+<button class="px-space-sm py-space-xs rounded bg-surface-container-high hover:bg-surface-variant text-on-surface font-mono-sm text-mono-sm flex items-center gap-space-xs transition-colors">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+<span>Raw Event Stream</span>
+</button>
+</div>
+</div>
+<!-- Quick Run History Table (Bottom) -->
+<div class="bg-surface-container-low rounded-lg p-inset-panel shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">history_edu</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Execution &amp; Handover Artifact Log</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cryptographically signed handover revisions and reproducibility records for Shift 04-B.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="relative">
+<input class="bg-surface-container-lowest text-on-surface placeholder:text-outline font-mono-sm text-mono-sm px-space-sm py-space-2xs rounded focus:outline-none w-52" placeholder="Filter run ID, lead, tag..." type="text"/>
+<span class="material-symbols-outlined text-outline text-[16px] absolute right-2 top-1.5 pointer-events-none">search</span>
+</div>
+<button class="p-space-2xs hover:bg-surface-container-high rounded text-on-surface-variant transition-colors" title="Reload History">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest text-outline font-label-caps text-label-caps uppercase">
+<th class="py-space-sm px-space-md rounded-l">Shift Window / ID</th>
+<th class="py-space-sm px-space-md">Generated (UTC / Local)</th>
+<th class="py-space-sm px-space-md">Ingested Events</th>
+<th class="py-space-sm px-space-md">Deduplicated</th>
+<th class="py-space-sm px-space-md">Artifact Exports</th>
+<th class="py-space-sm px-space-md">Verification State</th>
+<th class="py-space-sm px-space-md text-right rounded-r">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div class="flex flex-col">
+<span class="font-mono-md text-mono-md text-on-surface font-semibold">RUN-04B-9021</span>
+<span class="font-mono-sm text-mono-sm text-outline">17:00:00 → 20:00:00 [IST]</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-mono-sm text-mono-sm text-on-surface">11:10:04Z</span>
+<span class="font-mono-sm text-mono-sm text-outline">Today 16:40:04 IST</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="font-mono-sm text-mono-sm text-on-surface bg-surface-container px-space-xs py-space-2xs rounded">
+                  48 raw items
+                </span>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-2xs text-secondary font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[14px]">compress</span>
+<span>-29 redundant (-60.4%)</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-xs">
+<a class="px-space-xs py-space-2xs bg-surface-container-highest hover:bg-surface-variant text-primary rounded font-mono-sm text-mono-sm flex items-center gap-space-2xs transition-colors" href="#">
+<span class="material-symbols-outlined text-[13px]">picture_as_pdf</span>
+<span>PDF</span>
+</a>
+<a class="px-space-xs py-space-2xs bg-surface-container-highest hover:bg-surface-variant text-on-surface-variant rounded font-mono-sm text-mono-sm flex items-center gap-space-2xs transition-colors" href="#">
+<span class="material-symbols-outlined text-[13px]">description</span>
+<span>DOCX</span>
+</a>
+<a class="px-space-xs py-space-2xs bg-surface-container-highest hover:bg-surface-variant text-on-surface-variant rounded font-mono-sm text-mono-sm flex items-center gap-space-2xs transition-colors" href="#" title="Raw JSON Metadata">
+<span class="material-symbols-outlined text-[13px]">code</span>
+</a>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="inline-flex items-center gap-space-2xs bg-secondary-container/20 text-secondary px-space-sm py-space-2xs rounded font-label-caps text-label-caps uppercase font-semibold">
+<span class="material-symbols-outlined text-[13px]">done_all</span>
+<span>Diff Checked</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-right">
+<div class="flex items-center justify-end gap-space-xs">
+<button class="px-space-sm py-space-2xs bg-surface-container-high hover:bg-primary hover:text-on-primary text-on-surface rounded font-mono-sm text-mono-sm transition-colors flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+<span>Review</span>
+</button>
+<button class="p-space-2xs bg-surface-container-high hover:bg-surface-variant text-on-surface-variant rounded transition-colors" title="Re-Run Pipeline">
+<span class="material-symbols-outlined text-[14px]">replay</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div class="flex flex-col">
+<span class="font-mono-md text-mono-md text-on-surface font-semibold">RUN-04A-8843</span>
+<span class="font-mono-sm text-mono-sm text-outline">09:00:00 → 17:00:00 [IST]</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-mono-sm text-mono-sm text-on-surface">08:04:12Z</span>
+<span class="font-mono-sm text-mono-sm text-outline">Today 13:34:12 IST</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="font-mono-sm text-mono-sm text-on-surface bg-surface-container px-space-xs py-space-2xs rounded">
+                  142 raw items
+                </span>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-2xs text-secondary font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[14px]">compress</span>
+<span>-88 redundant (-62.0%)</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-xs">
+<a class="px-space-xs py-space-2xs bg-surface-container-highest hover:bg-surface-variant text-primary rounded font-mono-sm text-mono-sm flex items-center gap-space-2xs transition-colors" href="#">
+<span class="material-symbols-outlined text-[13px]">picture_as_pdf</span>
+<span>PDF</span>
+</a>
+<a class="px-space-xs py-space-2xs bg-surface-container-highest hover:bg-surface-variant text-on-surface-variant rounded font-mono-sm text-mono-sm flex items-center gap-space-2xs transition-colors" href="#">
+<span class="material-symbols-outlined text-[13px]">description</span>
+<span>DOCX</span>
+</a>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="inline-flex items-center gap-space-2xs bg-secondary-container/20 text-secondary px-space-sm py-space-2xs rounded font-label-caps text-label-caps uppercase font-semibold">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+<span>Signed by Lead</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-right">
+<div class="flex items-center justify-end gap-space-xs">
+<button class="px-space-sm py-space-2xs bg-surface-container-high hover:bg-primary hover:text-on-primary text-on-surface rounded font-mono-sm text-mono-sm transition-colors flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+<span>Review</span>
+</button>
+<button class="p-space-2xs bg-surface-container-high hover:bg-surface-variant text-on-surface-variant rounded transition-colors" title="Re-Run Pipeline">
+<span class="material-symbols-outlined text-[14px]">replay</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div class="flex flex-col">
+<span class="font-mono-md text-mono-md text-on-surface font-semibold">RUN-03N-7712</span>
+<span class="font-mono-sm text-mono-sm text-outline">01:00:00 → 09:00:00 [IST]</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-mono-sm text-mono-sm text-on-surface">00:15:29Z</span>
+<span class="font-mono-sm text-mono-sm text-outline">Yesterday 05:45:29 IST</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="font-mono-sm text-mono-sm text-on-surface bg-surface-container px-space-xs py-space-2xs rounded">
+                  23 raw items
+                </span>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-2xs text-secondary font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[14px]">compress</span>
+<span>-11 redundant (-47.8%)</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="flex items-center gap-space-xs">
+<a class="px-space-xs py-space-2xs bg-surface-container-highest hover:bg-surface-variant text-primary rounded font-mono-sm text-mono-sm flex items-center gap-space-2xs transition-colors" href="#">
+<span class="material-symbols-outlined text-[13px]">picture_as_pdf</span>
+<span>PDF</span>
+</a>
+<a class="px-space-xs py-space-2xs bg-surface-container-highest hover:bg-surface-variant text-on-surface-variant rounded font-mono-sm text-mono-sm flex items-center gap-space-2xs transition-colors" href="#">
+<span class="material-symbols-outlined text-[13px]">description</span>
+<span>DOCX</span>
+</a>
+</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="inline-flex items-center gap-space-2xs bg-secondary-container/20 text-secondary px-space-sm py-space-2xs rounded font-label-caps text-label-caps uppercase font-semibold">
+<span class="material-symbols-outlined text-[13px]">done_all</span>
+<span>Archived</span>
+</div>
+</td>
+<td class="py-space-sm px-space-md text-right">
+<div class="flex items-center justify-end gap-space-xs">
+<button class="px-space-sm py-space-2xs bg-surface-container-high hover:bg-primary hover:text-on-primary text-on-surface rounded font-mono-sm text-mono-sm transition-colors flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+<span>Review</span>
+</button>
+<button class="p-space-2xs bg-surface-container-high hover:bg-surface-variant text-on-surface-variant rounded transition-colors" title="Re-Run Pipeline">
+<span class="material-symbols-outlined text-[14px]">replay</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Quick Pagination / Audit Summary Footer -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-xs text-outline font-mono-sm text-mono-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Integrity Hash: <code class="text-on-surface font-mono-sm text-mono-sm">SHA-256: 4b2f18...d091</code> (Tamper-evident log chain)</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Showing 3 of 412 runs</span>
+<div class="flex items-center gap-space-2xs">
+<button class="px-space-sm py-space-2xs bg-surface-container hover:bg-surface-container-high text-on-surface-variant rounded font-mono-sm text-mono-sm disabled:opacity-40" disabled="">Prev</button>
+<button class="px-space-sm py-space-2xs bg-surface-container hover:bg-surface-container-high text-on-surface rounded font-mono-sm text-mono-sm">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Presets dynamic selector micro-interaction
+  document.querySelectorAll('.preset-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.className = 'preset-btn px-space-sm py-space-xs rounded font-mono-sm text-mono-sm text-on-surface-variant hover:bg-surface-container-high transition-colors';
+        const dot = btn.querySelector('.rounded-full');
+        if (dot) dot.remove();
+      });
+      button.className = 'preset-btn px-space-sm py-space-xs rounded font-mono-sm text-mono-sm bg-secondary text-on-secondary font-semibold shadow-[0_0_12px_rgba(78,222,163,0.35)] flex items-center gap-space-xs';
+      const indicator = document.createElement('span');
+      indicator.className = 'w-1.5 h-1.5 rounded-full bg-on-secondary';
+      button.prepend(indicator);
+
+      const text = button.innerText;
+      const startInput = document.getElementById('boundary-start');
+      const endInput = document.getElementById('boundary-end');
+      if (text.includes('Morning')) {
+        startInput.value = '2026-09-03 09:00:00';
+        endInput.value = '2026-09-03 17:00:00';
+      } else if (text.includes('Evening')) {
+        startInput.value = '2026-09-03 17:00:00';
+        endInput.value = '2026-09-03 20:00:00';
+      } else if (text.includes('Night')) {
+        startInput.value = '2026-09-03 01:00:00';
+        endInput.value = '2026-09-03 09:00:00';
+      }
+    });
+  });
+
+  // Reset Boundary button handling
+  const resetBtn = document.getElementById('reset-boundary-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      document.getElementById('boundary-start').value = '2026-09-03 17:00:00';
+      document.getElementById('boundary-end').value = '2026-09-03 20:00:00';
+    });
+  }
+
+  // Fetch trigger feedback
+  const fetchBtn = document.getElementById('fetch-trigger-btn');
+  if (fetchBtn) {
+    fetchBtn.addEventListener('click', () => {
+      const originalText = fetchBtn.innerHTML;
+      fetchBtn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span><span>Ingesting & Deduplicating...</span>';
+      fetchBtn.classList.add('opacity-90', 'pointer-events-none');
+      setTimeout(() => {
+        fetchBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check_circle</span><span>Handoff Draft Compiled</span>';
+        setTimeout(() => {
+          fetchBtn.innerHTML = originalText;
+          fetchBtn.classList.remove('opacity-90', 'pointer-events-none');
+        }, 2200);
+      }, 1600);
+    });
+  }
+</script></main></div></body></html>

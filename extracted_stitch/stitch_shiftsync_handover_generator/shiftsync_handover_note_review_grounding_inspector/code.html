@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>ShiftSync // Operations Console</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-on-surface": "#2a3043",
+                "secondary-container": "#00a572",
+                "error-container": "#93000a",
+                "surface-variant": "#2e3447",
+                "on-error": "#690005",
+                "on-primary-fixed": "#001f26",
+                "surface-container": "#191f31",
+                "on-primary-fixed-variant": "#004e5c",
+                "tertiary-fixed-dim": "#ffb95f",
+                "inverse-primary": "#00687a",
+                "primary-container": "#06b6d4",
+                "on-secondary": "#003824",
+                "secondary": "#4edea3",
+                "on-tertiary-fixed": "#2a1700",
+                "tertiary-fixed": "#ffddb8",
+                "on-tertiary": "#472a00",
+                "surface-container-highest": "#2e3447",
+                "outline": "#869397",
+                "surface-tint": "#4cd7f6",
+                "surface": "#0c1324",
+                "surface-bright": "#33394c",
+                "outline-variant": "#3d494c",
+                "on-tertiary-container": "#563400",
+                "surface-container-high": "#23293c",
+                "secondary-fixed": "#6ffbbe",
+                "on-secondary-fixed-variant": "#005236",
+                "on-primary": "#003640",
+                "surface-container-lowest": "#070d1f",
+                "primary-fixed": "#acedff",
+                "background": "#0c1324",
+                "on-surface-variant": "#bcc9cd",
+                "on-tertiary-fixed-variant": "#653e00",
+                "on-surface": "#dce1fb",
+                "tertiary-container": "#e79400",
+                "surface-dim": "#0c1324",
+                "primary-fixed-dim": "#4cd7f6",
+                "on-secondary-fixed": "#002113",
+                "error": "#ffb4ab",
+                "primary": "#4cd7f6",
+                "on-background": "#dce1fb",
+                "on-secondary-container": "#00311f",
+                "tertiary": "#ffb95f",
+                "inverse-surface": "#dce1fb",
+                "on-error-container": "#ffdad6",
+                "surface-container-low": "#151b2d",
+                "on-primary-container": "#00424f",
+                "secondary-fixed-dim": "#4edea3"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "gutter-console": "12px",
+                "space-md": "12px",
+                "space-lg": "16px",
+                "space-2xs": "2px",
+                "space-xs": "4px",
+                "space-sm": "8px",
+                "space-2xl": "24px",
+                "inset-panel": "16px",
+                "space-xl": "20px"
+        },
+        "fontFamily": {
+                "mono-md": [
+                        "JetBrains Mono"
+                ],
+                "label-caps": [
+                        "JetBrains Mono"
+                ],
+                "mono-sm": [
+                        "JetBrains Mono"
+                ],
+                "body-sm": [
+                        "Inter"
+                ],
+                "mono-lg": [
+                        "JetBrains Mono"
+                ],
+                "headline-sm": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "headline-xl": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "mono-md": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "label-caps": [
+                        "10px",
+                        {
+                                "lineHeight": "12px",
+                                "letterSpacing": "0.08em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "mono-sm": [
+                        "11px",
+                        {
+                                "lineHeight": "14px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "mono-lg": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "26px",
+                                "letterSpacing": "-0.015em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-xl": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }</script></head><body class="bg-background font-body-md text-body-md text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="flex flex-col"><div class="h-14 px-inset-panel flex items-center gap-space-sm bg-surface-container-lowest"><div class="w-8 h-8 rounded bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">sync_saved_locally</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">ShiftSync</span><span class="font-label-caps text-label-caps text-primary tracking-wider uppercase mt-space-2xs">Operations Console</span></div></div><div class="px-space-md py-space-sm"><div class="bg-surface-container px-space-sm py-space-xs rounded flex items-center justify-between"><span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">ROTATION ACTIVE</span><span class="font-mono-sm text-mono-sm text-secondary flex items-center gap-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>SHIFT 04-B</span></div></div><nav class="flex flex-col gap-space-2xs px-space-sm mt-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="control-center" href="#"><span class="material-symbols-outlined text-[18px]">space_dashboard</span><span>Control Center</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity-pipeline" href="#"><span class="material-symbols-outlined text-[18px]">filter_alt</span><span>Activity Pipeline</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded transition-colors bg-primary-container text-on-primary-container font-semibold" data-path="note-review" href="#"><span class="material-symbols-outlined text-[18px]">rate_review</span><span>Note Review</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="document-publisher" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span>Document Publisher</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="fault-tolerance-and-errors" href="#"><span class="material-symbols-outlined text-[18px]">warning</span><span>Fault-Tolerance &amp; Errors</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reproducibility-diff" href="#"><span class="material-symbols-outlined text-[18px]">difference</span><span>Reproducibility Diff</span></a></nav></div><div class="p-space-md flex flex-col gap-space-xs bg-surface-container-lowest"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-outline uppercase">ENGINE INTEGRITY</span><span class="font-mono-sm text-mono-sm text-secondary font-semibold">99.98%</span></div><div class="w-full bg-surface-container-highest h-1 rounded overflow-hidden"><div class="bg-secondary h-full w-[99.98%]"></div></div><div class="flex items-center justify-between text-outline mt-space-2xs"><span class="font-mono-sm text-mono-sm">v2.4.18-prod</span><span class="font-mono-sm text-mono-sm">INGEST: READY</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-14 bg-surface-container/90 backdrop-blur-xl z-40 px-gutter-console flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.3)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">terminal</span><span class="font-mono-md text-mono-md text-on-surface font-semibold tracking-wide">ShiftSync // Operations Console</span></div><div class="h-4 w-px bg-surface-container-highest"></div><div class="flex items-center gap-space-xs bg-secondary-container/20 text-secondary px-space-sm py-space-2xs rounded"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-mono-sm text-mono-sm font-semibold uppercase tracking-wider">All APIs Healthy</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-space-2xs rounded"><span class="font-label-caps text-label-caps text-outline uppercase">IST</span><span class="font-mono-sm text-mono-sm text-on-surface font-medium">16:42:08 (+05:30)</span><span class="text-outline-variant font-mono-sm text-mono-sm mx-space-2xs">|</span><span class="font-label-caps text-label-caps text-outline uppercase">UTC</span><span class="font-mono-sm text-mono-sm text-primary font-medium">11:12:08Z</span></div><div class="flex items-center gap-space-xs bg-surface-container-high px-space-sm py-space-2xs rounded"><span class="material-symbols-outlined text-tertiary text-[16px]">shield_person</span><span class="font-mono-sm text-mono-sm text-on-surface">Logged in: <strong class="text-on-surface font-semibold">Thiraviaraj R.</strong> (Lead SRE)</span></div><a class="flex items-center gap-space-2xs text-on-surface-variant hover:text-primary transition-colors text-body-sm font-body-sm" href="#"><span class="material-symbols-outlined text-[16px]">help</span><span>Docs</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Sticky Operations Control Sub-header -->
+<div class="sticky top-14 z-30 w-full bg-surface-container/95 backdrop-blur-md px-gutter-console py-space-sm shadow-[0_2px_12px_rgba(0,0,0,0.35)] flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-space-2xs rounded">
+<span class="material-symbols-outlined text-primary text-[18px]">history_edu</span>
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">DOC-ID</span>
+<span class="font-mono-sm text-mono-sm text-on-surface font-semibold">SH-20260903-EVN</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface truncate">Shift Handover Note - Evening Shift (17:00 - 20:00 IST)</h1>
+<span class="inline-flex items-center gap-space-2xs px-space-xs py-space-2xs rounded bg-secondary/10 text-secondary font-mono-sm text-mono-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            LIVE REVIEW
+          </span>
+</div>
+<div class="flex items-center gap-space-xs mt-space-2xs">
+<span class="font-label-caps text-label-caps text-outline uppercase">PROVENANCE:</span>
+<span class="inline-flex items-center gap-1 text-secondary font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+            100% Grounded (6/6 items attributed to verified source IDs)
+          </span>
+<span class="text-outline-variant font-mono-sm text-mono-sm mx-space-2xs">•</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Deterministic Hash: <code class="font-mono-sm text-primary">#9a81f0b4</code></span>
+</div>
+</div>
+</div>
+<!-- Action Bar Controls -->
+<div class="flex items-center gap-space-xs">
+<button class="flex items-center gap-space-xs px-space-sm py-1.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface transition-colors font-headline-sm text-headline-sm" id="btn-edit-mode" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">edit_note</span>
+<span>Edit Sections</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1.5 rounded bg-surface-container-high hover:bg-surface-container-highest text-on-surface transition-colors font-headline-sm text-headline-sm" id="btn-reverify" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">fact_check</span>
+<span>Re-verify Grounding</span>
+</button>
+<div class="h-4 w-px bg-surface-variant mx-space-2xs"></div>
+<div class="relative inline-block text-left">
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded bg-primary text-on-primary font-headline-sm text-headline-sm font-semibold hover:bg-primary-fixed-dim transition-colors shadow-sm" id="btn-export-dropdown" type="button">
+<span class="material-symbols-outlined text-[18px]">sim_card_download</span>
+<span>Compile PDF / DOCX</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Primary Split Work Area: Left/Center Handover Document & Right Telemetry Inspector -->
+<div class="p-gutter-console grid grid-cols-1 xl:grid-cols-12 gap-gutter-console items-start">
+<!-- Left / Center Structured Document Canvas (8 of 12 cols on desktop) -->
+<main class="xl:col-span-8 flex flex-col gap-space-md">
+<!-- Operational Handover Metadata Banner -->
+<section class="bg-surface-container-low p-space-md rounded flex flex-wrap items-center justify-between gap-space-md shadow-sm">
+<div class="flex items-center gap-space-lg">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">OUTGOING LEAD</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-primary text-[15px]">badge</span>
+              Thiraviaraj R. (SRE-Lead)
+            </span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">INCOMING ROTATION</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-tertiary text-[15px]">contactless</span>
+              Shift 05-Night (APAC Handover)
+            </span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">AUDIT COMPLIANCE</span>
+<span class="font-mono-sm text-mono-sm text-secondary flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[15px]">shield</span>
+              ISO-27001 / SOC-2 Ready
+            </span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-space-xs rounded">
+<span class="font-label-caps text-label-caps text-outline uppercase">INSPECTOR FOCUS:</span>
+<span class="font-mono-sm text-mono-sm text-error font-semibold uppercase bg-error-container/20 px-1 rounded">OPS-4821 [P1]</span>
+</div>
+</section>
+<!-- SECTION 1: Completed Work -->
+<section class="bg-surface-container-low p-space-md rounded shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-2.5 h-2.5 rounded-sm bg-secondary"></div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wide">1. Completed Work</h2>
+<span class="bg-secondary-container/20 text-secondary font-mono-sm text-mono-sm px-space-xs py-space-2xs rounded font-semibold">2 ITEMS RESOLVED</span>
+</div>
+<span class="font-label-caps text-label-caps text-outline uppercase">GROUNDED VIA AUDIT FEED</span>
+</div>
+<!-- Completed Work Item 1 -->
+<article class="bg-surface-container p-space-md rounded transition-colors hover:bg-surface-container-high group cursor-pointer" onclick="selectInspectorItem('OPS-4819')">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-mono-sm text-mono-sm bg-surface-container-lowest text-primary px-space-xs py-space-2xs rounded font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">confirmation_number</span>
+                ticketing: OPS-4819
+              </span>
+<span class="font-label-caps text-label-caps bg-secondary-container/20 text-secondary px-space-xs py-0.5 rounded uppercase">CLOSED / DEPLOYED</span>
+</div>
+<div class="flex items-center gap-space-xs text-outline font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Resolved: 18:20 IST</span>
+</div>
+</div>
+<div class="mt-space-sm flex flex-col gap-space-2xs">
+<p class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+              Memory leak patched on Payment Gateway pod
+            </p>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Hotfix deployed via canary pipeline <code class="font-mono-sm text-primary">v2.18.4-pg-fix</code>. Reclaimed 1.4GiB resident memory buffer across all 4 cluster nodes.
+            </p>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-lowest/50 p-space-xs rounded flex flex-wrap items-center justify-between gap-space-sm text-on-surface-variant">
+<div class="flex items-center gap-space-md">
+<span class="font-mono-sm text-mono-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[14px]">account_circle</span>
+                Owner: <strong class="text-on-surface">Alex K.</strong>
+</span>
+<span class="font-mono-sm text-mono-sm flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Verification: Zero restart errors over 90m
+              </span>
+</div>
+<span class="font-mono-sm text-mono-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">link</span>
+              CID: d8e09f8...
+            </span>
+</div>
+</article>
+<!-- Completed Work Item 2 -->
+<article class="bg-surface-container p-space-md rounded transition-colors hover:bg-surface-container-high group cursor-pointer" onclick="selectInspectorItem('INC-102')">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-mono-sm text-mono-sm bg-surface-container-lowest text-primary px-space-xs py-space-2xs rounded font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">crisis_alert</span>
+                pagerduty: INC-102
+              </span>
+<span class="font-label-caps text-label-caps bg-secondary-container/20 text-secondary px-space-xs py-0.5 rounded uppercase">ACK &amp; RESOLVED</span>
+</div>
+<div class="flex items-center gap-space-xs text-outline font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Resolved: 17:45 IST</span>
+</div>
+</div>
+<div class="mt-space-sm flex flex-col gap-space-2xs">
+<p class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+              CDN edge certificate rotation completed
+            </p>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Re-issued wildcard wildcard SSL SAN keys for <code class="font-mono-sm text-primary">*.api.production.internal</code>. Global Cloudflare distribution cache flushed without dropped TLS handshakes.
+            </p>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-lowest/50 p-space-xs rounded flex flex-wrap items-center justify-between gap-space-sm text-on-surface-variant">
+<div class="flex items-center gap-space-md">
+<span class="font-mono-sm text-mono-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[14px]">account_circle</span>
+                Owner: <strong class="text-on-surface">Sarah M.</strong>
+</span>
+<span class="font-mono-sm text-mono-sm flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                Verification: SSL cert valid until 2027 (Cloudflare Edge Verified)
+              </span>
+</div>
+<span class="font-mono-sm text-mono-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">link</span>
+              CID: e41b712...
+            </span>
+</div>
+</article>
+</section>
+<!-- SECTION 2: In Progress -->
+<section class="bg-surface-container-low p-space-md rounded shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-2.5 h-2.5 rounded-sm bg-primary"></div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wide">2. In Progress</h2>
+<span class="bg-primary-container/20 text-primary font-mono-sm text-mono-sm px-space-xs py-space-2xs rounded font-semibold">1 ACTIVE MONITOR</span>
+</div>
+<span class="font-label-caps text-label-caps text-outline uppercase">ACTIVE TELEMETRY STREAM</span>
+</div>
+<!-- In Progress Item -->
+<article class="bg-surface-container p-space-md rounded transition-colors hover:bg-surface-container-high group cursor-pointer" onclick="selectInspectorItem('OPS-4820')">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-mono-sm text-mono-sm bg-surface-container-lowest text-primary px-space-xs py-space-2xs rounded font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">sync_saved_locally</span>
+                ticketing: OPS-4820
+              </span>
+<span class="font-label-caps text-label-caps bg-primary-container/20 text-primary px-space-xs py-0.5 rounded uppercase">DIAGNOSTICS RUNNING</span>
+</div>
+<div class="flex items-center gap-space-xs text-outline font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>Last Touch: 19:10 IST</span>
+</div>
+</div>
+<div class="mt-space-sm flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between">
+<p class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors">
+                Database replica lag investigation ongoing (currently 42ms)
+              </p>
+<span class="font-mono-sm text-mono-sm text-tertiary font-semibold bg-tertiary-container/10 px-space-xs py-space-2xs rounded">
+                SLO Threshold: 50ms
+              </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Observed spike during bulk index run on user profiles. Write queues on Postgres follower <code class="font-mono-sm text-primary">db-read-03</code> elevated but oscillating downward.
+            </p>
+</div>
+<!-- Action Plan for Incoming Shift -->
+<div class="mt-space-sm bg-surface-container-lowest p-space-sm rounded flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-primary uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">double_arrow</span>
+                Action Mandate For Next Shift:
+              </span>
+<span class="font-mono-sm text-mono-sm text-outline">Priority: High Routine</span>
+</div>
+<p class="font-mono-md text-mono-md text-on-surface">
+              Check buffer pool hit ratio &amp; flush write IOPS if replica replication lag crosses <strong>&gt;50ms</strong>. If persisted past 21:00 IST, execute failover query routing to <code class="text-primary">db-read-04</code>.
+            </p>
+</div>
+</article>
+</section>
+<!-- SECTION 3: Blockers & Escalations (High Severity Accent) -->
+<section class="bg-surface-container-low p-space-md rounded shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-2.5 h-2.5 rounded-sm bg-error animate-pulse"></div>
+<h2 class="font-headline-sm text-headline-sm text-error uppercase tracking-wide flex items-center gap-1.5">
+<span>3. Blockers &amp; Escalations</span>
+<span class="material-symbols-outlined text-[18px]">emergency</span>
+</h2>
+<span class="bg-error-container text-on-error font-mono-sm text-mono-sm px-space-xs py-space-2xs rounded font-bold uppercase">
+              1 UNRESOLVED BLOCKER
+            </span>
+</div>
+<span class="font-label-caps text-label-caps text-error uppercase font-semibold">REQUIRES IMMEDIATE HANDOFF TAKE-OVER</span>
+</div>
+<!-- The Critical Handover Blocker Card (Selected / Active in Inspector) -->
+<article class="bg-surface-container p-space-md rounded relative transition-all shadow-[0_0_12px_rgba(255,180,171,0.1)] cursor-pointer" onclick="selectInspectorItem('OPS-4821')">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-mono-sm text-mono-sm bg-error-container text-on-error px-space-xs py-space-2xs rounded font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">report_problem</span>
+                ticketing: OPS-4821
+              </span>
+<span class="font-label-caps text-label-caps bg-error/20 text-error px-space-xs py-0.5 rounded font-bold uppercase tracking-wider">
+                SEVERITY: P1 BLOCKER
+              </span>
+<span class="font-mono-sm text-mono-sm text-tertiary bg-tertiary-container/10 px-space-xs py-space-2xs rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">alarm</span>
+                Escalated: 19:42 IST (18 mins ago)
+              </span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-mono-sm text-mono-sm bg-primary/20 text-primary px-space-xs py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">visibility</span>
+                ACTIVE IN INSPECTOR
+              </span>
+</div>
+</div>
+<div class="mt-space-sm">
+<h3 class="font-headline-lg text-headline-lg text-error font-bold tracking-tight">
+              Login failures on mobile app; root cause not found; escalated to backend on-call
+            </h3>
+<p class="font-body-md text-body-md text-on-surface mt-1">
+              Auth token exchange service returning HTTP 500 intermittently for iOS clients using build <code class="font-mono-sm text-primary">v4.12.0</code>. Android and Web login authentication remains unaffected.
+            </p>
+</div>
+<!-- Detailed Status Diagnostic Matrix -->
+<div class="mt-space-md grid grid-cols-1 md:grid-cols-3 gap-space-xs">
+<div class="bg-surface-container-lowest p-space-sm rounded flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">ASSIGNED ON-CALL</span>
+<span class="font-mono-sm text-mono-sm text-error font-semibold flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[15px]">person_alert</span>
+                Needs Next-Shift Lead Pick-up
+              </span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">CURRENT IMPACT</span>
+<span class="font-mono-sm text-mono-sm text-tertiary font-semibold flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[15px]">trending_up</span>
+                ~4.8% iOS Auth Failure Rate
+              </span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">WAR ROOM LINK</span>
+<a class="font-mono-sm text-mono-sm text-primary hover:underline flex items-center gap-1 mt-1" href="#">
+<span class="material-symbols-outlined text-[15px]">open_in_new</span>
+                #war-room-auth-ios
+              </a>
+</div>
+</div>
+</article>
+</section>
+<!-- SECTION 4: Watch-list -->
+<section class="bg-surface-container-low p-space-md rounded shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-2.5 h-2.5 rounded-sm bg-tertiary"></div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wide">4. Watch-list</h2>
+<span class="bg-surface-container-highest text-on-surface-variant font-mono-sm text-mono-sm px-space-xs py-space-2xs rounded">0 ACTIVE ALERTS</span>
+</div>
+<span class="font-label-caps text-label-caps text-outline uppercase">SURVEILLANCE WINDOW</span>
+</div>
+<!-- Strict Empty State Container -->
+<div class="bg-surface-container p-space-xl rounded flex flex-col items-center justify-center text-center py- space-xl">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-outline mb-space-sm">
+<span class="material-symbols-outlined text-[24px]">checklist_rtl</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface font-semibold">Nothing to report</p>
+<p class="font-body-sm text-body-sm text-outline mt-space-2xs max-w-md">
+            No monitored thresholds breached or watch-items assigned during this shift window
+          </p>
+<span class="mt-space-sm font-label-caps text-label-caps text-outline-variant uppercase tracking-wider">
+            KAFKA CONSUMER LAG: NOMINAL • EDGE CACHE HIT RATIO: 98.4% • REDIS CLUSTER LOAD: 14%
+          </span>
+</div>
+</section>
+</main>
+<!-- Right-Hand Drawer / Inspector (Grounding Inspector - 4 of 12 cols on desktop) -->
+<aside class="xl:col-span-4 flex flex-col gap-space-md sticky top-32">
+<!-- Grounding Inspector Header Card -->
+<div class="bg-surface-container-low p-space-md rounded shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">manage_search</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wide">Grounding Inspector</h3>
+</div>
+<span class="inline-flex items-center gap-1 font-mono-sm text-mono-sm text-secondary bg-secondary-container/20 px-space-xs py-space-2xs rounded font-bold">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+            VERIFIED GROUNDED
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">
+          Every note sentence is cryptographically matched against raw system audit logs &amp; external ticketing payloads.
+        </p>
+<!-- Dynamic Inspected Item Identity Card -->
+<div class="bg-surface-container p-space-sm rounded flex flex-col gap-space-xs mt-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase">ACTIVE RECORD FOCUS</span>
+<span class="font-mono-sm text-mono-sm text-error font-bold" id="inspector-record-key">OPS-4821</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs">
+<div class="bg-surface-container-lowest p-space-xs rounded">
+<span class="font-label-caps text-label-caps text-outline uppercase block">SOURCE SYSTEM</span>
+<span class="font-mono-sm text-mono-sm text-on-surface font-semibold" id="inspector-source-system">Jira Production</span>
+</div>
+<div class="bg-surface-container-lowest p-space-xs rounded">
+<span class="font-label-caps text-label-caps text-outline uppercase block">GROUNDING SCORE</span>
+<span class="font-mono-sm text-mono-sm text-secondary font-bold flex items-center gap-1" id="inspector-score">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                1.0 (Direct match)
+              </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-xs rounded mt-space-2xs">
+<span class="font-label-caps text-label-caps text-outline uppercase block">ORIGINAL TIMESTAMP</span>
+<span class="font-mono-sm text-mono-sm text-primary" id="inspector-timestamp">2026-09-03T19:42:00+05:30</span>
+</div>
+<div class="bg-surface-container-lowest p-space-xs rounded mt-space-2xs">
+<span class="font-label-caps text-label-caps text-outline uppercase block">SOURCE HASH (SHA-256)</span>
+<span class="font-mono-sm text-mono-sm text-outline truncate block" id="inspector-sha">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</span>
+</div>
+</div>
+<!-- Visual Trace Verification Pipeline -->
+<div class="bg-surface-container-lowest p-space-sm rounded flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase">ATTRIBUTION FLOW</span>
+<span class="font-mono-sm text-mono-sm text-secondary">3/3 STAGES PASS</span>
+</div>
+<div class="flex items-center gap-space-2xs pt-1">
+<div class="h-1 flex-1 rounded-full bg-secondary"></div>
+<div class="h-1 flex-1 rounded-full bg-secondary"></div>
+<div class="h-1 flex-1 rounded-full bg-secondary"></div>
+</div>
+<div class="flex items-center justify-between text-outline font-label-caps text-label-caps mt-1">
+<span>WEBHOOK INGEST</span>
+<span>LLM EXTRACTION</span>
+<span>AUDIT PROVENANCE</span>
+</div>
+</div>
+<!-- Raw JSON Code Payload Snippet -->
+<div class="flex flex-col gap-space-2xs mt-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-outline uppercase">RAW SOURCE PAYLOAD [JSON]</span>
+<button class="font-mono-sm text-mono-sm text-primary hover:underline flex items-center gap-1" onclick="copyRawJson()" type="button">
+<span class="material-symbols-outlined text-[13px]">content_copy</span>
+<span>Copy JSON</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded overflow-x-auto max-h-96">
+<pre class="font-mono-sm text-mono-sm text-on-surface leading-relaxed" id="inspector-code-block"><code><span class="text-outline">{</span>
+  <span class="text-primary">"id"</span>: <span class="text-tertiary">"109284"</span>,
+  <span class="text-primary">"key"</span>: <span class="text-secondary">"OPS-4821"</span>,
+  <span class="text-primary">"summary"</span>: <span class="text-tertiary">"Login failures on mobile app; root cause not found"</span>,
+  <span class="text-primary">"priority"</span>: <span class="text-error">"P1-Blocker"</span>,
+  <span class="text-primary">"status"</span>: <span class="text-tertiary">"Escalated"</span>,
+  <span class="text-primary">"assignee"</span>: <span class="text-tertiary">"needs-backend-oncall"</span>,
+  <span class="text-primary">"reporter"</span>: <span class="text-tertiary">"thiraviaraj.r@company.net"</span>,
+  <span class="text-primary">"created"</span>: <span class="text-tertiary">"2026-09-03T19:35:12+05:30"</span>,
+  <span class="text-primary">"updated"</span>: <span class="text-tertiary">"2026-09-03T19:42:00+05:30"</span>,
+  <span class="text-primary">"comments"</span>: [
+    <span class="text-outline">{</span>
+      <span class="text-primary">"author"</span>: <span class="text-tertiary">"Alex K."</span>,
+      <span class="text-primary">"body"</span>: <span class="text-tertiary">"Trace ID 7f4a21 shows Auth0 timeout on OAuth v2 handshake."</span>
+    <span class="text-outline">}</span>
+  ]
+<span class="text-outline">}</span></code></pre>
+</div>
+</div>
+<div class="flex items-center justify-between text-outline font-mono-sm text-mono-sm pt-space-xs">
+<span>Schema: <code class="text-on-surface">jira.v3.issue</code></span>
+<span>Latency: <code class="text-secondary">18ms</code></span>
+</div>
+</div>
+</aside>
+</div>
+<!-- Persistent Operations Sticky Bottom Footer with Markdown Shortcut & Quick-Action Bar -->
+<div class="sticky bottom-0 z-40 w-full bg-surface-container-lowest px-gutter-console py-space-sm shadow-[0_-2px_12px_rgba(0,0,0,0.4)] flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs font-mono-sm text-mono-sm text-outline">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span>All 4 Mandatory Sections Grounded</span>
+<span class="text-outline-variant mx-1">|</span>
+<span>Word Count: <strong class="text-on-surface">342 words</strong></span>
+</div>
+<div class="hidden md:flex items-center gap-space-xs">
+<kbd class="px-space-xs py-0.5 rounded bg-surface-container text-outline font-mono-sm text-mono-sm">⌘K</kbd>
+<span class="font-body-sm text-body-sm text-outline">Quick Jump</span>
+<kbd class="ml-2 px-space-xs py-0.5 rounded bg-surface-container text-outline font-mono-sm text-mono-sm">⌘P</kbd>
+<span class="font-body-sm text-body-sm text-outline">PDF Export</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-headline-sm text-headline-sm transition-colors" id="btn-copy-markdown" onclick="copyMarkdownNote()" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">markdown</span>
+<span>Copy Formatted Markdown</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-headline-sm text-headline-sm transition-colors" id="btn-send-slack" type="button">
+<span class="material-symbols-outlined text-[16px] text-tertiary">send</span>
+<span>Publish to #noc-handover</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-1 rounded bg-primary text-on-primary font-headline-sm text-headline-sm font-semibold hover:bg-primary-fixed-dim transition-colors shadow-sm" id="btn-complete-handover" type="button">
+<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+<span>Sign &amp; Complete Handover</span>
+</button>
+</div>
+</div>
+<!-- Notification Toast Container for Interactive Feedback -->
+<div class="fixed bottom-16 right-6 z-50 transform translate-y-10 opacity-0 transition-all duration-200 pointer-events-none bg-surface-bright text-on-surface px-space-md py-space-sm rounded shadow-lg flex items-center gap-space-sm" id="toast-message">
+<span class="material-symbols-outlined text-secondary text-[18px]" id="toast-icon">check</span>
+<span class="font-body-md text-body-md" id="toast-text">Action completed successfully</span>
+</div>
+</div>
+<script>
+  // Dynamic payloads for the Grounding Inspector
+  const recordPayloads = {
+    'OPS-4821': {
+      system: 'Jira Production Instance',
+      key: 'OPS-4821',
+      timestamp: '2026-09-03T19:42:00+05:30',
+      sha: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+      score: '1.0 (Direct match)',
+      json: `{\n  "id": "109284",\n  "key": "OPS-4821",\n  "summary": "Login failures on mobile app; root cause not found",\n  "priority": "P1-Blocker",\n  "status": "Escalated",\n  "assignee": "needs-backend-oncall",\n  "reporter": "thiraviaraj.r@company.net",\n  "created": "2026-09-03T19:35:12+05:30",\n  "updated": "2026-09-03T19:42:00+05:30",\n  "comments": [\n    {\n      "author": "Alex K.",\n      "body": "Trace ID 7f4a21 shows Auth0 timeout on OAuth v2 handshake."\n    }\n  ]\n}`
+    },
+    'OPS-4819': {
+      system: 'Jira Production Instance',
+      key: 'OPS-4819',
+      timestamp: '2026-09-03T18:20:14+05:30',
+      sha: '8f2d91b491a27e800c41098de76921b771e8841029c018239019283fccba1192',
+      score: '1.0 (Direct match)',
+      json: `{\n  "id": "109210",\n  "key": "OPS-4819",\n  "summary": "Memory leak patched on Payment Gateway pod",\n  "priority": "P2-High",\n  "status": "Closed",\n  "assignee": "alex.k@company.net",\n  "resolved": "2026-09-03T18:20:00+05:30",\n  "resolution": "Canary deployed v2.18.4-pg-fix",\n  "verification_window": "90m restart free"\n}`
+    },
+    'INC-102': {
+      system: 'PagerDuty v2 Rest API',
+      key: 'INC-102',
+      timestamp: '2026-09-03T17:45:22+05:30',
+      sha: 'b71239c0117a255109bca7109283019284fa9012398570182938472910381023',
+      score: '1.0 (Direct match)',
+      json: `{\n  "incident_number": 102,\n  "title": "CDN edge certificate rotation completed",\n  "status": "resolved",\n  "urgency": "high",\n  "owner": "sarah.m@company.net",\n  "resolved_at": "2026-09-03T17:45:00+05:30",\n  "ssl_expiry": "2027-09-01T00:00:00Z"\n}`
+    },
+    'OPS-4820': {
+      system: 'Jira Production Instance',
+      key: 'OPS-4820',
+      timestamp: '2026-09-03T19:10:04+05:30',
+      sha: '44910283fa71098cb1190283a009182377b21908234671829019284719281923',
+      score: '1.0 (Direct match)',
+      json: `{\n  "id": "109245",\n  "key": "OPS-4820",\n  "summary": "Database replica lag investigation ongoing (currently 42ms)",\n  "priority": "P2-High",\n  "status": "In Progress",\n  "assignee": "thiraviaraj.r@company.net",\n  "telemetry_link": "https://metrics.internal/db-read-03",\n  "next_shift_mandate": "Check buffer pool if lag >50ms"\n}`
+    }
+  };
+
+  function selectInspectorItem(key) {
+    const item = recordPayloads[key];
+    if (!item) return;
+
+    document.getElementById('inspector-record-key').innerText = item.key;
+    document.getElementById('inspector-source-system').innerText = item.system;
+    document.getElementById('inspector-timestamp').innerText = item.timestamp;
+    document.getElementById('inspector-sha').innerText = item.sha;
+    document.getElementById('inspector-score').innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> ${item.score}`;
+    
+    // Format JSON representation
+    const pre = document.getElementById('inspector-code-block');
+    pre.innerHTML = `<code>${escapeHtml(item.json)}</code>`;
+
+    showToast(`Loaded ${key} in Grounding Inspector`);
+  }
+
+  function copyRawJson() {
+    const key = document.getElementById('inspector-record-key').innerText;
+    const item = recordPayloads[key];
+    if (item) {
+      navigator.clipboard.writeText(item.json).then(() => {
+        showToast('JSON payload copied to clipboard');
+      });
+    }
+  }
+
+  function copyMarkdownNote() {
+    const markdown = `# Shift Handover Note - Evening Shift (17:00 - 20:00 IST)
+Deterministic Grounding Hash: #9a81f0b4 (100% Grounded)
+
+## 1. Completed Work
+- [OPS-4819] Memory leak patched on Payment Gateway pod (Resolved: 18:20 IST, Owner: Alex K.)
+- [INC-102] CDN edge certificate rotation completed (Resolved: 17:45 IST, Owner: Sarah M.)
+
+## 2. In Progress
+- [OPS-4820] Database replica lag investigation ongoing (Lag: 42ms, Mandate: Check buffer pool if >50ms)
+
+## 3. Blockers & Escalations (P1)
+- [OPS-4821] Login failures on mobile app; root cause not found; escalated to backend on-call (Needs immediate next-shift pick-up)
+
+## 4. Watch-list
+- Nothing to report.`;
+
+    navigator.clipboard.writeText(markdown).then(() => {
+      showToast('Structured Markdown copied to clipboard');
+    });
+  }
+
+  function showToast(text) {
+    const toast = document.getElementById('toast-message');
+    const toastText = document.getElementById('toast-text');
+    toastText.innerText = text;
+    toast.classList.remove('translate-y-10', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    setTimeout(() => {
+      toast.classList.add('translate-y-10', 'opacity-0');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 2500);
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // Interactive UI buttons hook
+  document.getElementById('btn-reverify').addEventListener('click', () => {
+    showToast('Re-verifying checksums against external audit APIs... OK');
+  });
+
+  document.getElementById('btn-export-dropdown').addEventListener('click', () => {
+    showToast('Compiling high-resolution PDF / DOCX handover artifact...');
+  });
+
+  document.getElementById('btn-complete-handover').addEventListener('click', () => {
+    showToast('Shift 04-B signed off. APAC Handover acknowledged.');
+  });
+</script></main></div></body></html>
