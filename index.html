@@ -175,23 +175,49 @@
         </button>
       </nav>
 
-      <!-- Right Operator Status & Quick Links -->
-      <div class="flex items-center gap-2.5 self-end md:self-auto font-mono text-xs">
-        <a href="landing.html" class="hidden xl:flex items-center gap-1 px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-cyan-300 border border-slate-800 text-[11px] transition-colors">
-          <span class="material-symbols-outlined text-[13px]">public</span>
-          <span>Public Page</span>
-        </a>
-
-        <!-- Operator Profile / Auth Pill -->
-        <div class="flex items-center gap-2 px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
-          <div class="w-5 h-5 rounded bg-cyan-950 text-cyan-400 flex items-center justify-center font-bold text-[10px]" id="user-initials">
+      <!-- Right Operator Profile Pill with Interactive Dropdown (Click for Logout) -->
+      <div class="relative font-mono text-xs" id="profile-container">
+        
+        <!-- Profile Trigger Pill -->
+        <button onclick="toggleProfileDropdown(event)" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer shadow-sm group">
+          <div class="w-6 h-6 rounded-lg bg-gradient-to-tr from-cyan-600 to-emerald-400 text-slate-950 flex items-center justify-center font-bold text-[11px] shadow-sm" id="user-initials">
             TR
           </div>
-          <span class="text-slate-200 font-medium text-xs hidden sm:inline" id="user-display">Thiraviaraj R.</span>
-          <a href="login.html" title="Switch user account" class="text-slate-400 hover:text-cyan-300 text-[11px] underline ml-0.5">
-            [Switch]
+          <span class="text-slate-100 font-semibold text-xs" id="user-display">Thiraviaraj R.</span>
+          <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-cyan-300 transition-transform" id="profile-dropdown-arrow">expand_more</span>
+        </button>
+
+        <!-- Dropdown Menu (Opens on Profile Click) -->
+        <div id="profile-dropdown-menu" class="hidden absolute right-0 top-full mt-2 w-64 bg-[#0c1324] border border-slate-700/80 rounded-2xl shadow-2xl p-3 z-50 flex flex-col gap-2 font-mono animate-pop-in">
+          
+          <!-- User Summary Header -->
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800/80 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-emerald-400 text-slate-950 flex items-center justify-center font-bold text-sm" id="user-dropdown-avatar">
+              TR
+            </div>
+            <div class="flex flex-col truncate">
+              <span class="text-white font-bold text-xs truncate" id="user-dropdown-name">Thiraviaraj R.</span>
+              <span class="text-cyan-400 text-[10px]" id="user-dropdown-role">Lead SRE</span>
+              <span class="text-slate-500 text-[9px] truncate" id="user-dropdown-email">thiraviarajr2007@gmail.com</span>
+            </div>
+          </div>
+
+          <div class="h-px bg-slate-800 my-0.5"></div>
+
+          <!-- Public Landing Option -->
+          <a href="landing.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-colors text-xs">
+            <span class="material-symbols-outlined text-[16px] text-slate-400">public</span>
+            <span>Public Landing Page</span>
           </a>
+
+          <!-- Logout Option -->
+          <button onclick="signOutUser()" class="flex items-center gap-2 p-2 rounded-lg text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 border border-rose-900/30 transition-all text-xs font-bold w-full text-left">
+            <span class="material-symbols-outlined text-[16px] text-rose-500">logout</span>
+            <span>Sign Out / Logout</span>
+          </button>
+
         </div>
+
       </div>
 
     </div>
@@ -1413,22 +1439,60 @@ _Grounded 100% via ShiftSync Engine_`;
       }, 2800);
     }
 
+    function toggleProfileDropdown(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('profile-dropdown-menu');
+      const arrow = document.getElementById('profile-dropdown-arrow');
+      if (menu) {
+        menu.classList.toggle('hidden');
+        if (arrow) {
+          arrow.textContent = menu.classList.contains('hidden') ? 'expand_more' : 'expand_less';
+        }
+      }
+    }
+
+    // Close profile dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('profile-container');
+      const menu = document.getElementById('profile-dropdown-menu');
+      const arrow = document.getElementById('profile-dropdown-arrow');
+      if (container && menu && !container.contains(e.target)) {
+        menu.classList.add('hidden');
+        if (arrow) arrow.textContent = 'expand_more';
+      }
+    });
+
     function loadActiveUser() {
       try {
         const saved = localStorage.getItem('shiftsync_user');
         let userName = 'Thiraviaraj R.';
         let userRole = 'Lead SRE';
+        let userEmail = 'thiraviarajr2007@gmail.com';
+        let userInitials = 'TR';
+
         if (saved) {
           const u = JSON.parse(saved);
-          if (u.name) {
-            userName = u.name;
-            document.getElementById('user-display').textContent = u.name;
-          }
-          if (u.initials) {
-            document.getElementById('user-initials').textContent = u.initials;
-          }
+          if (u.name) userName = u.name;
+          if (u.initials) userInitials = u.initials;
           if (u.role) userRole = u.role;
+          if (u.email) userEmail = u.email;
         }
+
+        // Set top profile pill
+        const displayEl = document.getElementById('user-display');
+        const initialsEl = document.getElementById('user-initials');
+        if (displayEl) displayEl.textContent = userName;
+        if (initialsEl) initialsEl.textContent = userInitials;
+
+        // Set dropdown menu elements
+        const ddName = document.getElementById('user-dropdown-name');
+        const ddRole = document.getElementById('user-dropdown-role');
+        const ddEmail = document.getElementById('user-dropdown-email');
+        const ddAvatar = document.getElementById('user-dropdown-avatar');
+        if (ddName) ddName.textContent = userName;
+        if (ddRole) ddRole.textContent = userRole;
+        if (ddEmail) ddEmail.textContent = userEmail;
+        if (ddAvatar) ddAvatar.textContent = userInitials;
 
         // Trigger Holographic Login Welcome Animation
         const overlay = document.getElementById('login-welcome-overlay');
