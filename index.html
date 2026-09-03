@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>ShiftSync - Grounded Shift Handover Note Generator</title>
+  <title>ShiftSync - Automated NOC &amp; DevOps Handover Generator</title>
   
-  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <!-- Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
@@ -20,39 +20,39 @@
         extend: {
           colors: {
             surface: "#0c1324",
-            "surface-dim": "#0c1324",
-            "surface-bright": "#33394c",
-            "surface-container-lowest": "#070d1f",
-            "surface-container-low": "#151b2d",
-            "surface-container": "#191f31",
-            "surface-container-high": "#23293c",
-            "surface-container-highest": "#2e3447",
-            "on-surface": "#dce1fb",
-            "on-surface-variant": "#bcc9cd",
-            outline: "#869397",
-            "outline-variant": "#3d494c",
+            "surface-dim": "#070d1f",
+            "surface-card": "#11182c",
+            "surface-border": "#1e293b",
             primary: "#4cd7f6",
-            "primary-container": "#06b6d4",
-            "on-primary": "#003640",
-            secondary: "#4edea3",
-            "secondary-container": "#00a572",
-            "on-secondary": "#003824",
-            tertiary: "#ffb95f",
-            "tertiary-container": "#e79400",
-            "on-tertiary": "#472a00",
-            error: "#ffb4ab",
-            "error-container": "#93000a",
-            "on-error": "#690005"
+            emerald: {
+              400: "#34d399",
+              500: "#10b981",
+              950: "#022c22"
+            },
+            cyan: {
+              400: "#38bdf8",
+              500: "#06b6d4",
+              950: "#083344"
+            },
+            amber: {
+              400: "#fbbf24",
+              500: "#f59e0b",
+              950: "#451a03"
+            },
+            rose: {
+              400: "#f87171",
+              500: "#ef4444",
+              950: "#450a0a"
+            }
           },
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace']
           },
           boxShadow: {
-            'glow-primary': '0 0 12px rgba(76, 215, 246, 0.25)',
-            'glow-secondary': '0 0 12px rgba(78, 222, 163, 0.25)',
-            'glow-error': '0 0 16px rgba(244, 63, 94, 0.35)',
-            'panel': '0 4px 20px -2px rgba(0, 0, 0, 0.6)'
+            'glow-cyan': '0 0 16px -2px rgba(56, 189, 248, 0.3)',
+            'glow-emerald': '0 0 16px -2px rgba(16, 185, 129, 0.3)',
+            'panel': '0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.06)'
           }
         }
       }
@@ -62,27 +62,27 @@
   <style>
     /* Custom Scrollbars */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #0c1324; }
-    ::-webkit-scrollbar-thumb { background: #23293c; border-radius: 2px; }
-    ::-webkit-scrollbar-thumb:hover { background: #3d494c; }
+    ::-webkit-scrollbar-track { background: #070d1f; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
     
     .sheet-shadow { box-shadow: 0 20px 50px -15px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.08); }
     
-    .nav-active-pill {
+    .nav-btn.active {
       background: rgba(76, 215, 246, 0.12);
-      border-left: 3px solid #4cd7f6;
-      color: #4cd7f6 !important;
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.4);
+      font-weight: 600;
     }
-    
-    .view-container { animation: fadeIn 0.18s ease-in-out; }
+
+    .view-pane { animation: fadeIn 0.15s ease-in-out; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(2px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
     pre, code { font-family: 'JetBrains Mono', monospace; }
-    
-    /* Print Layout for Monolithic PDF */
+
     @media print {
       body * { visibility: hidden; }
       #simulated-a4-sheet, #simulated-a4-sheet * { visibility: visible; }
@@ -90,2271 +90,1020 @@
     }
   </style>
 </head>
-<body class="bg-[#070d1f] font-sans text-slate-200 antialiased min-h-screen selection:bg-cyan-500 selection:text-slate-950 overflow-x-hidden">
+<body class="bg-[#070d1f] text-slate-200 font-sans antialiased min-h-screen selection:bg-cyan-500 selection:text-slate-950 flex flex-col justify-between">
 
-  <!-- ==================== APP CONTAINER ==================== -->
-  <div class="flex min-h-screen flex-col">
-    
-    <!-- ==================== PERSISTENT TOP NAVIGATION & METRICS BAR ==================== -->
-    <header class="sticky top-0 z-30 bg-[#0c1324]/95 backdrop-blur-md border-b border-slate-800 px-4 lg:px-6 py-2.5 flex flex-col xl:flex-row xl:items-center justify-between gap-3 shadow-panel">
+  <!-- ==================== TOP NAVIGATION & HEADER ==================== -->
+  <header class="sticky top-0 z-40 bg-[#0c1324]/95 backdrop-blur-md border-b border-slate-800/90 px-4 sm:px-6 py-2.5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
       
-      <!-- Top Left: Title, Live Timezone Badge, Active SRE Lead -->
-      <div class="flex flex-wrap items-center gap-3 lg:gap-4">
-        <div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('dashboard')">
-          <div class="w-8 h-8 rounded bg-gradient-to-tr from-cyan-600 to-cyan-400 flex items-center justify-center shadow-glow-primary">
-            <span class="material-symbols-outlined text-slate-950 text-[20px] font-bold">sync_saved_locally</span>
-          </div>
-          <div>
-            <div class="flex items-center gap-1.5">
-              <span class="font-bold text-sm text-slate-100 tracking-tight font-mono">ShiftSync</span>
-              <span class="text-slate-500 font-mono text-xs">//</span>
-              <span class="text-xs font-semibold text-cyan-400 font-mono">Handover Intelligence Engine</span>
+      <!-- Brand & Page Breadcrumb -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <a href="landing.html" class="flex items-center gap-2.5 group">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-600 to-emerald-400 flex items-center justify-center shadow-glow-cyan group-hover:scale-105 transition-transform">
+              <span class="material-symbols-outlined text-slate-950 text-[18px] font-bold">sync_saved_locally</span>
             </div>
-            <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest block">NOC &amp; DEVOPS OPERATIONAL CONSOLE</span>
-          </div>
+            <div class="flex flex-col">
+              <div class="flex items-center gap-1.5">
+                <span class="font-extrabold text-sm text-white font-mono tracking-tight">ShiftSync</span>
+                <span class="text-slate-600 font-mono text-xs">/</span>
+                <span class="text-xs font-semibold text-cyan-400 font-mono" id="current-page-label">Overview</span>
+              </div>
+              <span class="text-[9px] font-mono text-slate-400 tracking-wider uppercase">NOC Operations Console</span>
+            </div>
+          </a>
         </div>
 
-        <div class="hidden sm:block h-5 w-px bg-slate-800"></div>
+        <!-- Mobile Menu Toggle Button -->
+        <button onclick="toggleMobileNav()" class="md:hidden p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
+          <span class="material-symbols-outlined text-[20px]">menu</span>
+        </button>
+      </div>
 
-        <!-- Live Normalized Timezone Badge -->
-        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-xs font-mono text-cyan-300">
-          <span class="material-symbols-outlined text-[14px] text-cyan-400">schedule</span>
-          <span id="top-tz-badge">Asia/Kolkata +05:30</span>
-          <span class="text-slate-600">|</span>
-          <span class="text-slate-300 font-semibold" id="top-clock-ist">18:50:00 IST</span>
-        </div>
+      <!-- 6 Primary Navigation Items: 1. Overview, 2. Shift setup, 3. Handover note, 4. Activity, 5. Communication, 6. History -->
+      <nav class="hidden md:flex items-center bg-slate-950/80 border border-slate-800 rounded-xl p-1 gap-1 font-mono text-xs" id="desktop-nav">
+        <button onclick="navigateTo('overview')" data-view="overview" class="nav-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-all flex items-center gap-1.5 active">
+          <span class="material-symbols-outlined text-[15px]">dashboard</span>
+          <span>Overview</span>
+        </button>
 
-        <!-- Active SRE Lead Indicator -->
-        <div class="flex items-center gap-2 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-xs font-mono">
-          <div class="w-5 h-5 rounded-full bg-cyan-950 text-cyan-400 flex items-center justify-center border border-cyan-800/60 font-bold text-[10px]" id="user-avatar-initials">
+        <button onclick="navigateTo('setup')" data-view="setup" class="nav-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[15px]">tune</span>
+          <span>Shift setup</span>
+        </button>
+
+        <button onclick="navigateTo('note')" data-view="note" class="nav-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[15px]">description</span>
+          <span>Handover note</span>
+        </button>
+
+        <button onclick="navigateTo('activity')" data-view="activity" class="nav-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[15px]">timeline</span>
+          <span>Activity</span>
+        </button>
+
+        <button onclick="navigateTo('communication')" data-view="communication" class="nav-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[15px]">chat</span>
+          <span>Communication</span>
+        </button>
+
+        <button onclick="navigateTo('history')" data-view="history" class="nav-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-900 transition-all flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[15px]">history</span>
+          <span>History</span>
+        </button>
+      </nav>
+
+      <!-- Right Operator Status & Quick Links -->
+      <div class="flex items-center gap-2.5 self-end md:self-auto font-mono text-xs">
+        <a href="landing.html" class="hidden xl:flex items-center gap-1 px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-cyan-300 border border-slate-800 text-[11px] transition-colors">
+          <span class="material-symbols-outlined text-[13px]">public</span>
+          <span>Public Page</span>
+        </a>
+
+        <!-- Operator Profile / Auth Pill -->
+        <div class="flex items-center gap-2 px-2.5 py-1 rounded bg-slate-900 border border-slate-800">
+          <div class="w-5 h-5 rounded bg-cyan-950 text-cyan-400 flex items-center justify-center font-bold text-[10px]" id="user-initials">
             TR
           </div>
-          <div class="flex items-center gap-1.5">
-            <span class="text-slate-400 text-[10px] uppercase font-semibold">LEAD:</span>
-            <span class="text-slate-100 font-semibold text-xs" id="top-sre-lead-text">Thiraviaraj R. - Lead SRE</span>
-          </div>
-          <a href="login.html" title="Go to Login Page" class="ml-1 px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 text-[10px] border border-slate-700 transition-colors">
-            Login
-          </a>
-          <a href="signup.html" title="Create New Operator Profile" class="px-1.5 py-0.5 rounded bg-emerald-950 hover:bg-emerald-900 text-emerald-400 text-[10px] border border-emerald-800/60 font-semibold transition-colors">
-            + Sign Up
+          <span class="text-slate-200 font-medium text-xs hidden sm:inline" id="user-display">Thiraviaraj R.</span>
+          <a href="login.html" title="Switch user account" class="text-slate-400 hover:text-cyan-300 text-[11px] underline ml-0.5">
+            [Switch]
           </a>
         </div>
-
-        <!-- Firebase Sync Pill -->
-        <div class="hidden md:flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-800/60 text-emerald-400 text-[11px] font-mono">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Firebase: <strong class="text-white">shift-sync-a0b66</strong></span>
-        </div>
       </div>
 
-      <!-- Top Right: Grounding Score Chip, Conflict Indicator, 5 Navigation Tabs -->
-      <div class="flex flex-wrap items-center gap-2.5">
-        
-        <!-- Grounding Score Chip -->
-        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-950/80 border border-emerald-800/60 text-emerald-300 text-xs font-mono font-semibold" id="top-grounding-chip">
-          <span class="material-symbols-outlined text-[15px] text-emerald-400">verified</span>
-          <span id="top-grounding-text">Grounding: 100% (18/18 Verified)</span>
-        </div>
-
-        <!-- Conflict Indicator -->
-        <div onclick="navigateTo('split_view')" class="flex items-center gap-1.5 px-2.5 py-1 rounded cursor-pointer transition-all text-xs font-mono font-semibold" id="top-conflict-indicator">
-          <span class="material-symbols-outlined text-[15px]" id="top-conflict-icon">warning</span>
-          <span id="top-conflict-text">Conflicts: 1 Active Warning</span>
-        </div>
-
-        <!-- Navigation Tabs: [ 1. Shift Control ] | [ 2. Raw vs Ingestion Split ] | [ 3. Human Review & Sections ] | [ 4. Document Publisher ] | [ 5. Test Scenarios ] -->
-        <nav class="flex items-center bg-slate-900 border border-slate-800 rounded p-1 gap-1 text-xs font-mono" id="main-nav-tabs">
-          <a href="landing.html" class="px-2.5 py-1 rounded bg-emerald-950/80 hover:bg-emerald-900 text-emerald-400 border border-emerald-800/60 font-mono text-xs flex items-center gap-1 transition-colors">
-            <span class="material-symbols-outlined text-[14px]">public</span>
-            <span>[ Public Landing &amp; Demo ]</span>
-          </a>
-          <button onclick="navigateTo('dashboard')" data-nav="dashboard" class="nav-tab-btn px-2.5 py-1 rounded transition-colors text-slate-300 hover:text-white">
-            [ 1. Shift Control ]
-          </button>
-          <button onclick="navigateTo('split_view')" data-nav="split_view" class="nav-tab-btn px-2.5 py-1 rounded transition-colors text-slate-300 hover:text-white">
-            [ 2. Raw vs Ingestion Split ]
-          </button>
-          <button onclick="navigateTo('review_view')" data-nav="review_view" class="nav-tab-btn px-2.5 py-1 rounded transition-colors text-slate-300 hover:text-white">
-            [ 3. Human Review &amp; Sections ]
-          </button>
-          <button onclick="navigateTo('publisher_view')" data-nav="publisher_view" class="nav-tab-btn px-2.5 py-1 rounded transition-colors text-slate-300 hover:text-white">
-            [ 4. Document Publisher ]
-          </button>
-          <button onclick="navigateTo('test_scenarios')" data-nav="test_scenarios" class="nav-tab-btn px-2.5 py-1 rounded transition-colors text-slate-300 hover:text-white">
-            [ 5. Test Scenarios ]
-          </button>
-        </nav>
-
-        <!-- Unreachable Warning Trigger Button -->
-        <button onclick="toggleUnreachableBanner()" title="Toggle simulated 504 warning banner" class="p-1 rounded bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-amber-400 transition-colors">
-          <span class="material-symbols-outlined text-[18px]">notifications</span>
-        </button>
-
-      </div>
-
-    </header>
-
-    <!-- ==================== UNREACHABLE SOURCE WARNING BANNER ==================== -->
-    <div id="unreachable-source-banner" class="bg-amber-950/90 border-b-2 border-amber-500 px-6 py-2.5 flex items-center justify-between text-amber-200 text-xs font-mono transition-all">
-      <div class="flex items-center gap-2.5">
-        <span class="material-symbols-outlined text-[18px] text-amber-400 animate-bounce">warning</span>
-        <span><strong>Warning:</strong> Slack export unreachable (504 Gateway Timeout). Logged to audit; fallback rule-based pipeline active.</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <button onclick="navigateTo('test_scenarios')" class="underline hover:text-white font-bold">Inspect Fallback Trail &rarr;</button>
-        <button onclick="toggleUnreachableBanner()" class="text-amber-400 hover:text-white">
-          <span class="material-symbols-outlined text-[18px]">close</span>
-        </button>
-      </div>
     </div>
 
-    <!-- ==================== MAIN CONTENT CANVAS ==================== -->
-    <main class="flex-1 p-4 lg:p-6 max-w-7xl w-full mx-auto flex flex-col gap-6">
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-nav" class="md:hidden hidden pt-3 border-t border-slate-800 mt-2 grid grid-cols-3 gap-1.5 font-mono text-xs">
+      <button onclick="navigateTo('overview')" class="p-2 rounded bg-slate-900 text-cyan-400 text-left">Overview</button>
+      <button onclick="navigateTo('setup')" class="p-2 rounded bg-slate-900 text-slate-300 text-left">Shift setup</button>
+      <button onclick="navigateTo('note')" class="p-2 rounded bg-slate-900 text-slate-300 text-left">Handover note</button>
+      <button onclick="navigateTo('activity')" class="p-2 rounded bg-slate-900 text-slate-300 text-left">Activity</button>
+      <button onclick="navigateTo('communication')" class="p-2 rounded bg-slate-900 text-slate-300 text-left">Communication</button>
+      <button onclick="navigateTo('history')" class="p-2 rounded bg-slate-900 text-slate-300 text-left">History</button>
+    </div>
+  </header>
 
-      <!-- ======================================================== -->
-      <!-- VIEW 1: SHIFT CONTROL & HEALTH SUMMARY (`dashboard`)     -->
-      <!-- ======================================================== -->
-      <section id="view-dashboard" class="view-container flex flex-col gap-6">
+  <!-- ==================== MAIN CONTENT AREA ==================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 flex flex-col gap-6">
+
+    <!-- ======================================================== -->
+    <!-- VIEW 1: OVERVIEW (CLEAN DASHBOARD)                       -->
+    <!-- ======================================================== -->
+    <section id="view-overview" class="view-pane flex flex-col gap-5">
+      
+      <!-- Top Clean Dashboard Status Bar: Shift, Time, Source, Grounding, Generate Button -->
+      <div class="bg-gradient-to-r from-slate-900 via-[#0c1324] to-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         
-        <!-- Header Banner -->
-        <div class="bg-gradient-to-r from-slate-900 via-[#11172c] to-[#0c1324] border border-slate-800 rounded-xl p-6 shadow-panel relative overflow-hidden">
-          <div class="absolute -right-20 -bottom-20 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- Left Quick Telemetry -->
+        <div class="flex flex-wrap items-center gap-3 sm:gap-4 font-mono text-xs">
+          <!-- Current Shift -->
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-slate-400 uppercase text-[10px]">Shift:</span>
+            <strong class="text-white" id="ov-shift-name">Shift 04-B (Evening)</strong>
+          </div>
+
+          <!-- Current Time & Timezone -->
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800">
+            <span class="material-symbols-outlined text-[14px] text-cyan-400">schedule</span>
+            <span class="text-slate-300" id="ov-time-display">18:50:00 IST (Asia/Kolkata)</span>
+          </div>
+
+          <!-- Source Connection State -->
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-emerald-400">
+            <span class="material-symbols-outlined text-[14px]">sensors</span>
+            <span class="font-bold">4/4 Sources Online</span>
+          </div>
+
+          <!-- Grounding Score -->
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-800/60 text-emerald-300 font-bold">
+            <span class="material-symbols-outlined text-[14px]">verified</span>
+            <span>100% Grounded</span>
+          </div>
+        </div>
+
+        <!-- Generate Handover Button -->
+        <div class="flex items-center gap-2.5">
+          <button onclick="handleGenerateAction()" id="btn-generate-main" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 text-slate-950 font-bold font-mono text-xs tracking-wide shadow-glow-cyan transition-all flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[18px]" id="gen-icon">bolt</span>
+            <span id="gen-text">Generate handover</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Activity Summary Metrics Grid (Clean 6 Cards) -->
+      <div>
+        <div class="flex items-center justify-between mb-2.5">
+          <h2 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">Activity summary</h2>
+          <span class="text-[11px] font-mono text-slate-500">Time-Bounded Window [17:00 - 01:00)</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center font-mono">
           
-          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
+          <!-- Events -->
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl flex flex-col justify-between">
+            <span class="text-[10px] text-slate-400 uppercase">Events</span>
+            <div class="text-2xl font-bold text-white mt-1">24</div>
+            <span class="text-[9px] text-slate-500 mt-0.5">Raw Ingested</span>
+          </div>
+
+          <!-- Completed -->
+          <div class="bg-slate-900 border border-emerald-900/60 p-3.5 rounded-xl flex flex-col justify-between">
+            <span class="text-[10px] text-emerald-400 uppercase">Completed</span>
+            <div class="text-2xl font-bold text-emerald-300 mt-1">11</div>
+            <span class="text-[9px] text-emerald-500 mt-0.5">Verified</span>
+          </div>
+
+          <!-- In progress -->
+          <div class="bg-slate-900 border border-amber-900/60 p-3.5 rounded-xl flex flex-col justify-between">
+            <span class="text-[10px] text-amber-400 uppercase">In progress</span>
+            <div class="text-2xl font-bold text-amber-300 mt-1">6</div>
+            <span class="text-[9px] text-amber-500 mt-0.5">With ETAs</span>
+          </div>
+
+          <!-- Blockers -->
+          <div class="bg-slate-900 border border-rose-900/60 p-3.5 rounded-xl flex flex-col justify-between">
+            <span class="text-[10px] text-rose-400 uppercase">Blockers</span>
+            <div class="text-2xl font-bold text-rose-300 mt-1">2</div>
+            <span class="text-[9px] text-rose-500 mt-0.5">P1 Priority</span>
+          </div>
+
+          <!-- Incidents -->
+          <div class="bg-slate-900 border border-sky-900/60 p-3.5 rounded-xl flex flex-col justify-between">
+            <span class="text-[10px] text-sky-400 uppercase">Incidents</span>
+            <div class="text-2xl font-bold text-sky-300 mt-1">1</div>
+            <span class="text-[9px] text-sky-500 mt-0.5">INC-102 CDN</span>
+          </div>
+
+          <!-- Grounding score -->
+          <div class="bg-slate-900 border border-emerald-700/80 p-3.5 rounded-xl flex flex-col justify-between bg-emerald-950/20">
+            <span class="text-[10px] text-emerald-400 uppercase font-bold">Grounding</span>
+            <div class="text-2xl font-bold text-emerald-300 mt-1">100%</div>
+            <span class="text-[9px] text-emerald-400 mt-0.5">0 Hallucinations</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quick Dual Panels: Current Active Blocker & Next Actions -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        
+        <!-- Active Escalation Banner (7 Cols) -->
+        <div class="lg:col-span-7 bg-slate-900 border-2 border-rose-900/80 rounded-2xl p-5 shadow-panel flex flex-col gap-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+              <h3 class="text-xs font-mono font-bold uppercase text-rose-400">Immediate Action Required</h3>
+            </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-950 text-rose-200 font-bold">[P1 BLOCKER]</span>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="font-bold text-white">JIRA-4821 • Login failure on iOS v4.2</span>
+              <span class="text-slate-400">Owner: <strong class="text-white">Alex K.</strong></span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed font-sans">
+              Twilio Indian transit carrier route degradation causing 14% failure in OTP deliveries. Vendor Ticket #TW-994102 escalated to Sev-1. Due in 2 hrs.
+            </p>
+          </div>
+
+          <div class="flex items-center justify-between text-xs font-mono border-t border-slate-800 pt-2.5">
+            <button onclick="openEvidenceDrawer('JIRA-4821')" class="text-cyan-400 hover:underline flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">link</span>
+              <span>Source evidence &rarr;</span>
+            </button>
+            <button onclick="navigateTo('note')" class="text-slate-400 hover:text-white">
+              Review in full note &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Next Actions Quick Checklist (5 Cols) -->
+        <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel flex flex-col gap-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+            <h3 class="text-xs font-mono font-bold uppercase text-purple-300">Next-Shift Actions</h3>
+            <span class="text-[10px] font-mono text-slate-500">2 Items</span>
+          </div>
+
+          <div class="space-y-2 font-mono text-xs text-slate-300">
+            <label class="flex items-start gap-2.5 p-2 rounded bg-slate-950/70 border border-slate-800 hover:border-purple-500/50 cursor-pointer">
+              <input type="checkbox" checked class="mt-0.5 w-3.5 h-3.5 rounded text-purple-600 bg-slate-900 border-slate-700"/>
+              <span>Verify DB replication lag drops &lt;20ms by 22:00</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded bg-slate-950/70 border border-slate-800 hover:border-purple-500/50 cursor-pointer">
+              <input type="checkbox" class="mt-0.5 w-3.5 h-3.5 rounded text-purple-600 bg-slate-900 border-slate-700"/>
+              <span>Check mobile login rates after payment fix</span>
+            </label>
+          </div>
+
+          <button onclick="navigateTo('communication')" class="text-xs font-mono text-cyan-400 hover:underline text-left pt-1">
+            Dispatch Slack / Teams alert &rarr;
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 2: SHIFT SETUP                                      -->
+    <!-- ======================================================== -->
+    <section id="view-setup" class="view-pane hidden flex flex-col gap-5">
+      
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-panel flex flex-col gap-5">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <div>
+            <h1 class="text-base font-bold font-mono text-white uppercase">Shift setup</h1>
+            <p class="text-xs text-slate-400 mt-0.5">Configure timestamp boundary and active connectors.</p>
+          </div>
+          <!-- Tooltip badge -->
+          <div class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] font-mono text-slate-400">
+            <span class="material-symbols-outlined text-[14px] text-cyan-400">info</span>
+            <span>Boundary: Start included, End excluded</span>
+          </div>
+        </div>
+
+        <!-- Quick Shift Presets -->
+        <div>
+          <label class="text-xs font-mono text-slate-400 uppercase font-semibold block mb-2">Quick shift presets:</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <button type="button" onclick="setSetupPreset('morning')" id="st-btn-morning" class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-left font-mono transition-all">
+              <div class="flex justify-between items-center text-xs font-bold text-slate-200">
+                <span>Morning Shift</span>
+                <span class="text-amber-400">09:00 - 17:00</span>
+              </div>
+              <span class="text-[10px] text-slate-500 block mt-1">Shift 04-A</span>
+            </button>
+
+            <button type="button" onclick="setSetupPreset('evening')" id="st-btn-evening" class="p-3.5 rounded-xl bg-slate-950 border-2 border-cyan-500 shadow-glow-cyan text-left font-mono transition-all">
+              <div class="flex justify-between items-center text-xs font-bold text-cyan-300">
+                <span>Evening Shift (Active)</span>
+                <span class="text-cyan-400">17:00 - 01:00</span>
+              </div>
+              <span class="text-[10px] text-cyan-400/80 block mt-1">Shift 04-B</span>
+            </button>
+
+            <button type="button" onclick="setSetupPreset('night')" id="st-btn-night" class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-left font-mono transition-all">
+              <div class="flex justify-between items-center text-xs font-bold text-slate-200">
+                <span>Night Shift</span>
+                <span class="text-indigo-400">01:00 - 09:00</span>
+              </div>
+              <span class="text-[10px] text-slate-500 block mt-1">Shift 05-A</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Time Inputs & Timezone Normalizer -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 font-mono text-xs">
+          <div>
+            <label class="text-slate-400 uppercase text-[11px] block mb-1 font-semibold">Start time</label>
+            <input type="text" id="setup-start-time" value="2026-09-03 17:00:00" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded-xl p-2.5 text-slate-100 outline-none"/>
+          </div>
+          <div>
+            <label class="text-slate-400 uppercase text-[11px] block mb-1 font-semibold">End time</label>
+            <input type="text" id="setup-end-time" value="2026-09-04 01:00:00" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded-xl p-2.5 text-slate-100 outline-none"/>
+          </div>
+          <div>
+            <label class="text-slate-400 uppercase text-[11px] block mb-1 font-semibold">Timezone</label>
+            <select id="setup-timezone" onchange="handleSetupTz(this.value)" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded-xl p-2.5 text-cyan-300 outline-none cursor-pointer">
+              <option value="Asia/Kolkata">Asia/Kolkata (+05:30 IST)</option>
+              <option value="UTC">UTC (+00:00 UTC)</option>
+              <option value="America/New_York">America/New_York (-05:00 EST)</option>
+              <option value="Europe/London">Europe/London (+01:00 BST)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Connected Source Toggles -->
+        <div class="border-t border-slate-800 pt-4">
+          <label class="text-xs font-mono text-slate-400 uppercase font-semibold block mb-2">Connected source toggles:</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 font-mono text-xs">
+            <button type="button" onclick="toggleSetupSource('jira')" id="tog-jira" class="p-2.5 rounded-xl bg-slate-950 border border-emerald-800/60 flex items-center justify-between">
+              <span class="font-bold text-blue-400">Jira Tickets</span>
+              <span class="text-[10px] text-emerald-400 font-semibold">● Online</span>
+            </button>
+
+            <button type="button" onclick="toggleSetupSource('pagerduty')" id="tog-pagerduty" class="p-2.5 rounded-xl bg-slate-950 border border-emerald-800/60 flex items-center justify-between">
+              <span class="font-bold text-emerald-400">PagerDuty</span>
+              <span class="text-[10px] text-emerald-400 font-semibold">● Online</span>
+            </button>
+
+            <button type="button" onclick="toggleSetupSource('slack')" id="tog-slack" class="p-2.5 rounded-xl bg-slate-950 border border-emerald-800/60 flex items-center justify-between">
+              <span class="font-bold text-amber-400">Slack NOC</span>
+              <span class="text-[10px] text-emerald-400 font-semibold">● Online</span>
+            </button>
+
+            <button type="button" onclick="toggleSetupSource('git')" id="tog-git" class="p-2.5 rounded-xl bg-slate-950 border border-emerald-800/60 flex items-center justify-between">
+              <span class="font-bold text-purple-400">Git Commits</span>
+              <span class="text-[10px] text-emerald-400 font-semibold">● Online</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="border-t border-slate-800 pt-4 flex items-center justify-between">
+          <span class="text-xs text-slate-400 font-mono">Changes save automatically to session.</span>
+          <button onclick="navigateTo('note')" class="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold font-mono text-xs tracking-wide shadow-glow-cyan transition-all flex items-center gap-1.5">
+            <span>Review note &rarr;</span>
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 3: HANDOVER NOTE (REVIEW & EDIT)                    -->
+    <!-- ======================================================== -->
+    <section id="view-note" class="view-pane hidden flex flex-col gap-5">
+      
+      <!-- Top Control Bar -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h1 class="text-base font-bold font-mono text-white uppercase">Review note</h1>
+          <span class="text-xs text-slate-400 font-mono">DOC ID: SH-20260903-EVN • 100% Grounded</span>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 font-mono text-xs">
+          <!-- Format Selector -->
+          <div class="flex items-center bg-slate-950 border border-slate-800 rounded-lg p-1" id="format-toggle-bar">
+            <button onclick="setNoteFormat('concise')" id="fmt-concise" class="px-2.5 py-1 rounded bg-cyan-500 text-slate-950 font-bold transition-all">Concise</button>
+            <button onclick="setNoteFormat('detailed')" id="fmt-detailed" class="px-2.5 py-1 rounded text-slate-400 hover:text-white transition-all">Technical</button>
+            <button onclick="setNoteFormat('executive')" id="fmt-executive" class="px-2.5 py-1 rounded text-slate-400 hover:text-white transition-all">Executive</button>
+          </div>
+
+          <button onclick="exportNotePdf()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 text-slate-950 font-bold tracking-wide shadow-glow-cyan transition-all flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+            <span>Export note</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Core Scanable Sections -->
+      <div class="space-y-4">
+        
+        <!-- Section 1: Blockers & Escalations (Red Accent) -->
+        <div class="bg-slate-900 border-2 border-rose-900/80 rounded-2xl p-5 shadow-panel">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3">
+            <span class="text-xs font-mono font-bold uppercase text-rose-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+              1. Blockers &amp; Escalations
+            </span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-950 text-rose-300 font-bold">1 ACTIVE</span>
+          </div>
+
+          <div class="bg-slate-950/80 border border-rose-900/40 p-3.5 rounded-xl font-mono text-xs flex flex-col gap-2" id="blocker-item-box">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-white">JIRA-4821 • Login failure on iOS v4.2</span>
+              <span class="text-rose-300 text-[11px]">Due in 2 hrs • Alex K.</span>
+            </div>
+            <p class="text-slate-300 font-sans text-xs leading-relaxed" id="note-blocker-desc">
+              Twilio Indian transit carrier route degradation causing 14% failure in OTP deliveries. External Ticket #TW-994102 escalated to Sev-1.
+            </p>
+            <div class="flex justify-between items-center text-[11px] border-t border-slate-800/80 pt-2">
+              <button onclick="openEvidenceDrawer('JIRA-4821')" class="text-cyan-400 hover:underline">
+                Source evidence &rarr;
+              </button>
+              <div class="flex gap-2">
+                <button onclick="editNoteLine('JIRA-4821')" class="text-slate-400 hover:text-white underline">Edit</button>
+                <button onclick="toggleRejectNote('JIRA-4821')" class="text-rose-400 hover:underline">Reject</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Completed Work (Green Accent) -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3">
+            <span class="text-xs font-mono font-bold uppercase text-emerald-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              2. Completed Work
+            </span>
+            <span class="text-[10px] font-mono text-slate-400">3 Items Verified</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-xs">
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <span class="text-emerald-400 font-bold block mb-1">INC-102 • CDN cert renewed</span>
+                <p class="text-[11px] text-slate-400 font-sans">Automated edge certificate provisioning complete across Cloudflare endpoints.</p>
+              </div>
+              <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] flex justify-between text-slate-500">
+                <span>Sarah M.</span>
+                <button onclick="openEvidenceDrawer('INC-102')" class="text-cyan-400 hover:underline">Evidence</button>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <span class="text-emerald-400 font-bold block mb-1">SEC-1092 • TLS Ingress rotation</span>
+                <p class="text-[11px] text-slate-400 font-sans">Rotated wildcard certificates across 48 API Gateway pods. 0 dropped handshakes.</p>
+              </div>
+              <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] flex justify-between text-slate-500">
+                <span>Thiraviaraj R.</span>
+                <button onclick="openEvidenceDrawer('SEC-1092')" class="text-cyan-400 hover:underline">Evidence</button>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <span class="text-emerald-400 font-bold block mb-1">INFRA-9023 • Kafka rebalance</span>
+                <p class="text-[11px] text-slate-400 font-sans">Cluster-C topic rebalance completed. Consumer lag dropped from 42k to 120 msgs.</p>
+              </div>
+              <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] flex justify-between text-slate-500">
+                <span>NOC Pod</span>
+                <button onclick="openEvidenceDrawer('INFRA-9023')" class="text-cyan-400 hover:underline">Evidence</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: In Progress (Blue Accent) -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3">
+            <span class="text-xs font-mono font-bold uppercase text-sky-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+              3. In Progress
+            </span>
+            <span class="text-[10px] font-mono text-slate-400">2 Ongoing Tasks</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sky-400 font-bold">OPS-4820 • DB replica lag</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 font-bold">[Not Specified]</span>
+                </div>
+                <p class="text-[11px] text-slate-400 font-sans">IOPS throttling mitigation on secondary reader pods in ap-south-1.</p>
+              </div>
+              <button onclick="openEvidenceDrawer('OPS-4820')" class="text-[10px] text-cyan-400 hover:underline text-left mt-2 pt-2 border-t border-slate-800">
+                Source evidence &rarr;
+              </button>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sky-400 font-bold">DB-3301 • Postgres pg16 dump</span>
+                  <span class="text-sky-300 text-[10px]">ETA: 02:30 IST</span>
+                </div>
+                <p class="text-[11px] text-slate-400 font-sans">75% data indexing complete. Night shift lead to verify WAL sync.</p>
+              </div>
+              <button onclick="openEvidenceDrawer('DB-3301')" class="text-[10px] text-cyan-400 hover:underline text-left mt-2 pt-2 border-t border-slate-800">
+                Source evidence &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Watch-list (Deliberate Clean "Nothing to report") -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-2.5">
+            <span class="text-xs font-mono font-bold uppercase text-slate-400">4. Watch-list</span>
+            <span class="text-[10px] font-mono text-slate-500">Audit Compliant</span>
+          </div>
+          <div class="bg-slate-950/60 border border-dashed border-slate-800 p-4 rounded-xl text-center font-mono text-xs text-slate-500">
+            Nothing to report in this shift window
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 4: ACTIVITY (RAW STREAM & CONFLICTS)                -->
+    <!-- ======================================================== -->
+    <section id="view-activity" class="view-pane hidden flex flex-col gap-5">
+      
+      <!-- Top Conflict Warning Banner -->
+      <div id="act-conflict-card" class="bg-amber-950/80 border-2 border-amber-500/80 rounded-2xl p-4 shadow-panel flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-amber-200 font-mono text-xs">
+        <div class="flex items-center gap-2.5">
+          <span class="material-symbols-outlined text-[20px] text-amber-400">warning</span>
+          <div>
+            <strong class="text-white block">Data Conflict: INC-45</strong>
+            <span>Jira marked 'Resolved' vs PagerDuty marked 'In Progress'.</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="resolveConflictDirect('Resolved')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all">Resolve to Resolved</button>
+          <button onclick="resolveConflictDirect('In Progress')" class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold transition-all">Resolve to In Progress</button>
+        </div>
+      </div>
+
+      <!-- Raw Stream List -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-panel flex flex-col gap-3">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+          <h2 class="text-xs font-mono font-bold uppercase text-white">Time-bounded event stream</h2>
+          <span class="text-[10px] font-mono text-slate-400">Showing 16 In-Window Events</span>
+        </div>
+
+        <div class="space-y-2 font-mono text-xs" id="activity-events-list">
+          <!-- Dynamically populated via script -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 5: COMMUNICATION (SLACK / TEAMS DRAFTS)             -->
+    <!-- ======================================================== -->
+    <section id="view-communication" class="view-pane hidden flex flex-col gap-5">
+      
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-panel flex flex-col gap-5">
+        <div class="border-b border-slate-800 pb-3">
+          <h1 class="text-base font-bold font-mono text-white uppercase">Communication &amp; alert dispatch</h1>
+          <p class="text-xs text-slate-400 mt-0.5">Copy formatted handover digests for Slack, Teams, or generate read-only audit permalinks.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 font-mono text-xs">
+          
+          <!-- Slack / Teams Message Box -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-3">
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-amber-400 font-bold uppercase text-[11px]">Slack / Teams Draft</span>
+                <span class="text-slate-500 text-[10px]">Markdown Format</span>
+              </div>
+              <textarea id="slack-draft-box" readonly rows="8" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 text-slate-200 outline-none text-xs leading-relaxed font-mono resize-none"></textarea>
+            </div>
+            <button onclick="copySlackText()" id="btn-copy-slack" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all">
+              <span class="material-symbols-outlined text-[16px]">content_copy</span>
+              <span id="btn-copy-slack-text">Copy Slack Draft</span>
+            </button>
+          </div>
+
+          <!-- Shareable Read-Only Audit Link -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-3">
+            <div>
+              <span class="text-purple-400 font-bold uppercase text-[11px] block mb-2">Read-Only Immutable Audit Link</span>
+              <p class="text-slate-400 font-sans text-xs mb-3">
+                Send this link to stakeholders for read-only audit access backed by Firebase Cloud Firestore.
+              </p>
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 text-cyan-300 break-all select-all text-xs">
+                https://shift-sync-a0b66.web.app/audit/sh-20260903-evn
+              </div>
+            </div>
+            <button onclick="copyAuditUrl()" id="btn-copy-audit" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all">
+              <span class="material-symbols-outlined text-[16px]">link</span>
+              <span>Copy Audit Link</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 6: HISTORY (PREVIOUS SHIFTS & AUDIT LOGS)          -->
+    <!-- ======================================================== -->
+    <section id="view-history" class="view-pane hidden flex flex-col gap-5">
+      
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-panel flex flex-col gap-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <div>
+            <h1 class="text-base font-bold font-mono text-white uppercase">Shift history</h1>
+            <p class="text-xs text-slate-400 mt-0.5">Previously approved and sealed handover notes.</p>
+          </div>
+          <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-950 text-emerald-400 border border-emerald-800/40 font-semibold">
+            Firestore Synced
+          </span>
+        </div>
+
+        <div class="space-y-2.5 font-mono text-xs">
+          
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:border-slate-700 transition-colors">
             <div>
               <div class="flex items-center gap-2 mb-1">
-                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-cyan-950 text-cyan-300 border border-cyan-800/50 uppercase">Shift Ingestion &amp; Boundary Control</span>
-                <span class="text-slate-500 text-xs font-mono">•</span>
-                <span class="text-xs text-emerald-400 font-mono">100% Deterministic Provenance</span>
+                <span class="font-bold text-white">SH-20260903-EVN (Current)</span>
+                <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800/40">SEALED</span>
               </div>
-              <h1 class="text-2xl font-bold text-white tracking-tight">Shift Control &amp; Health Summary</h1>
-              <p class="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
-                Configure shift boundary timestamps, toggle telemetry connectors, and inspect real-time ingestion health before generating the structured handover note.
-              </p>
+              <span class="text-[11px] text-slate-400">17:00 - 01:00 IST • Lead: Thiraviaraj R. • 6 items</span>
             </div>
-
-            <div class="flex flex-wrap items-center gap-2.5">
-              <button onclick="navigateTo('test_scenarios')" class="px-3.5 py-2 rounded bg-slate-800 hover:bg-slate-700 text-xs font-mono text-cyan-300 border border-slate-700 flex items-center gap-1.5 transition-all shadow-sm">
-                <span class="material-symbols-outlined text-[16px]">science</span>
-                <span>Load Demo Scenarios</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 1. Shift Boundary Configuration Card -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel flex flex-col gap-4">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-cyan-400 text-[18px]">tune</span>
-              <h2 class="text-sm font-semibold text-white tracking-wide uppercase font-mono">1. Shift Boundary Configuration</h2>
-            </div>
-            <span class="text-[11px] font-mono text-slate-400">Strict Timestamp Boundary [Start, End)</span>
+            <button onclick="navigateTo('note')" class="text-cyan-400 hover:underline text-left sm:text-right">
+              View note &rarr;
+            </button>
           </div>
 
-          <!-- Quick Shift Presets -->
-          <div>
-            <label class="text-xs font-mono text-slate-400 mb-2 block uppercase font-semibold">Quick Shift Presets:</label>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="shift-presets-container">
-              
-              <button type="button" onclick="selectShiftPreset('morning')" id="preset-btn-morning" class="preset-btn p-3.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-left transition-all group">
-                <div class="flex items-center justify-between mb-1">
-                  <span class="text-xs font-bold text-slate-200 group-hover:text-cyan-400">[Morning: 09:00 - 17:00]</span>
-                  <span class="material-symbols-outlined text-[16px] text-amber-400">wb_sunny</span>
-                </div>
-                <span class="text-[11px] font-mono text-slate-400 block">Shift 04-A (09:00 - 17:00 IST)</span>
-              </button>
-
-              <button type="button" onclick="selectShiftPreset('evening')" id="preset-btn-evening" class="preset-btn p-3.5 rounded-lg bg-slate-950 border-2 border-cyan-500 shadow-glow-primary text-left transition-all group">
-                <div class="flex items-center justify-between mb-1">
-                  <span class="text-xs font-bold text-cyan-300">[Evening: 17:00 - 01:00]</span>
-                  <span class="material-symbols-outlined text-[16px] text-cyan-400">wb_twilight</span>
-                </div>
-                <span class="text-[11px] font-mono text-cyan-400/90 block">Shift 04-B Active (17:00 - 01:00 IST)</span>
-              </button>
-
-              <button type="button" onclick="selectShiftPreset('night')" id="preset-btn-night" class="preset-btn p-3.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-left transition-all group">
-                <div class="flex items-center justify-between mb-1">
-                  <span class="text-xs font-bold text-slate-200 group-hover:text-cyan-400">[Night: 01:00 - 09:00]</span>
-                  <span class="material-symbols-outlined text-[16px] text-indigo-400">nightlight</span>
-                </div>
-                <span class="text-[11px] font-mono text-slate-400 block">Shift 05-A (01:00 - 09:00 IST)</span>
-              </button>
-
-            </div>
-          </div>
-
-          <!-- Shift Window Picker: Start Time, End Time, Timezone Normalizer -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:border-slate-700 transition-colors">
             <div>
-              <label class="text-[11px] font-mono text-slate-400 uppercase block mb-1">Start Time (ISO/Local)</label>
-              <input type="text" id="input-shift-start" value="2026-09-03 17:00:00" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded px-3 py-2 text-xs font-mono text-slate-100 outline-none transition-colors"/>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-bold text-slate-300">SH-20260903-MOR</span>
+                <span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-400">ARCHIVED</span>
+              </div>
+              <span class="text-[11px] text-slate-400">09:00 - 17:00 IST • Lead: Sarah M. • 8 items</span>
             </div>
+            <button onclick="showToast('Loading archived note snapshot...', 'info')" class="text-slate-400 hover:text-white text-left sm:text-right">
+              View archive &rarr;
+            </button>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:border-slate-700 transition-colors">
             <div>
-              <label class="text-[11px] font-mono text-slate-400 uppercase block mb-1">End Time (ISO/Local)</label>
-              <input type="text" id="input-shift-end" value="2026-09-04 01:00:00" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded px-3 py-2 text-xs font-mono text-slate-100 outline-none transition-colors"/>
-            </div>
-            <div>
-              <label class="text-[11px] font-mono text-slate-400 uppercase block mb-1">Timezone Normalizer</label>
-              <select id="select-timezone" onchange="handleTimezoneChange(this.value)" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded px-3 py-2 text-xs font-mono text-cyan-300 outline-none transition-colors cursor-pointer">
-                <option value="Asia/Kolkata">Asia/Kolkata (+05:30 IST)</option>
-                <option value="UTC">UTC (+00:00 UTC)</option>
-                <option value="America/New_York">America/New_York (-05:00 EST)</option>
-                <option value="Europe/London">Europe/London (+01:00 BST)</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Connected Source Toggles -->
-          <div class="border-t border-slate-800 pt-3">
-            <label class="text-[11px] font-mono text-slate-400 uppercase block mb-2 font-semibold">Connected Source Toggles:</label>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-              
-              <button type="button" onclick="toggleSource('jira')" id="btn-toggle-jira" class="p-2.5 rounded bg-slate-950 border border-emerald-800/60 text-xs font-mono flex items-center justify-between transition-all">
-                <span class="font-bold text-blue-400">Jira Tickets</span>
-                <span class="text-[10px] text-emerald-400 font-semibold">● Active</span>
-              </button>
-
-              <button type="button" onclick="toggleSource('pagerduty')" id="btn-toggle-pagerduty" class="p-2.5 rounded bg-slate-950 border border-emerald-800/60 text-xs font-mono flex items-center justify-between transition-all">
-                <span class="font-bold text-emerald-400">PagerDuty Incidents</span>
-                <span class="text-[10px] text-emerald-400 font-semibold">● Active</span>
-              </button>
-
-              <button type="button" onclick="toggleSource('slack')" id="btn-toggle-slack" class="p-2.5 rounded bg-slate-950 border border-emerald-800/60 text-xs font-mono flex items-center justify-between transition-all">
-                <span class="font-bold text-amber-400">Slack NOC Export</span>
-                <span class="text-[10px] text-emerald-400 font-semibold">● Active</span>
-              </button>
-
-              <button type="button" onclick="toggleSource('git')" id="btn-toggle-git" class="p-2.5 rounded bg-slate-950 border border-emerald-800/60 text-xs font-mono flex items-center justify-between transition-all">
-                <span class="font-bold text-purple-400">Git Commits</span>
-                <span class="text-[10px] text-emerald-400 font-semibold">● Active</span>
-              </button>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- 2. Shift Health Summary Card -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-emerald-400 text-[18px]">monitor_heart</span>
-              <h2 class="text-sm font-semibold text-white tracking-wide uppercase font-mono">2. Shift Health Summary Card</h2>
-            </div>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/50 font-bold">ALL SYSTEMS LIVE</span>
-          </div>
-
-          <!-- Metrics Grid: Total Ingested (24) | Completed (11) | In Progress (6) | Blockers (2) | Incidents (1) | Grounding Score (100%) -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center font-mono">
-            
-            <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-lg flex flex-col justify-between">
-              <span class="text-[10px] text-slate-400 uppercase">Total Ingested</span>
-              <div class="text-2xl font-bold text-white mt-1">24</div>
-              <span class="text-[9px] text-slate-500 mt-1">4 Connected Sources</span>
-            </div>
-
-            <div class="bg-slate-950 border border-emerald-800/60 p-3.5 rounded-lg flex flex-col justify-between">
-              <span class="text-[10px] text-emerald-400 uppercase">Completed</span>
-              <div class="text-2xl font-bold text-emerald-300 mt-1">11</div>
-              <span class="text-[9px] text-emerald-500 mt-1">Deployed &amp; Verified</span>
-            </div>
-
-            <div class="bg-slate-950 border border-amber-800/60 p-3.5 rounded-lg flex flex-col justify-between">
-              <span class="text-[10px] text-amber-400 uppercase">In Progress</span>
-              <div class="text-2xl font-bold text-amber-300 mt-1">6</div>
-              <span class="text-[9px] text-amber-500 mt-1">Tracked with ETAs</span>
-            </div>
-
-            <div class="bg-slate-950 border border-rose-800/60 p-3.5 rounded-lg flex flex-col justify-between">
-              <span class="text-[10px] text-rose-400 uppercase">Blockers</span>
-              <div class="text-2xl font-bold text-rose-300 mt-1">2</div>
-              <span class="text-[9px] text-rose-500 mt-1">Active P1 Escalations</span>
-            </div>
-
-            <div class="bg-slate-950 border border-sky-800/60 p-3.5 rounded-lg flex flex-col justify-between">
-              <span class="text-[10px] text-sky-400 uppercase">Incidents</span>
-              <div class="text-2xl font-bold text-sky-300 mt-1">1</div>
-              <span class="text-[9px] text-sky-500 mt-1">INC-102 CDN Latency</span>
-            </div>
-
-            <div class="bg-slate-950 border border-emerald-700 p-3.5 rounded-lg flex flex-col justify-between bg-emerald-950/20">
-              <span class="text-[10px] text-emerald-400 uppercase font-bold">Grounding Score</span>
-              <div class="text-2xl font-bold text-emerald-300 mt-1">100%</div>
-              <span class="text-[9px] text-emerald-400 mt-1">18/18 Verified</span>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- 3. Action Bar -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-panel flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
-            <span class="material-symbols-outlined text-cyan-400 text-[18px]">play_circle</span>
-            <span>Shift window boundary ready. 24 raw telemetry records staged for deterministic parsing.</span>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
-            <button onclick="navigateTo('test_scenarios')" class="flex-1 sm:flex-none px-4 py-2.5 rounded bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-300 border border-slate-700 transition-colors flex items-center justify-center gap-1.5">
-              <span class="material-symbols-outlined text-[16px]">science</span>
-              <span>Load Demo Scenarios</span>
-            </button>
-
-            <button onclick="handleIngestShiftAction()" id="btn-ingest-run" class="flex-1 sm:flex-none px-6 py-2.5 rounded bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-slate-950 font-bold text-xs tracking-wide shadow-glow-primary transition-all flex items-center justify-center gap-2">
-              <span class="material-symbols-outlined text-[18px]" id="ingest-icon">bolt</span>
-              <span id="ingest-text">Ingest Shift Window &amp; Run Deduplication</span>
-            </button>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ======================================================== -->
-      <!-- VIEW 2: SPLIT RAW DATA VS GENERATED NOTE (`split_view`)  -->
-      <!-- ======================================================== -->
-      <section id="view-split_view" class="view-container hidden flex flex-col gap-6">
-        
-        <!-- Header -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <button onclick="navigateTo('dashboard')" class="text-xs font-mono text-cyan-400 hover:underline flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">arrow_back</span>
-                <span>Shift Control</span>
-              </button>
-              <span class="text-slate-600 font-mono">/</span>
-              <span class="text-xs font-mono text-slate-400">Raw vs Ingestion Split</span>
-            </div>
-            <h1 class="text-lg font-bold text-white tracking-tight">Split Raw Data vs Generated Note Comparison</h1>
-            <p class="text-xs text-slate-400">Inspect raw un-grouped stream logs versus consolidated records with multi-touch event collapsing.</p>
-          </div>
-
-          <button onclick="navigateTo('review_view')" class="px-5 py-2.5 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-glow-primary transition-all flex items-center gap-1.5 self-start md:self-auto">
-            <span>Proceed to Human Review &amp; Editing</span>
-            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-          </button>
-        </div>
-
-        <!-- Conflict Warning Card (Yellow Banner for INC-45) -->
-        <div id="split-conflict-card" class="bg-amber-950/80 border-2 border-amber-500/80 rounded-xl p-4 shadow-panel flex flex-col md:flex-row md:items-center justify-between gap-4 text-amber-200">
-          <div class="flex items-start gap-3">
-            <div class="w-8 h-8 rounded bg-amber-900 text-amber-300 flex items-center justify-center shrink-0 mt-0.5">
-              <span class="material-symbols-outlined text-[20px]">warning</span>
-            </div>
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 rounded bg-amber-900 text-amber-200 text-[10px] font-mono font-bold uppercase">Data Conflict Detected</span>
-                <span class="text-xs font-mono font-bold text-white">INC-45 / Payment Webhook Processor</span>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-bold text-slate-300">SH-20260902-NGT</span>
+                <span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-400">ARCHIVED</span>
               </div>
-              <p class="text-xs text-amber-200/90 mt-1">
-                Data Conflict Detected: <code class="text-white bg-black/40 px-1 rounded">INC-45</code> is marked as 'Resolved' in Jira but 'In Progress' in PagerDuty. Shift lead review required.
-              </p>
+              <span class="text-[11px] text-slate-400">01:00 - 09:00 IST • Lead: Alex K. • 4 items</span>
             </div>
-          </div>
-
-          <!-- Arbitration Buttons: [Resolve to Resolved] | [Resolve to In Progress] -->
-          <div class="flex items-center gap-2 shrink-0 font-mono text-xs">
-            <button onclick="resolveSplitConflict('Resolved')" class="px-3.5 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center gap-1 shadow-sm">
-              <span class="material-symbols-outlined text-[14px]">check</span>
-              <span>Resolve to Resolved</span>
-            </button>
-            <button onclick="resolveSplitConflict('In Progress')" class="px-3.5 py-1.5 rounded bg-sky-600 hover:bg-sky-500 text-white font-bold transition-all flex items-center gap-1 shadow-sm">
-              <span class="material-symbols-outlined text-[14px]">sync</span>
-              <span>Resolve to In Progress</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Two-Column Comparative Inspection Layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          <!-- Left Column: Raw Operational Events Stream (Time-bounded) (7 Cols) -->
-          <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-panel flex flex-col gap-3">
-            
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
-              <div>
-                <h2 class="text-xs font-bold font-mono text-white uppercase">Raw Operational Events Stream (Time-bounded)</h2>
-                <span class="text-[10px] font-mono text-slate-400">Filtered strictly to [Shift Start, Shift End)</span>
-              </div>
-
-              <!-- Filter pills: [All In-Window], [Discarded Stale Backlog (12)], [Grouped/Duplicates (8)] -->
-              <div class="flex items-center bg-slate-950 border border-slate-800 rounded p-1 gap-1 text-xs font-mono" id="split-filter-pills">
-                <button onclick="setSplitFilter('in_window')" id="s-pill-inwin" class="split-pill px-2 py-1 rounded bg-cyan-950 text-cyan-300 font-semibold border border-cyan-800/50">[All In-Window (16)]</button>
-                <button onclick="setSplitFilter('discarded')" id="s-pill-discard" class="split-pill px-2 py-1 rounded text-slate-400 hover:text-slate-200">[Discarded Stale Backlog (12)]</button>
-                <button onclick="setSplitFilter('grouped')" id="s-pill-grouped" class="split-pill px-2 py-1 rounded text-slate-400 hover:text-slate-200">[Grouped/Duplicates (8)]</button>
-              </div>
-            </div>
-
-            <!-- Event Cards displaying raw timestamp, source payload snippet, and record ID -->
-            <div class="flex flex-col gap-2.5 max-h-[640px] overflow-y-auto pr-1" id="split-raw-stream-container">
-              <!-- Dynamically populated via JS -->
-            </div>
-
-          </div>
-
-          <!-- Right Column: Consolidated & Deduplicated Output (5 Cols) -->
-          <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-panel flex flex-col gap-3">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div>
-                <h2 class="text-xs font-bold font-mono text-white uppercase">Consolidated &amp; Deduplicated Output</h2>
-                <span class="text-[10px] font-mono text-emerald-400">Multi-touch collapsed into single line states</span>
-              </div>
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800/50">6 Core Items</span>
-            </div>
-
-            <p class="text-xs text-slate-400 leading-relaxed font-sans">
-              Example: Multi-touch event <code class="text-cyan-300 font-mono">JIRA-102</code> (Opened &rarr; Updated &rarr; Resolved) collapses into 1 line under <strong>Completed Work</strong>.
-            </p>
-
-            <div class="flex flex-col gap-3" id="split-consolidated-container">
-              <!-- Dynamically populated via JS -->
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Bottom Transition Button -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-panel flex items-center justify-between">
-          <span class="text-xs text-slate-400 font-mono">Deduplication verified. 0 redundant touch points in export AST.</span>
-          <button onclick="navigateTo('review_view')" class="px-6 py-2.5 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs tracking-wide shadow-glow-primary transition-all flex items-center gap-2">
-            <span>Proceed to Human Review &amp; Editing</span>
-            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-          </button>
-        </div>
-
-      </section>
-
-      <!-- ======================================================== -->
-      <!-- VIEW 3: HUMAN REVIEW & STRUCTURED SECTIONS (`review_view`)-->
-      <!-- ======================================================== -->
-      <section id="view-review_view" class="view-container hidden flex flex-col gap-6">
-        
-        <!-- Header & Format Style Selector -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300 uppercase">DOC ID: SH-20260903-EVN</span>
-              <span class="text-slate-500 font-mono">•</span>
-              <span class="text-xs font-mono text-emerald-400 flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">verified_user</span>
-                Human-in-the-Loop Review
-              </span>
-            </div>
-            <h1 class="text-lg font-bold text-white tracking-tight">Human Review &amp; Structured Handover Sections</h1>
-            <p class="text-xs text-slate-400">Edit, approve, or reject lines before publishing. Grounded with 100% cryptographic trace.</p>
-          </div>
-
-          <!-- Format Style Selector: [Concise Ops] | [Detailed Technical] | [Executive Summary] -->
-          <div class="flex flex-wrap items-center gap-3">
-            <div class="flex items-center bg-slate-950 border border-slate-800 rounded p-1 text-xs font-mono" id="review-format-pills">
-              <button onclick="setReviewFormatStyle('concise')" id="rf-concise" class="rf-pill px-3 py-1.5 rounded bg-cyan-500 text-slate-950 font-bold transition-all">[Concise Ops]</button>
-              <button onclick="setReviewFormatStyle('detailed')" id="rf-detailed" class="rf-pill px-3 py-1.5 rounded text-slate-400 hover:text-slate-200 transition-all">[Detailed Technical]</button>
-              <button onclick="setReviewFormatStyle('executive')" id="rf-executive" class="rf-pill px-3 py-1.5 rounded text-slate-400 hover:text-slate-200 transition-all">[Executive Summary]</button>
-            </div>
-
-            <button onclick="navigateTo('publisher_view')" class="px-5 py-2.5 rounded bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-slate-950 font-bold text-xs tracking-wide shadow-glow-primary transition-all flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[16px]">lock</span>
-              <span>Approve &amp; Lock Note for Export</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Structured Section Cards -->
-        <div class="grid grid-cols-1 gap-5">
-          
-          <!-- Section 1: Priority Incidents & Blockers (Red Accent) -->
-          <div class="bg-slate-900 border-2 border-rose-900/80 rounded-xl p-5 shadow-panel relative overflow-hidden">
-            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-rose-500"></div>
-
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-              <div class="flex items-center gap-2.5">
-                <div class="w-6 h-6 rounded bg-rose-950 border border-rose-800/60 text-rose-400 flex items-center justify-center font-mono font-bold text-xs">
-                  1
-                </div>
-                <h2 class="text-sm font-bold text-rose-400 font-mono uppercase tracking-wide">1. Priority Incidents &amp; Blockers</h2>
-                <span class="text-xs font-mono px-2 py-0.5 rounded bg-rose-950/80 text-rose-300 border border-rose-800/60 font-semibold animate-pulse">1 Active Blocker</span>
-              </div>
-
-              <!-- Section-level Action: [Regenerate Section Only] -->
-              <button onclick="regenerateSection('blockers')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-mono flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px] text-cyan-400">replay</span>
-                <span>[Regenerate Section Only]</span>
-              </button>
-            </div>
-
-            <div class="flex flex-col gap-3" id="review-blockers-container">
-              <!-- Dynamically populated via JS -->
-            </div>
-          </div>
-
-          <!-- Section 2: Completed Work (Green Accent) -->
-          <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel relative overflow-hidden">
-            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500"></div>
-
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-              <div class="flex items-center gap-2.5">
-                <div class="w-6 h-6 rounded bg-emerald-950 border border-emerald-800/60 text-emerald-400 flex items-center justify-center font-mono font-bold text-xs">
-                  2
-                </div>
-                <h2 class="text-sm font-bold text-slate-100 font-mono uppercase tracking-wide">2. Completed Work</h2>
-                <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 font-semibold">3 Resolved Items</span>
-              </div>
-
-              <!-- Section-level Action: [Regenerate Section Only] -->
-              <button onclick="regenerateSection('completed')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-mono flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px] text-cyan-400">replay</span>
-                <span>[Regenerate Section Only]</span>
-              </button>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5" id="review-completed-container">
-              <!-- Dynamically populated via JS -->
-            </div>
-          </div>
-
-          <!-- Section 3: In Progress (Sky Accent) -->
-          <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel relative overflow-hidden">
-            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-sky-500"></div>
-
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-              <div class="flex items-center gap-2.5">
-                <div class="w-6 h-6 rounded bg-sky-950 border border-sky-800/60 text-sky-400 flex items-center justify-center font-mono font-bold text-xs">
-                  3
-                </div>
-                <h2 class="text-sm font-bold text-slate-100 font-mono uppercase tracking-wide">3. In Progress</h2>
-                <span class="text-xs font-mono px-2 py-0.5 rounded bg-sky-950/60 text-sky-400 border border-sky-800/40 font-semibold">3 Active Tasks</span>
-              </div>
-
-              <!-- Section-level Action: [Regenerate Section Only] -->
-              <button onclick="regenerateSection('inprogress')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-mono flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px] text-cyan-400">replay</span>
-                <span>[Regenerate Section Only]</span>
-              </button>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5" id="review-inprogress-container">
-              <!-- Dynamically populated via JS -->
-            </div>
-          </div>
-
-          <!-- Section 4: Watch-list (Amber Accent - Deliberate Clean State) -->
-          <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel relative overflow-hidden">
-            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500"></div>
-
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-              <div class="flex items-center gap-2.5">
-                <div class="w-6 h-6 rounded bg-amber-950 border border-amber-800/60 text-amber-400 flex items-center justify-center font-mono font-bold text-xs">
-                  4
-                </div>
-                <h2 class="text-sm font-bold text-slate-100 font-mono uppercase tracking-wide">4. Watch-list</h2>
-                <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">Audit Compliant</span>
-              </div>
-
-              <!-- Section-level Action: [Regenerate Section Only] -->
-              <button onclick="regenerateSection('watchlist')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-mono flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px] text-cyan-400">replay</span>
-                <span>[Regenerate Section Only]</span>
-              </button>
-            </div>
-
-            <!-- Empty state container rendering strictly: "Nothing to report" -->
-            <div class="bg-slate-950/60 border border-dashed border-slate-800 p-6 rounded-lg flex flex-col items-center justify-center text-center">
-              <span class="material-symbols-outlined text-slate-600 text-[26px] mb-1">check_circle_outline</span>
-              <span class="text-sm font-mono font-semibold text-slate-300">Nothing to report</span>
-              <span class="text-[11px] font-mono text-slate-500 mt-0.5">Zero secondary monitoring threshold breaches or unassigned background jobs logged.</span>
-            </div>
-          </div>
-
-          <!-- Section 5: Next-Shift Action Checklist (Purple Accent) -->
-          <div class="bg-slate-900 border border-purple-900/60 rounded-xl p-5 shadow-panel relative overflow-hidden">
-            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-purple-500"></div>
-
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-              <div class="flex items-center gap-2.5">
-                <div class="w-6 h-6 rounded bg-purple-950 border border-purple-800/60 text-purple-400 flex items-center justify-center font-mono font-bold text-xs">
-                  5
-                </div>
-                <h2 class="text-sm font-bold text-purple-300 font-mono uppercase tracking-wide">5. Next-Shift Action Checklist</h2>
-                <span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-800/60 font-semibold">Incoming Handover Action Items</span>
-              </div>
-
-              <!-- Section-level Action: [Regenerate Section Only] -->
-              <button onclick="regenerateSection('checklist')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-mono flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px] text-cyan-400">replay</span>
-                <span>[Regenerate Section Only]</span>
-              </button>
-            </div>
-
-            <!-- Interactive checkboxes from prompt -->
-            <div class="flex flex-col gap-2.5 font-mono text-xs" id="review-checklist-container">
-              <label class="flex items-start gap-3 p-3 rounded bg-slate-950/80 border border-slate-800 hover:border-purple-600/60 transition-colors cursor-pointer group">
-                <input type="checkbox" onchange="toggleChecklistItem(0, this.checked)" class="mt-0.5 w-4 h-4 rounded text-purple-600 bg-slate-900 border-slate-700 cursor-pointer"/>
-                <div class="flex-1">
-                  <span class="text-slate-200 group-hover:text-purple-300">Verify DB replication lag drops below 20ms by 22:00 IST</span>
-                  <span class="text-[10px] text-slate-500 block mt-0.5 font-sans">Required for postgres-primary replica 03 completion.</span>
-                </div>
-                <span class="text-[9px] px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800/40">HIGH PRIORITY</span>
-              </label>
-
-              <label class="flex items-start gap-3 p-3 rounded bg-slate-950/80 border border-slate-800 hover:border-purple-600/60 transition-colors cursor-pointer group">
-                <input type="checkbox" onchange="toggleChecklistItem(1, this.checked)" class="mt-0.5 w-4 h-4 rounded text-purple-600 bg-slate-900 border-slate-700 cursor-pointer"/>
-                <div class="flex-1">
-                  <span class="text-slate-200 group-hover:text-purple-300">Check mobile login error rates after payment service hotfix</span>
-                  <span class="text-[10px] text-slate-500 block mt-0.5 font-sans">Verify iOS auth gateway p99 returns under 120ms.</span>
-                </div>
-                <span class="text-[9px] px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800/40">BLOCKER WATCH</span>
-              </label>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Bottom Primary Action: Button "Approve & Lock Note for Export" -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-panel flex items-center justify-between">
-          <span class="text-xs text-slate-400 font-mono">18 of 18 items grounded. All human approvals registered.</span>
-          <button onclick="navigateTo('publisher_view')" class="px-6 py-2.5 rounded bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-slate-950 font-bold text-xs tracking-wide shadow-glow-primary transition-all flex items-center gap-2">
-            <span class="material-symbols-outlined text-[18px]">lock</span>
-            <span>Approve &amp; Lock Note for Export</span>
-          </button>
-        </div>
-
-      </section>
-
-      <!-- ======================================================== -->
-      <!-- VIEW 4: DOCUMENT PUBLISHER & EXPORT (`publisher_view`)   -->
-      <!-- ======================================================== -->
-      <section id="view-publisher_view" class="view-container hidden flex flex-col gap-6">
-        
-        <!-- Publisher Top Bar -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <button onclick="navigateTo('review_view')" class="text-xs font-mono text-cyan-400 hover:underline flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">arrow_back</span>
-                <span>Back to Review</span>
-              </button>
-              <span class="text-slate-600 font-mono">/</span>
-              <span class="text-xs font-mono text-slate-400">Document Publisher</span>
-            </div>
-            <h1 class="text-lg font-bold text-white tracking-tight">Document Publisher &amp; Single Artifact Export</h1>
-            <span class="text-xs font-mono text-slate-400">Target Artifact: <strong class="text-cyan-300">Handover-Note-2026-09-03.pdf</strong></span>
-          </div>
-
-          <!-- Export Controls Toolbar: [Download Monolithic PDF (.pdf)], [Export DOCX (.docx)], [Export Markdown (.md)], [Copy Slack/Teams Alert Draft], [Generate Read-Only Audit URL] -->
-          <div class="flex flex-wrap items-center gap-2.5">
-            
-            <!-- Primary Download Button: [Download Monolithic PDF (.pdf)] -->
-            <button onclick="handleDownloadFinalPdf()" id="btn-pub-pdf" class="px-4 py-2 rounded bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-slate-950 font-bold text-xs tracking-wide shadow-glow-primary transition-all flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
-              <span id="btn-pub-pdf-text">[Download Monolithic PDF (.pdf)]</span>
-            </button>
-
-            <!-- Secondary Export Button: [Export DOCX (.docx)] -->
-            <button onclick="handleExportDocx()" class="px-3 py-2 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-semibold transition-all flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[16px] text-blue-400">description</span>
-              <span>[Export DOCX (.docx)]</span>
-            </button>
-
-            <!-- Secondary Export Button: [Export Markdown (.md)] -->
-            <button onclick="handleExportMarkdown()" class="px-3 py-2 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-semibold transition-all flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[16px] text-emerald-400">code</span>
-              <span>[Export Markdown (.md)]</span>
-            </button>
-
-            <!-- Stretch Export: [Copy Slack/Teams Alert Draft] with Tooltip -->
-            <div class="relative group">
-              <button onclick="copySlackMarkdown()" id="btn-pub-slack" class="px-3 py-2 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-semibold transition-all flex items-center gap-1.5">
-                <span class="material-symbols-outlined text-[16px] text-amber-400">send_to_mobile</span>
-                <span id="btn-pub-slack-text">[Copy Slack/Teams Alert Draft]</span>
-              </button>
-              <div id="slack-tooltip" class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-slate-950 text-cyan-300 text-[10px] font-mono rounded shadow border border-slate-800 opacity-0 pointer-events-none transition-opacity">
-                Copied to clipboard!
-              </div>
-            </div>
-
-            <!-- Shareable Link Button: [Generate Read-Only Audit URL] -->
-            <button onclick="generateAuditUrlModal()" class="px-3 py-2 rounded bg-purple-950/60 hover:bg-purple-900/60 text-purple-300 border border-purple-800/60 text-xs font-mono font-semibold transition-all flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[16px]">link</span>
-              <span>[Generate Read-Only Audit URL]</span>
-            </button>
-
-          </div>
-        </div>
-
-        <!-- 1. Simulated A4 Paper Preview Container -->
-        <div class="flex justify-center py-4 overflow-x-auto">
-          <div id="simulated-a4-sheet" class="w-full max-w-[850px] bg-white text-slate-900 rounded-lg p-8 sm:p-12 sheet-shadow font-sans text-xs transition-all duration-300">
-            
-            <!-- Header with Shift Details, Lead Name, Grounding Audit Badge (18/18 Grounded - 100%), and Version Tag (v1.2 Approved) -->
-            <div class="border-b-2 border-slate-900 pb-5 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded bg-slate-950 text-cyan-400 flex items-center justify-center font-mono font-bold text-lg">
-                  SS
-                </div>
-                <div>
-                  <span class="text-[10px] font-mono uppercase tracking-widest text-slate-500 block font-semibold">SHIFTSYNC OPERATIONS COMMAND // SRE DIVISION</span>
-                  <h2 class="text-xl font-black text-slate-950 tracking-tight">ENGINEERING SHIFT HANDOVER NOTE</h2>
-                </div>
-              </div>
-              <div class="text-right font-mono text-[11px] text-slate-600">
-                <div><strong>DOC ID:</strong> SH-20260903-EVN</div>
-                <div><strong>VERSION:</strong> <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">v1.2 Approved</span></div>
-                <div><strong>AUDIT:</strong> <span class="text-emerald-700 font-bold">18/18 Grounded (100%)</span></div>
-              </div>
-            </div>
-
-            <!-- Metadata Grid -->
-            <div class="grid grid-cols-3 gap-4 bg-slate-100 p-3.5 rounded border border-slate-200 mb-6 font-mono text-[11px]">
-              <div>
-                <span class="text-slate-500 block text-[9px] uppercase">Shift Lead Name:</span>
-                <strong class="text-slate-900" id="pub-lead-name">Thiraviaraj R. (Lead SRE)</strong>
-              </div>
-              <div>
-                <span class="text-slate-500 block text-[9px] uppercase">Handover Target:</span>
-                <strong class="text-slate-900">Shift 05-Night (APAC Handover)</strong>
-              </div>
-              <div>
-                <span class="text-slate-500 block text-[9px] uppercase">Shift Span:</span>
-                <strong class="text-slate-900" id="pub-span-name">17:00:00 - 01:00:00 (Asia/Kolkata)</strong>
-              </div>
-            </div>
-
-            <!-- Cleanly rendered sections with traceable source footnotes at the bottom of each section -->
-            <div class="flex flex-col gap-6" id="publisher-doc-body">
-              
-              <!-- 1. Priority Incidents & Blockers -->
-              <div>
-                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-red-700 border-b border-red-300 pb-1 mb-2.5 flex items-center justify-between">
-                  <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-red-600"></span>
-                    1. Priority Incidents &amp; Blockers
-                  </span>
-                  <span class="text-[10px] text-slate-400 font-normal">1 Item</span>
-                </h3>
-                <div class="p-3 bg-red-50 rounded border-2 border-red-300 text-slate-800">
-                  <div class="flex justify-between font-mono text-[10px] text-red-700 mb-1 font-bold">
-                    <span>[P1 BLOCKER] JIRA-4821 • Login failure on iOS v4.2; needs backend on-call</span>
-                    <span>Due in 2 hrs • Owner: Alex K.</span>
-                  </div>
-                  <p class="text-slate-800 leading-relaxed font-medium">
-                    Twilio Indian transit carrier route degradation causing 14% failure in customer authentication OTPs. External Ticket #TW-994102 escalated to Sev-1. Primary on-call: Alex K.
-                  </p>
-                  <div class="text-[9px] font-mono text-slate-500 mt-1.5 border-t border-red-200 pt-1">
-                    Footnote: Source: JIRA-4821 @ 19:42 IST • High Confidence 98% • Evidence Hash: #ff0021bb4419a
-                  </div>
-                </div>
-              </div>
-
-              <!-- 2. Completed Work -->
-              <div>
-                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-1 mb-2.5 flex items-center justify-between">
-                  <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-                    2. Completed Work
-                  </span>
-                  <span class="text-[10px] text-slate-400 font-normal">3 Items</span>
-                </h3>
-                <div class="space-y-2">
-                  <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
-                    <div class="flex justify-between font-mono text-[10px] text-slate-600 mb-0.5">
-                      <span class="font-bold text-blue-700">INC-102 • CDN certificate renewed</span>
-                      <span>Owner: Sarah M.</span>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed">Automated edge certificate provisioning completed across Cloudflare distribution endpoints.</p>
-                    <div class="text-[9px] font-mono text-slate-400 mt-1 border-t border-slate-200 pt-1">
-                      Footnote: Source: pagerduty: INC-102 @ 20:10 IST • High Confidence • Evidence Hash: #102eac39110
-                    </div>
-                  </div>
-
-                  <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
-                    <div class="flex justify-between font-mono text-[10px] text-slate-600 mb-0.5">
-                      <span class="font-bold text-blue-700">SEC-1092 • TLS Wildcard Cert Rotation for Ingress Pods</span>
-                      <span>Owner: Thiraviaraj R.</span>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed">Rotated wildcard certificates across production API Gateway ingress pods. Verified zero handshake dropouts.</p>
-                    <div class="text-[9px] font-mono text-slate-400 mt-1 border-t border-slate-200 pt-1">
-                      Footnote: Source: jira: SEC-1092 @ 18:42 IST • Evidence Hash: #8a90f119b431c
-                    </div>
-                  </div>
-
-                  <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
-                    <div class="flex justify-between font-mono text-[10px] text-slate-600 mb-0.5">
-                      <span class="font-bold text-blue-700">INFRA-9023 • Kafka Partition Rebalance on Cluster-C</span>
-                      <span>Owner: NOC Infra Pod</span>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed">Completed manual topic repartitioning on Cluster-C. High consumer lag resolved; dropped from 42,000 to &lt;150 messages.</p>
-                    <div class="text-[9px] font-mono text-slate-400 mt-1 border-t border-slate-200 pt-1">
-                      Footnote: Source: jira: INFRA-9023 + slack #infra @ 19:15 IST • Evidence Hash: #4b21e89f0221a
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 3. In Progress -->
-              <div>
-                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-1 mb-2.5 flex items-center justify-between">
-                  <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-sky-500"></span>
-                    3. In Progress
-                  </span>
-                  <span class="text-[10px] text-slate-400 font-normal">3 Items</span>
-                </h3>
-                <div class="space-y-2">
-                  <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
-                    <div class="flex justify-between font-mono text-[10px] text-slate-600 mb-0.5">
-                      <span class="font-bold text-sky-700">OPS-4820 • Database replica replication lag mitigation</span>
-                      <span class="px-1.5 py-0.2 bg-amber-100 text-amber-800 rounded font-bold">[Not Specified]</span>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed">Replica replication lag mitigation in progress across secondary reader pods in ap-south-1.</p>
-                    <div class="text-[9px] font-mono text-slate-400 mt-1 border-t border-slate-200 pt-1">
-                      Footnote: Source: jira: OPS-4820 @ 20:05 IST • Evidence Hash: #ops4820ff
-                    </div>
-                  </div>
-
-                  <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
-                    <div class="flex justify-between font-mono text-[10px] text-slate-600 mb-0.5">
-                      <span class="font-bold text-sky-700">DB-3301 • Postgres Read-Replica Upgrade (pg15 to pg16)</span>
-                      <span>ETA: 02:30 IST</span>
-                    </div>
-                    <p class="text-slate-700 leading-relaxed">Replica 3 data dump 75% complete. SRE-Night lead to verify WAL synchronization at 02:30 IST.</p>
-                    <div class="text-[9px] font-mono text-slate-400 mt-1 border-t border-slate-200 pt-1">
-                      Footnote: Source: jira: DB-3301 @ 20:45 IST • Evidence Hash: #992a77bc8100e
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 4. Watch-list (Strictly "Nothing to report") -->
-              <div>
-                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-1 mb-2.5 flex items-center justify-between">
-                  <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-slate-400"></span>
-                    4. Watch-list
-                  </span>
-                  <span class="text-[10px] text-slate-400 font-normal">0 Alerts</span>
-                </h3>
-                <div class="p-3 bg-slate-50 rounded border border-dashed border-slate-300 text-center font-mono text-slate-500 text-[11px]">
-                  Nothing to report
-                </div>
-              </div>
-
-              <!-- 5. Next-Shift Action Checklist -->
-              <div>
-                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-purple-900 border-b border-purple-300 pb-1 mb-2.5 flex items-center justify-between">
-                  <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-purple-600"></span>
-                    5. Next-Shift Action Checklist
-                  </span>
-                  <span class="text-[10px] text-slate-400 font-normal">2 Action Items</span>
-                </h3>
-                <div class="space-y-1.5 font-mono text-[11px] text-slate-800" id="pub-checklist-container">
-                  <div class="flex items-center gap-2 p-2 bg-purple-50/50 rounded border border-purple-200">
-                    <span>[ ]</span>
-                    <span>Verify DB replication lag drops below 20ms by 22:00 IST</span>
-                  </div>
-                  <div class="flex items-center gap-2 p-2 bg-purple-50/50 rounded border border-purple-200">
-                    <span>[ ]</span>
-                    <span>Check mobile login error rates after payment service hotfix</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Footer -->
-            <div class="mt-8 pt-4 border-t border-slate-300 flex justify-between items-center text-[10px] font-mono text-slate-400">
-              <span>ShiftSync Handover Intelligence Engine • SHA-256: 9a81f0b4c8e712a10</span>
-              <span>Page 1 of 1 • Internal SRE Audit Record</span>
-            </div>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ======================================================== -->
-      <!-- VIEW 5: TEST SCENARIOS & REPRODUCIBILITY (`test_scenarios`)-->
-      <!-- ======================================================== -->
-      <section id="view-test_scenarios" class="view-container hidden flex flex-col gap-6">
-        
-        <!-- Header -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-teal-950 text-teal-300 border border-teal-800/50">EDGE CASE TEST HARNESS</span>
-              <span class="text-slate-500 font-mono">•</span>
-              <span class="text-xs font-mono text-slate-400">Reproducibility &amp; AST Verifier</span>
-            </div>
-            <h1 class="text-lg font-bold text-white tracking-tight">Test Scenarios &amp; Reproducibility Verification</h1>
-            <p class="text-xs text-slate-400 mt-0.5">
-              Verify edge-case handling across Quiet, Busy, Messy, and Conflicting shift windows.
-            </p>
-          </div>
-
-          <button onclick="navigateTo('dashboard')" class="px-3.5 py-2 rounded bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-300 border border-slate-700 flex items-center gap-1.5 self-start lg:self-auto">
-            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            <span>Return to Shift Control</span>
-          </button>
-        </div>
-
-        <!-- Four Test Load Presets -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-          
-          <!-- Button [1. Quiet Shift] -->
-          <button onclick="loadDemoScenario('quiet')" id="scen-tab-quiet" class="scen-box p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-left transition-all group">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-200 group-hover:text-cyan-400">[1. Quiet Shift]</span>
-              <span class="material-symbols-outlined text-[18px] text-slate-400">nightlight</span>
-            </div>
-            <p class="text-[11px] text-slate-400 font-sans leading-relaxed">
-              Loads 0 events. Handover preview renders "No activity recorded during this shift" and all 4 sections read "Nothing to report".
-            </p>
-            <span class="text-[9px] font-mono text-slate-500 block mt-2">0 Events • Clean Validation</span>
-          </button>
-
-          <!-- Button [2. Busy Shift] -->
-          <button onclick="loadDemoScenario('busy')" id="scen-tab-busy" class="scen-box p-4 rounded-xl bg-slate-900 border-2 border-cyan-500 shadow-glow-primary text-left transition-all group">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-cyan-300">[2. Busy Shift]</span>
-              <span class="material-symbols-outlined text-[18px] text-cyan-400">sensors</span>
-            </div>
-            <p class="text-[11px] text-slate-400 font-sans leading-relaxed">
-              Loads 24 events across Jira, PagerDuty, and Git commits with 100% Grounding score and 1 active blocker.
-            </p>
-            <span class="text-[9px] font-mono text-cyan-400 block mt-2">24 Events • 100% Grounding</span>
-          </button>
-
-          <!-- Button [3. Messy Shift] -->
-          <button onclick="loadDemoScenario('messy')" id="scen-tab-messy" class="scen-box p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-left transition-all group">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-200 group-hover:text-cyan-400">[3. Messy Shift]</span>
-              <span class="material-symbols-outlined text-[18px] text-amber-400">shuffle</span>
-            </div>
-            <p class="text-[11px] text-slate-400 font-sans leading-relaxed">
-              Loads out-of-order timestamps, duplicate chat threads, and verifies identical item count on repeated regeneration.
-            </p>
-            <span class="text-[9px] font-mono text-amber-400 block mt-2">Out-of-order logs • AST Match</span>
-          </button>
-
-          <!-- Button [4. Conflicting Data Shift] -->
-          <button onclick="loadDemoScenario('conflicting')" id="scen-tab-conflicting" class="scen-box p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-left transition-all group">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-200 group-hover:text-cyan-400">[4. Conflicting Data Shift]</span>
-              <span class="material-symbols-outlined text-[18px] text-rose-400">warning</span>
-            </div>
-            <p class="text-[11px] text-slate-400 font-sans leading-relaxed">
-              Triggers the conflict banner for INC-45 (Jira vs PagerDuty status mismatch) and prompts lead resolution.
-            </p>
-            <span class="text-[9px] font-mono text-rose-400 block mt-2">INC-45 Mismatch • Lead Arbitration</span>
-          </button>
-
-        </div>
-
-        <!-- Scenario Output Preview & Determinism Match Card -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-panel flex flex-col gap-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold font-mono text-white uppercase" id="scenario-active-title">Active Scenario: Scenario 2 (Busy Shift)</span>
-                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-800/50">100% REPEATABILITY MATCH</span>
-              </div>
-              <span class="text-xs text-slate-400 font-mono" id="scenario-active-meta">SHA-256 AST Hash: #9a81f0b4 == #9a81f0b4 (0 additions, 0 deletions)</span>
-            </div>
-
-            <button onclick="runScenarioDiffTest()" id="btn-run-diff" class="px-4 py-2 rounded bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 font-bold text-xs tracking-wide shadow-glow-secondary transition-all flex items-center gap-1.5 self-start sm:self-auto">
-              <span class="material-symbols-outlined text-[16px]">replay</span>
-              <span>Re-run Generation Check</span>
+            <button onclick="showToast('Loading archived note snapshot...', 'info')" class="text-slate-400 hover:text-white text-left sm:text-right">
+              View archive &rarr;
             </button>
           </div>
 
-          <!-- Scenario Preview Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="scenario-preview-container">
-            <!-- Dynamically populated -->
-          </div>
         </div>
+      </div>
 
-      </section>
+    </section>
 
-    </main>
+  </main>
 
-  </div>
-
-  <!-- ==================== SLIDE-OUT GROUNDING EVIDENCE JSON DRAWER ==================== -->
-  <div id="drawer-grounding-evidence" class="fixed inset-y-0 right-0 z-50 w-full max-w-lg bg-[#0c1324] border-l border-slate-800 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+  <!-- ==================== SIDE EXPANDABLE EVIDENCE DRAWER ==================== -->
+  <div id="drawer-evidence" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-[#0c1324] border-l border-slate-800 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
     
-    <div class="px-6 py-4 border-b border-slate-800 bg-[#070d1f] flex items-center justify-between">
+    <div class="px-5 py-4 border-b border-slate-800 bg-[#070d1f] flex items-center justify-between font-mono text-xs">
       <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-cyan-400 text-[20px]">fact_check</span>
-        <div>
-          <h3 class="text-sm font-bold text-white font-mono uppercase">Grounding Evidence Drawer</h3>
-          <span class="text-[10px] font-mono text-emerald-400">100% Cryptographic Provenance Trace</span>
-        </div>
+        <span class="material-symbols-outlined text-cyan-400 text-[18px]">verified</span>
+        <h3 class="font-bold text-white uppercase">Source evidence</h3>
       </div>
       <button onclick="closeEvidenceDrawer()" class="text-slate-400 hover:text-white">
         <span class="material-symbols-outlined text-[20px]">close</span>
       </button>
     </div>
 
-    <div class="p-6 overflow-y-auto flex-1 flex flex-col gap-4 font-mono text-xs text-slate-300">
-      <div class="bg-slate-950 p-3.5 rounded border border-slate-800 space-y-2">
-        <div class="flex justify-between"><span class="text-slate-500">RECORD ID:</span><span class="text-cyan-300 font-bold" id="drawer-record-id">JIRA-4821</span></div>
-        <div class="flex justify-between"><span class="text-slate-500">ORIGIN SYSTEM:</span><span class="text-slate-200" id="drawer-origin">Jira Service Desk</span></div>
-        <div class="flex justify-between"><span class="text-slate-500">TIMESTAMP:</span><span class="text-cyan-400" id="drawer-time">19:42:00 IST</span></div>
-        <div class="flex justify-between"><span class="text-slate-500">AUDIT HASH:</span><code class="text-emerald-400" id="drawer-hash">sha256-ff0021bb4419a</code></div>
+    <div class="p-5 overflow-y-auto flex-1 flex flex-col gap-3.5 font-mono text-xs text-slate-300">
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5">
+        <div class="flex justify-between"><span class="text-slate-500">TICKET:</span><strong class="text-cyan-300" id="drw-ticket">JIRA-4821</strong></div>
+        <div class="flex justify-between"><span class="text-slate-500">ORIGIN:</span><span class="text-slate-200" id="drw-origin">Jira + PagerDuty</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">TIME:</span><span class="text-cyan-400" id="drw-time">19:42:00 IST</span></div>
       </div>
 
-      <div>
-        <span class="text-slate-400 uppercase block mb-1.5 font-semibold text-[11px]">Raw JSON Evidence Payload:</span>
-        <div class="bg-slate-950 p-4 rounded border border-slate-800 text-[11px] text-cyan-300 overflow-x-auto max-h-72">
-          <pre><code id="drawer-json-content">...</code></pre>
+      <!-- Expandable Advanced Details -->
+      <details class="group bg-slate-950 rounded-xl border border-slate-800 p-3">
+        <summary class="cursor-pointer text-[11px] text-slate-400 hover:text-white font-bold flex items-center justify-between">
+          <span>Advanced Provenance &amp; Raw JSON</span>
+          <span class="material-symbols-outlined text-[14px] group-open:rotate-180 transition-transform">expand_more</span>
+        </summary>
+        <div class="mt-2 pt-2 border-t border-slate-800/80 text-[10px] text-cyan-300 overflow-x-auto max-h-48">
+          <pre><code id="drw-json">...</code></pre>
         </div>
-      </div>
+      </details>
     </div>
 
-    <div class="px-6 py-3 border-t border-slate-800 bg-[#070d1f] flex justify-between items-center text-xs font-mono">
-      <button onclick="copyDrawerJson()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 flex items-center gap-1">
-        <span class="material-symbols-outlined text-[14px]">content_copy</span>
-        <span id="btn-copy-drawer">Copy Payload</span>
+    <div class="px-5 py-3 border-t border-slate-800 bg-[#070d1f] flex justify-end">
+      <button onclick="closeEvidenceDrawer()" class="px-4 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold font-mono text-xs">
+        Close drawer
       </button>
-      <button onclick="closeEvidenceDrawer()" class="px-4 py-1.5 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold">Close Drawer</button>
     </div>
 
   </div>
 
-  <!-- ==================== MODALS ==================== -->
-
-  <!-- Modal 1: Export Failure Modal (Error 127) -->
-  <div id="modal-export-failure" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#120507] border-2 border-rose-600 rounded-xl max-w-lg w-full shadow-glow-error flex flex-col overflow-hidden animate-fadeIn">
-      
-      <div class="px-6 py-4 bg-rose-950/80 border-b border-rose-800/80 flex items-center gap-3">
-        <div class="w-10 h-10 rounded bg-rose-600 text-white flex items-center justify-center font-bold text-lg animate-pulse">
-          <span class="material-symbols-outlined text-[22px]">error</span>
-        </div>
-        <div>
-          <h3 class="text-sm font-bold text-white font-mono uppercase tracking-wide">Critical Export Failure</h3>
-          <span class="text-xs font-mono text-rose-300">PDF rendering worker error 127</span>
-        </div>
-      </div>
-
-      <div class="p-6 flex flex-col gap-4 text-xs font-mono text-slate-300">
-        <div class="bg-black/60 border border-rose-900/60 p-3 rounded text-rose-300 space-y-1">
-          <div><strong class="text-rose-400">Error:</strong> [FATAL_CLI_FAIL] Typst compiler binary not found in $PATH</div>
-          <div><strong class="text-slate-400">Exit Status:</strong> 127 (Non-zero exit code)</div>
-          <div><strong class="text-slate-400">Subsystem:</strong> Monolithic Document PDF Compiler v2.5</div>
-        </div>
-
-        <p class="text-slate-300">
-          The PDF compiler aborted loudly to avoid silently generating a truncated or blank document. All shift event state remains safe and uncorrupted.
-        </p>
-
-        <div id="debug-stacktrace-box" class="hidden bg-slate-950 p-3 rounded border border-slate-800 text-[10px] text-slate-400 overflow-x-auto max-h-32">
-          <pre><code>at WorkerPool.compile (compiler.ts:182:12)
-at renderMonolithicA4 (renderer.ts:44:9)
-at async exportToPdf (exporter.ts:89:15)
-Exit code 127: Binary typst not located in current runtime path.</code></pre>
-        </div>
-      </div>
-
-      <div class="px-6 py-3.5 bg-rose-950/40 border-t border-rose-900/60 flex justify-between items-center font-mono text-xs">
-        <button onclick="toggleDebugStacktrace()" class="text-cyan-400 hover:underline flex items-center gap-1">
-          <span class="material-symbols-outlined text-[14px]">terminal</span>
-          <span id="btn-debug-stack-text">Debug Stacktrace</span>
-        </button>
-
-        <div class="flex gap-2.5">
-          <button onclick="dismissExportErrorModal()" class="px-3.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold">
-            Dismiss
-          </button>
-          <button onclick="retryExportProcess()" id="btn-retry-export" class="px-4 py-1.5 rounded bg-rose-600 hover:bg-rose-500 text-white font-bold transition-all shadow-glow-error flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[16px]">refresh</span>
-            <span>Retry Export</span>
-          </button>
-        </div>
-      </div>
-
+  <!-- Minimal Footer -->
+  <footer class="border-t border-slate-800/80 py-3.5 px-6 font-mono text-xs text-slate-500 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-2">
+    <span>ShiftSync // Handover Intelligence Engine</span>
+    <div class="flex items-center gap-4">
+      <a href="landing.html" class="hover:text-cyan-400">Public Landing</a>
+      <a href="login.html" class="hover:text-emerald-400">Sign In</a>
+      <a href="signup.html" class="hover:text-emerald-400">Sign Up</a>
     </div>
-  </div>
-
-  <!-- Modal 2: Edit Text Modal -->
-  <div id="modal-edit-item" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-xl max-w-lg w-full shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
-      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-cyan-400 text-[20px]">edit_note</span>
-          <h3 class="text-sm font-bold text-white font-mono uppercase">Edit Handover Line</h3>
-        </div>
-        <button onclick="closeEditModal()" class="text-slate-400 hover:text-white">
-          <span class="material-symbols-outlined text-[20px]">close</span>
-        </button>
-      </div>
-
-      <div class="p-5 flex flex-col gap-3.5 text-xs font-mono">
-        <div>
-          <label class="text-slate-400 block mb-1">Headline / Description:</label>
-          <input type="text" id="edit-item-title" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded p-2.5 text-slate-100 outline-none"/>
-        </div>
-
-        <div>
-          <label class="text-slate-400 block mb-1">Assigned Owner:</label>
-          <input type="text" id="edit-item-owner" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded p-2.5 text-slate-100 outline-none"/>
-        </div>
-
-        <div>
-          <label class="text-slate-400 block mb-1">Context &amp; Handover Instructions:</label>
-          <textarea id="edit-item-details" rows="3" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded p-2.5 text-slate-100 outline-none font-sans text-xs"></textarea>
-        </div>
-      </div>
-
-      <div class="px-5 py-3 border-t border-slate-800 bg-slate-950 flex justify-end gap-2 text-xs font-mono">
-        <button onclick="closeEditModal()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">Cancel</button>
-        <button onclick="saveEditModalItem()" class="px-4 py-1.5 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold">Save Changes</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 3: Read-Only Audit URL Modal -->
-  <div id="modal-audit-url" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-xl max-w-lg w-full shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
-      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-purple-400 text-[20px]">link</span>
-          <h3 class="text-sm font-bold text-white font-mono uppercase">Read-Only Audit Permlink</h3>
-        </div>
-        <button onclick="closeAuditUrlModal()" class="text-slate-400 hover:text-white">
-          <span class="material-symbols-outlined text-[20px]">close</span>
-        </button>
-      </div>
-
-      <div class="p-5 flex flex-col gap-3.5 text-xs font-mono text-slate-300">
-        <p class="text-slate-400 font-sans">
-          This permanent permalink points to an immutable SOC-2 / ISO-27001 sealed snapshot of this shift handover note synced in Cloud Firestore.
-        </p>
-        
-        <div class="p-3 bg-slate-950 rounded border border-slate-800 text-cyan-300 break-all select-all">
-          https://shift-sync-a0b66.web.app/audit/sh-20260903-evn-9a81f0b4c8e712a10
-        </div>
-
-        <div class="flex items-center justify-between text-[11px] text-slate-500 border-t border-slate-800/80 pt-2">
-          <span>Cryptographic Seal: SHA-256</span>
-          <span class="text-emerald-400 font-semibold">FIRESTORE_LOCKED</span>
-        </div>
-      </div>
-
-      <div class="px-5 py-3 border-t border-slate-800 bg-slate-950 flex justify-end gap-2.5 text-xs font-mono">
-        <button onclick="copyAuditUrlLink()" id="btn-copy-audit-url" class="px-4 py-1.5 rounded bg-purple-600 hover:bg-purple-500 text-white font-bold flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[14px]">content_copy</span>
-          <span>Copy Audit URL</span>
-        </button>
-        <button onclick="closeAuditUrlModal()" class="px-3.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 4: Firebase Auth Modal -->
-  <div id="modal-firebase-auth" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-xl max-w-md w-full shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
-      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-cyan-400 text-[20px]">vpn_key</span>
-          <h3 class="text-sm font-bold text-white font-mono uppercase">Firebase Operator Authentication</h3>
-        </div>
-        <button onclick="closeAuthModal()" class="text-slate-400 hover:text-white">
-          <span class="material-symbols-outlined text-[20px]">close</span>
-        </button>
-      </div>
-
-      <div class="p-5 flex flex-col gap-4">
-        <!-- Google Sign-In -->
-        <button type="button" onclick="handleGoogleSignIn()" class="w-full py-2.5 px-4 rounded bg-white hover:bg-slate-100 text-slate-900 font-semibold text-xs flex items-center justify-center gap-2.5 shadow transition-all">
-          <svg class="w-4 h-4" viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-          </svg>
-          <span>Sign In with Google Account</span>
-        </button>
-
-        <div class="flex items-center gap-3">
-          <div class="h-px bg-slate-800 flex-1"></div>
-          <span class="text-[10px] font-mono text-slate-500 uppercase">OR EMAIL &amp; PASSWORD</span>
-          <div class="h-px bg-slate-800 flex-1"></div>
-        </div>
-
-        <div class="flex flex-col gap-3 font-mono text-xs">
-          <div>
-            <label class="text-slate-400 block mb-1">Operator Email:</label>
-            <input type="email" id="auth-email" value="thiraviaraj.sre@shiftsync.internal" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded p-2.5 text-slate-100 outline-none"/>
-          </div>
-          <div>
-            <label class="text-slate-400 block mb-1">Password:</label>
-            <input type="password" id="auth-password" value="OperatorShift2026!" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 rounded p-2.5 text-slate-100 outline-none"/>
-          </div>
-
-          <div class="grid grid-cols-2 gap-2 mt-1">
-            <button type="button" onclick="handleEmailSignIn()" class="py-2 px-3 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all flex items-center justify-center gap-1">
-              <span>Sign In</span>
-            </button>
-            <button type="button" onclick="handleEmailSignUp()" class="py-2 px-3 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs transition-all flex items-center justify-center gap-1">
-              <span>Register</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </footer>
 
   <!-- Toast Notification Container -->
-  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- ==================== STATE MANAGEMENT & CLIENT-SIDE SCRIPT ==================== -->
+  <!-- ==================== CLIENT ENGINE SCRIPT ==================== -->
   <script>
-    // --- Application Central State Store ---
-    const AppState = {
-      currentView: 'dashboard',
-      shiftPreset: 'evening',
-      shiftStart: '2026-09-03 17:00:00',
-      shiftEnd: '2026-09-04 01:00:00',
-      timezone: 'Asia/Kolkata',
-      formatStyle: 'concise',
-      sources: { jira: true, pagerduty: true, slack: true, git: true },
-      splitFilter: 'in_window',
+    const AppData = {
+      activeView: 'overview',
+      format: 'concise',
       conflictResolved: false,
-      conflictStatus: 'In Progress (Active Warning)',
-      activeScenario: 'busy',
-      rejectedItemIds: new Set(),
-      editingItemId: null,
-      checklistState: [false, false],
-      currentUser: {
-        displayName: 'Thiraviaraj R. - Lead SRE',
-        initials: 'TR',
-        email: 'thiraviaraj.sre@shiftsync.internal'
+      sources: { jira: true, pagerduty: true, slack: true, git: true }
+    };
+
+    const EVIDENCE_STORE = {
+      'JIRA-4821': {
+        ticket: 'JIRA-4821',
+        origin: 'PagerDuty P1 + Jira',
+        time: '19:42:00 IST',
+        raw: { incident: 'TW-994102', carrier: 'Twilio Transit Mumbai', failure_pct: 14.2, war_room: '#war-room-otp' }
+      },
+      'INC-102': {
+        ticket: 'INC-102',
+        origin: 'PagerDuty Alert',
+        time: '20:10:00 IST',
+        raw: { target: '*.production.internal', cert_issuer: 'DigiCert', pops_updated: 24 }
+      },
+      'SEC-1092': {
+        ticket: 'SEC-1092',
+        origin: 'Jira Service Desk',
+        time: '18:42:00 IST',
+        raw: { pods_restarted: 48, cert_type: 'Wildcard Ingress', expiry: '2027-09-03' }
+      },
+      'INFRA-9023': {
+        ticket: 'INFRA-9023',
+        origin: 'Jira + Slack #infra',
+        time: '19:15:00 IST',
+        raw: { cluster: 'kafka-c-prod', lag_before: 42000, lag_after: 120 }
+      },
+      'OPS-4820': {
+        ticket: 'OPS-4820',
+        origin: 'Jira Database Track',
+        time: '20:05:00 IST',
+        raw: { cluster: 'postgres-replica-02', current_lag_sec: 142 }
+      },
+      'DB-3301': {
+        ticket: 'DB-3301',
+        origin: 'Jira Database Track',
+        time: '20:45:00 IST',
+        raw: { progress_pct: 75.4, eta: '02:30 IST' }
       }
     };
 
-    // --- Master Data Store ---
-    const MASTER_DATA = {
-      blockers: [
-        {
-          id: 'JIRA-4821',
-          title: 'Login failure on iOS v4.2; needs backend on-call',
-          conciseText: 'Twilio Indian transit carrier route degradation causing 14% failure in customer authentication OTPs. External Ticket #TW-994102 escalated to Sev-1.',
-          detailedText: 'Upstream transit telco BGP routing flapping at Mumbai IXP resulting in HTTP 502 Bad Gateway responses on Twilio OTP dispatch endpoints. Alex K. managing vendor bridge.',
-          executiveText: 'Customer authentication SMS OTP delivery rate temporarily impacted by third-party telecom degradation. Failover route operational.',
-          confidence: 'High Confidence 98%',
-          priority: 'P1 Blocker',
-          dueDate: 'Due in 2 hrs',
-          owner: 'Alex K.',
-          source: 'JIRA-4821 @ 19:42 IST',
-          system: 'Jira Service Desk + PagerDuty',
-          hash: 'sha256-ff0021bb4419a',
-          rawPayload: {
-            ticket: 'JIRA-4821',
-            vendor_incident: 'TW-994102',
-            carrier: 'Vodafone/Airtel Transit Hub',
-            impacted_users_pct: 14.2,
-            failover_route: 'AWS SNS Secondary Bridge',
-            war_room: '#war-room-otp-delivery'
-          }
-        }
-      ],
-      completed: [
-        {
-          id: 'INC-102',
-          title: 'CDN certificate renewed',
-          conciseText: 'Automated edge certificate provisioning completed across Cloudflare distribution endpoints.',
-          detailedText: 'DigiCert Wildcard SAN renewed across 24 edge points of presence. Zero TLS handshake errors logged during rolling edge reload.',
-          executiveText: 'Edge security certificates successfully rotated with zero customer interruption.',
-          confidence: 'High Confidence',
-          owner: 'Sarah M.',
-          source: 'pagerduty: INC-102 @ 20:10 IST',
-          system: 'PagerDuty Alert Pipeline',
-          hash: 'sha256-102eac39110',
-          rawPayload: {
-            incident: 'INC-102',
-            target: '*.production.internal',
-            edge_pops_updated: 24,
-            handshake_failures: 0
-          }
-        },
-        {
-          id: 'SEC-1092',
-          title: 'Rotate TLS Certificates for API Gateway Pods',
-          conciseText: 'Wildcard cert renewal applied to production clusters with 0 dropped handshakes.',
-          detailedText: 'Kubernetes ingress controller cert-manager issuer rotated secrets on 48 ingress pods in ap-south-1. Synthetic canaries passed at 100%.',
-          executiveText: 'Core API Gateway security certificates successfully renewed and validated.',
-          confidence: 'High Confidence',
-          owner: 'Thiraviaraj R.',
-          source: 'jira: SEC-1092 @ 18:42 IST',
-          system: 'Jira Service Desk',
-          hash: 'sha256-8a90f119b431c',
-          rawPayload: {
-            ticket: 'SEC-1092',
-            pods_restarted: 48,
-            ssl_expiry_extended: '2027-09-03',
-            handshake_failures: 0
-          }
-        },
-        {
-          id: 'INFRA-9023',
-          title: 'Kafka Partition Rebalance on Cluster-C',
-          conciseText: 'Rebalanced 12 partitions with consumer lag dropping from 42k to 120 msgs.',
-          detailedText: 'Manual partition rebalance executed on Kafka brokers 04, 05, and 06. Consumer group telemetry-ingest lag normalized under 150 msgs.',
-          executiveText: 'Streaming message queue balanced with consumer throughput restored.',
-          confidence: 'High Confidence',
-          owner: 'NOC Infra Pod',
-          source: 'jira: INFRA-9023 + slack #infra @ 19:15 IST',
-          system: 'Jira + Slack',
-          hash: 'sha256-4b21e89f0221a',
-          rawPayload: {
-            cluster: 'kafka-c-prod',
-            lag_before: 42000,
-            lag_after: 120,
-            broker_cpu_peak_pct: 38.4
-          }
-        }
-      ],
-      inProgress: [
-        {
-          id: 'OPS-4820',
-          title: 'Database replica replication lag mitigation',
-          conciseText: 'Replica replication lag mitigation in progress across secondary reader pods in ap-south-1.',
-          detailedText: 'IOPS throttling on secondary database volume causing 180s replication lag. Storage volume IOPS being upgraded from 3000 to 10000.',
-          executiveText: 'Database read replica performance tuning ongoing with completion expected overnight.',
-          confidence: 'High Confidence',
-          owner: '[Not Specified]',
-          source: 'jira: OPS-4820 @ 20:05 IST',
-          system: 'Jira Database Track',
-          hash: 'sha256-ops4820ff',
-          rawPayload: {
-            ticket: 'OPS-4820',
-            cluster: 'postgres-replica-02',
-            current_lag_seconds: 142,
-            target_lag_seconds: 15
-          }
-        },
-        {
-          id: 'DB-3301',
-          title: 'Postgres Read-Replica Upgrade (pg15 to pg16)',
-          conciseText: 'Replica 3 data dump 75% complete. SRE-Night lead to verify WAL synchronization at 02:30 IST.',
-          detailedText: 'Logical replication stream active. 75.4% of table indexes generated. Estimated cutoff time at 02:30 IST for incoming shift.',
-          executiveText: 'PostgreSQL database version upgrade 75% complete on schedule.',
-          confidence: 'High Confidence',
-          owner: 'Thiraviaraj R.',
-          source: 'jira: DB-3301 @ 20:45 IST',
-          system: 'Jira Database Track',
-          hash: 'sha256-992a77bc8100e',
-          rawPayload: {
-            ticket: 'DB-3301',
-            progress_pct: 75.4,
-            eta_ist: '02:30 IST',
-            wal_delay_seconds: 1.2
-          }
-        }
-      ]
-    };
-
-    // --- Raw Ingestion Stream (24 Events) ---
-    const RAW_EVENTS = [
-      { id: 'EV-101', time: '17:04:12', source: 'JIRA', key: 'SEC-1092', text: 'TLS certificate renewal ticket moved to IN PROGRESS', status: 'IN_WINDOW', isDup: false, snippet: '{"action": "status_change", "to": "in_progress"}' },
-      { id: 'EV-102', time: '17:15:40', source: 'SLACK', key: '#infra-deployments', text: 'Starting cert rotation on API Gateway pods', status: 'IN_WINDOW', isDup: true, snippet: '{"channel": "#infra-deployments", "user": "thira"}' },
-      { id: 'EV-103', time: '17:35:00', source: 'JIRA', key: 'INFRA-9023', text: 'Kafka cluster partition lag alert logged (42k msgs)', status: 'IN_WINDOW', isDup: false, snippet: '{"metric": "consumer_lag", "val": 42000}' },
-      { id: 'EV-104', time: '18:12:22', source: 'SLACK', key: '#noc-war-room', text: 'Investigating Kafka rebalance on node kafka-c-02', status: 'IN_WINDOW', isDup: true, snippet: '{"msg": "Node rebalance started"}' },
-      { id: 'EV-105', time: '18:42:19', source: 'JIRA', key: 'SEC-1092', text: 'TLS Certificate rotation verified on 100% of ingress nodes. Status -> RESOLVED', status: 'IN_WINDOW', isDup: false, snippet: '{"status": "RESOLVED", "pods": 48}' },
-      { id: 'EV-106', time: '19:15:30', source: 'JIRA', key: 'INFRA-9023', text: 'Kafka partitions rebalanced. Consumer lag restored to 120 msgs. Status -> CLOSED', status: 'IN_WINDOW', isDup: false, snippet: '{"status": "CLOSED", "lag": 120}' },
-      { id: 'EV-107', time: '19:40:11', source: 'PAGERDUTY', key: 'INC-102', text: 'TRIGGERED: Payment webhook proxy p99 latency > 800ms', status: 'IN_WINDOW', isDup: true, snippet: '{"p99_ms": 840, "urgency": "high"}' },
-      { id: 'EV-108', time: '19:42:00', source: 'JIRA', key: 'JIRA-4821', text: 'Login failure on iOS v4.2; needs backend on-call (P1 Blocker)', status: 'IN_WINDOW', isDup: false, snippet: '{"priority": "P1", "component": "auth_otp"}' },
-      { id: 'EV-109', time: '19:55:00', source: 'SLACK', key: '#noc-war-room', text: 'Connection pool scale-out initiated for payment webhooks', status: 'IN_WINDOW', isDup: true, snippet: '{"action": "pool_scale", "factor": 2}' },
-      { id: 'EV-110', time: '20:05:00', source: 'JIRA', key: 'OPS-4820', text: 'Database replica replication lag mitigation in progress', status: 'IN_WINDOW', isDup: false, snippet: '{"lag_sec": 142, "assignee": null}' },
-      { id: 'EV-111', time: '20:10:45', source: 'PAGERDUTY', key: 'INC-102', text: 'RESOLVED: CDN certificate renewed; latency normalized to 45ms', status: 'IN_WINDOW', isDup: false, snippet: '{"status": "RESOLVED", "p99_ms": 45}' },
-      { id: 'EV-112', time: '20:30:15', source: 'JIRA', key: 'INC-45', text: 'Status in Jira: RESOLVED by payment-dev-lead', status: 'IN_WINDOW', isConflict: true, snippet: '{"jira_status": "RESOLVED"}' },
-      { id: 'EV-113', time: '20:31:00', source: 'PAGERDUTY', key: 'INC-45', text: 'Status in PagerDuty: IN PROGRESS (Incident Still Acknowledged)', status: 'IN_WINDOW', isConflict: true, snippet: '{"pd_status": "IN_PROGRESS"}' },
-      { id: 'EV-114', time: '20:45:00', source: 'JIRA', key: 'DB-3301', text: 'Postgres pg16 read-replica dump 75% complete. Ongoing indexing.', status: 'IN_WINDOW', isDup: false, snippet: '{"progress": "75.4%"}' },
-      { id: 'EV-115', time: '21:00:15', source: 'JIRA', key: 'CDN-4190', text: 'Cloudflare WAF canary active at 10% EU traffic', status: 'IN_WINDOW', isDup: false, snippet: '{"canary": 10}' },
-      { id: 'EV-116', time: '21:40:00', source: 'GIT', key: 'PR #892', text: 'Merge PR #892: Connection pool scale-out hotfix', status: 'IN_WINDOW', isDup: false, snippet: '{"commit": "8f9a21b", "branch": "main"}' },
-
-      // Discarded Stale Backlog Events (12 Outside Shift Window)
-      { id: 'EV-080', time: '08:12:00', source: 'JIRA', key: 'STALE-101', text: 'Legacy DB index rebuild routine', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-081', time: '10:00:22', source: 'PAGERDUTY', key: 'STALE-102', text: 'Morning CPU spike resolved', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-082', time: '11:15:00', source: 'SLACK', key: '#general', text: 'Sprint backlog grooming thread', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-083', time: '12:30:10', source: 'JIRA', key: 'STALE-104', text: 'Routine dependency upgrade PR #402 merged', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-084', time: '13:00:00', source: 'JIRA', key: 'STALE-105', text: 'Staging environment reboot', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-085', time: '14:22:18', source: 'PAGERDUTY', key: 'STALE-106', text: 'Synthetic test ping cleared', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-086', time: '15:10:00', source: 'SLACK', key: '#infra', text: 'Terraform state lock released', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-087', time: '15:45:00', source: 'JIRA', key: 'STALE-108', text: 'Grafana dashboard link updated', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-088', time: '16:10:00', source: 'JIRA', key: 'STALE-109', text: 'Closed stale PR review request', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-089', time: '16:30:00', source: 'SLACK', key: '#infra', text: 'Morning handover signoff note', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-090', time: '16:40:00', source: 'PAGERDUTY', key: 'STALE-111', text: 'Pager test ping acknowledged', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' },
-      { id: 'EV-091', time: '16:55:00', source: 'JIRA', key: 'STALE-112', text: 'Shift rotation prep note draft', status: 'DISCARDED', snippet: '{"window": "prior_shift"}' }
+    const STREAM_EVENTS = [
+      { key: 'SEC-1092', time: '18:42', text: 'TLS Certificate rotation verified on 100% of ingress nodes. Status -> RESOLVED', source: 'JIRA' },
+      { key: 'INFRA-9023', time: '19:15', text: 'Kafka partitions rebalanced. Consumer lag restored to 120 msgs. Status -> CLOSED', source: 'JIRA' },
+      { key: 'JIRA-4821', time: '19:42', text: 'Login failure on iOS v4.2; needs backend on-call (P1 Blocker)', source: 'JIRA' },
+      { key: 'INC-102', time: '20:10', text: 'RESOLVED: CDN certificate renewed; latency normalized to 45ms', source: 'PAGERDUTY' },
+      { key: 'INC-45', time: '20:30', text: 'Payment Webhook Processing Timeout (Jira Resolved vs PD In Progress)', source: 'JIRA/PD', isConflict: true },
+      { key: 'DB-3301', time: '20:45', text: 'Postgres pg16 read-replica dump 75% complete. Ongoing indexing.', source: 'JIRA' }
     ];
 
-    // --- Navigation Engine Across 5 Canonical Views ---
-    function navigateTo(viewKey) {
-      const aliasMap = {
-        'control_center': 'dashboard',
-        'pipeline': 'split_view',
-        'handover_note': 'review_view',
-        'reproducibility': 'test_scenarios',
-        'publisher': 'publisher_view',
-        'grounding': 'review_view'
-      };
+    function navigateTo(viewId) {
+      AppData.activeView = viewId;
+      document.querySelectorAll('.view-pane').forEach(el => el.classList.add('hidden'));
 
-      const activeId = aliasMap[viewKey] || viewKey;
-      AppState.currentView = activeId;
-
-      // 1. Hide all view sections
-      document.querySelectorAll('.view-container').forEach(el => el.classList.add('hidden'));
-
-      // 2. Show target section
-      const target = document.getElementById(`view-${activeId}`);
+      const target = document.getElementById(`view-${viewId}`);
       if (target) target.classList.remove('hidden');
 
-      // 3. Update Top Navigation Tabs
-      document.querySelectorAll('#main-nav-tabs .nav-tab-btn').forEach(btn => {
-        if (btn.getAttribute('data-nav') === activeId) {
-          btn.className = 'nav-tab-btn px-2.5 py-1 rounded bg-cyan-500 text-slate-950 font-bold transition-all';
+      // Update Desktop Nav
+      document.querySelectorAll('#desktop-nav .nav-btn').forEach(btn => {
+        if (btn.getAttribute('data-view') === viewId) {
+          btn.classList.add('active');
         } else {
-          btn.className = 'nav-tab-btn px-2.5 py-1 rounded text-slate-300 hover:text-white transition-all';
+          btn.classList.remove('active');
         }
       });
+
+      // Update Label
+      const labels = {
+        overview: 'Overview',
+        setup: 'Shift setup',
+        note: 'Handover note',
+        activity: 'Activity',
+        communication: 'Communication',
+        history: 'History'
+      };
+      document.getElementById('current-page-label').textContent = labels[viewId] || viewId;
+      
+      const mobileNav = document.getElementById('mobile-nav');
+      if (mobileNav) mobileNav.classList.add('hidden');
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- Shift Preset & Boundary Logic ---
-    function selectShiftPreset(preset) {
-      AppState.shiftPreset = preset;
-      const startInput = document.getElementById('input-shift-start');
-      const endInput = document.getElementById('input-shift-end');
-      const pubSpan = document.getElementById('pub-span-name');
-
-      document.querySelectorAll('.preset-btn').forEach(btn => {
-        btn.classList.remove('border-2', 'border-cyan-500', 'shadow-glow-primary');
-        btn.classList.add('border-slate-800');
-      });
-
-      const activeBtn = document.getElementById(`preset-btn-${preset}`);
-      if (activeBtn) {
-        activeBtn.classList.remove('border-slate-800');
-        activeBtn.classList.add('border-2', 'border-cyan-500', 'shadow-glow-primary');
-      }
-
-      if (preset === 'morning') {
-        startInput.value = '2026-09-03 09:00:00';
-        endInput.value = '2026-09-03 17:00:00';
-        if (pubSpan) pubSpan.textContent = '09:00:00 - 17:00:00 (Asia/Kolkata)';
-        showToast('Shift preset set to [Morning: 09:00 - 17:00]', 'info');
-      } else if (preset === 'evening') {
-        startInput.value = '2026-09-03 17:00:00';
-        endInput.value = '2026-09-04 01:00:00';
-        if (pubSpan) pubSpan.textContent = '17:00:00 - 01:00:00 (Asia/Kolkata)';
-        showToast('Shift preset set to [Evening: 17:00 - 01:00]', 'info');
-      } else if (preset === 'night') {
-        startInput.value = '2026-09-04 01:00:00';
-        endInput.value = '2026-09-04 09:00:00';
-        if (pubSpan) pubSpan.textContent = '01:00:00 - 09:00:00 (Asia/Kolkata)';
-        showToast('Shift preset set to [Night: 01:00 - 09:00]', 'info');
-      }
-
-      AppState.shiftStart = startInput.value;
-      AppState.shiftEnd = endInput.value;
+    function toggleMobileNav() {
+      document.getElementById('mobile-nav').classList.toggle('hidden');
     }
 
-    function handleTimezoneChange(tz) {
-      AppState.timezone = tz;
-      const topTzBadge = document.getElementById('top-tz-badge');
-      if (topTzBadge) topTzBadge.textContent = `${tz} ${tz === 'Asia/Kolkata' ? '+05:30' : (tz === 'UTC' ? '+00:00' : '')}`;
-      showToast(`Timezone normalized to ${tz}`, 'info');
-    }
-
-    function toggleSource(src) {
-      AppState.sources[src] = !AppState.sources[src];
-      const btn = document.getElementById(`btn-toggle-${src}`);
-      const isOnline = AppState.sources[src];
-
-      if (isOnline) {
-        btn.className = 'p-2.5 rounded bg-slate-950 border border-emerald-800/60 text-xs font-mono flex items-center justify-between transition-all';
-        btn.querySelector('span:last-child').className = 'text-[10px] text-emerald-400 font-semibold';
-        btn.querySelector('span:last-child').textContent = '● Active';
-        showToast(`Connected ${src.toUpperCase()} telemetry source`, 'success');
-      } else {
-        btn.className = 'p-2.5 rounded bg-slate-950 border border-slate-800 text-xs font-mono flex items-center justify-between opacity-60 transition-all';
-        btn.querySelector('span:last-child').className = 'text-[10px] text-slate-500 font-semibold';
-        btn.querySelector('span:last-child').textContent = '○ Disabled';
-        showToast(`Disabled ${src.toUpperCase()} source`, 'warning');
-      }
-    }
-
-    function handleIngestShiftAction() {
-      const btn = document.getElementById('btn-ingest-run');
-      const text = document.getElementById('ingest-text');
-      const icon = document.getElementById('ingest-icon');
+    function handleGenerateAction() {
+      const btn = document.getElementById('btn-generate-main');
+      const icon = document.getElementById('gen-icon');
+      const text = document.getElementById('gen-text');
 
       btn.disabled = true;
       icon.textContent = 'progress_activity';
       icon.classList.add('animate-spin');
-      text.textContent = 'Ingesting 24 events & Deduplicating...';
+      text.textContent = 'Generating handover...';
 
       setTimeout(() => {
         btn.disabled = false;
         icon.textContent = 'bolt';
         icon.classList.remove('animate-spin');
-        text.textContent = 'Ingest Shift Window & Run Deduplication';
-        showToast('Ingested 24 events. Deduplicated to 6 items (100% Grounding)', 'success');
-        navigateTo('split_view');
-      }, 900);
-    }
-
-    // --- View 2: Split View Renderers & Conflict Arbitration ---
-    function setSplitFilter(filterKey) {
-      AppState.splitFilter = filterKey;
-      document.querySelectorAll('#split-filter-pills .split-pill').forEach(pill => {
-        pill.className = 'split-pill px-2 py-1 rounded text-slate-400 hover:text-slate-200';
-      });
-
-      const pillMap = { in_window: 's-pill-inwin', discarded: 's-pill-discard', grouped: 's-pill-grouped' };
-      const active = document.getElementById(pillMap[filterKey]);
-      if (active) {
-        active.className = 'split-pill px-2 py-1 rounded bg-cyan-950 text-cyan-300 font-semibold border border-cyan-800/50';
-      }
-
-      renderSplitRawStream();
-    }
-
-    function renderSplitRawStream() {
-      const container = document.getElementById('split-raw-stream-container');
-      if (!container) return;
-
-      let list = RAW_EVENTS;
-      if (AppState.splitFilter === 'in_window') {
-        list = RAW_EVENTS.filter(e => e.status === 'IN_WINDOW');
-      } else if (AppState.splitFilter === 'discarded') {
-        list = RAW_EVENTS.filter(e => e.status === 'DISCARDED');
-      } else if (AppState.splitFilter === 'grouped') {
-        list = RAW_EVENTS.filter(e => e.isDup || e.isConflict);
-      }
-
-      const srcStyles = {
-        'JIRA': 'bg-blue-950 text-blue-400 border-blue-800/50',
-        'PAGERDUTY': 'bg-emerald-950 text-emerald-400 border-emerald-800/50',
-        'SLACK': 'bg-amber-950 text-amber-400 border-amber-800/50',
-        'GIT': 'bg-purple-950 text-purple-400 border-purple-800/50'
-      };
-
-      container.innerHTML = list.map(ev => `
-        <div class="p-3 rounded border ${ev.isConflict ? 'bg-amber-950/30 border-amber-600/80' : 'bg-slate-950 border-slate-800'} flex flex-col gap-1.5 hover:border-slate-700 transition-colors">
-          <div class="flex items-center justify-between text-xs font-mono">
-            <div class="flex items-center gap-2">
-              <span class="px-1.5 py-0.5 rounded text-[9px] font-bold border ${srcStyles[ev.source] || 'bg-slate-800 text-slate-300'}">${ev.source}</span>
-              <span class="font-bold text-slate-200">${ev.key}</span>
-              ${ev.isConflict ? '<span class="px-1.5 py-0.2 rounded bg-amber-900 text-amber-200 text-[9px] font-bold">CONFLICT</span>' : ''}
-            </div>
-            <span class="text-cyan-400">${ev.time} IST</span>
-          </div>
-          <p class="text-xs text-slate-300 font-sans">${ev.text}</p>
-          <div class="flex items-center justify-between text-[10px] font-mono text-slate-500 border-t border-slate-800/80 pt-1.5">
-            <span>Payload: <code class="text-slate-400">${ev.snippet}</code></span>
-            <button onclick="openEvidenceDrawer('${ev.key}')" class="text-cyan-400 hover:underline">Evidence Drawer &rarr;</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderSplitConsolidated() {
-      const container = document.getElementById('split-consolidated-container');
-      if (!container) return;
-
-      const items = [
-        { key: 'JIRA-4821', title: 'Login failure on iOS v4.2; needs backend on-call', collapse: '2 touches collapsed into P1 Blocker', sec: 'Priority Incidents & Blockers', color: 'rose' },
-        { key: 'INC-102', title: 'CDN certificate renewed', collapse: 'Opened -> Updated -> Resolved collapsed into 1 line under Completed', sec: 'Completed Work', color: 'emerald' },
-        { key: 'SEC-1092', title: 'Rotate TLS Certificates for API Gateway Pods', collapse: 'In Progress -> Verified -> Resolved', sec: 'Completed Work', color: 'emerald' },
-        { key: 'INFRA-9023', title: 'Kafka Partition Rebalance on Cluster-C', collapse: 'Lag alert -> Rebalance -> Closed', sec: 'Completed Work', color: 'emerald' },
-        { key: 'OPS-4820', title: 'Database replica replication lag mitigation', collapse: 'Single active ongoing task [Not Specified]', sec: 'In Progress', color: 'sky' },
-        { key: 'DB-3301', title: 'Postgres Read-Replica Upgrade (pg15 to pg16)', collapse: 'Single active migration (75% dump ETA 02:30)', sec: 'In Progress', color: 'sky' }
-      ];
-
-      container.innerHTML = items.map(item => `
-        <div onclick="openEvidenceDrawer('${item.key}')" class="p-3 bg-slate-950/90 border border-slate-800 hover:border-cyan-500/80 rounded-lg cursor-pointer transition-all">
-          <div class="flex items-center justify-between mb-1 text-xs font-mono">
-            <span class="font-bold text-cyan-400">${item.key}</span>
-            <span class="text-[9px] px-2 py-0.5 rounded bg-${item.color}-950 text-${item.color}-400 border border-${item.color}-800/40">${item.sec}</span>
-          </div>
-          <div class="text-xs font-semibold text-slate-200 mb-1">${item.title}</div>
-          <div class="text-[10px] font-mono text-slate-400 flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[13px] text-cyan-400">merge</span>
-            <span>${item.collapse}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function resolveSplitConflict(state) {
-      AppState.conflictResolved = true;
-      AppState.conflictStatus = state;
-
-      const card = document.getElementById('split-conflict-card');
-      card.className = 'bg-emerald-950/80 border-2 border-emerald-500/80 rounded-xl p-4 shadow-panel flex flex-col md:flex-row md:items-center justify-between gap-4 text-emerald-200';
-      card.innerHTML = `
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded bg-emerald-900 text-emerald-300 flex items-center justify-center shrink-0">
-            <span class="material-symbols-outlined text-[20px]">check_circle</span>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded bg-emerald-900 text-emerald-200 text-[10px] font-mono font-bold uppercase">Conflict Resolved</span>
-              <span class="text-xs font-mono font-bold text-white">INC-45 designated as '${state}'</span>
-            </div>
-            <p class="text-xs text-emerald-200/90 mt-0.5">
-              Shift lead reconciled Jira and PagerDuty discrepancy to authoritative state <strong>${state}</strong>.
-            </p>
-          </div>
-        </div>
-        <button onclick="reopenSplitConflict()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-300 border border-slate-700">
-          Change Decision
-        </button>
-      `;
-
-      const topConflict = document.getElementById('top-conflict-indicator');
-      const topText = document.getElementById('top-conflict-text');
-      const topIcon = document.getElementById('top-conflict-icon');
-      topConflict.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded cursor-pointer transition-all text-xs font-mono font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800/60';
-      topText.textContent = 'Conflicts: 0 (Resolved)';
-      topIcon.textContent = 'check_circle';
-
-      showToast(`Conflict resolved: INC-45 designated '${state}'`, 'success');
-    }
-
-    function reopenSplitConflict() {
-      AppState.conflictResolved = false;
-      const card = document.getElementById('split-conflict-card');
-      card.className = 'bg-amber-950/80 border-2 border-amber-500/80 rounded-xl p-4 shadow-panel flex flex-col md:flex-row md:items-center justify-between gap-4 text-amber-200';
-      card.innerHTML = `
-        <div class="flex items-start gap-3">
-          <div class="w-8 h-8 rounded bg-amber-900 text-amber-300 flex items-center justify-center shrink-0 mt-0.5">
-            <span class="material-symbols-outlined text-[20px]">warning</span>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded bg-amber-900 text-amber-200 text-[10px] font-mono font-bold uppercase">Data Conflict Detected</span>
-              <span class="text-xs font-mono font-bold text-white">INC-45 / Payment Webhook Processor</span>
-            </div>
-            <p class="text-xs text-amber-200/90 mt-1">
-              Data Conflict Detected: <code class="text-white bg-black/40 px-1 rounded">INC-45</code> is marked as 'Resolved' in Jira but 'In Progress' in PagerDuty. Shift lead review required.
-            </p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 shrink-0 font-mono text-xs">
-          <button onclick="resolveSplitConflict('Resolved')" class="px-3.5 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center gap-1 shadow-sm">
-            <span class="material-symbols-outlined text-[14px]">check</span>
-            <span>Resolve to Resolved</span>
-          </button>
-          <button onclick="resolveSplitConflict('In Progress')" class="px-3.5 py-1.5 rounded bg-sky-600 hover:bg-sky-500 text-white font-bold transition-all flex items-center gap-1 shadow-sm">
-            <span class="material-symbols-outlined text-[14px]">sync</span>
-            <span>Resolve to In Progress</span>
-          </button>
-        </div>
-      `;
-
-      const topConflict = document.getElementById('top-conflict-indicator');
-      const topText = document.getElementById('top-conflict-text');
-      const topIcon = document.getElementById('top-conflict-icon');
-      topConflict.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded cursor-pointer transition-all text-xs font-mono font-semibold bg-amber-950/80 border border-amber-800/60 text-amber-300 animate-pulse';
-      topText.textContent = 'Conflicts: 1 Active Warning';
-      topIcon.textContent = 'warning';
-    }
-
-    // --- View 3: Review View & Format Styles ---
-    function setReviewFormatStyle(style) {
-      AppState.formatStyle = style;
-      document.querySelectorAll('#review-format-pills .rf-pill').forEach(b => {
-        b.className = 'rf-pill px-3 py-1.5 rounded text-slate-400 hover:text-slate-200 transition-all';
-      });
-
-      const active = document.getElementById(`rf-${style}`);
-      if (active) active.className = 'rf-pill px-3 py-1.5 rounded bg-cyan-500 text-slate-950 font-bold transition-all';
-
-      showToast(`Adapted note format style to [${style.toUpperCase()}]`, 'info');
-      renderReviewSections();
-    }
-
-    function getReviewText(item) {
-      if (AppState.formatStyle === 'detailed') return item.detailedText;
-      if (AppState.formatStyle === 'executive') return item.executiveText;
-      return item.conciseText;
-    }
-
-    function renderReviewSections() {
-      renderReviewBlockers();
-      renderReviewCompleted();
-      renderReviewInProgress();
-    }
-
-    function renderReviewBlockers() {
-      const container = document.getElementById('review-blockers-container');
-      if (!container) return;
-
-      container.innerHTML = MASTER_DATA.blockers.map(item => {
-        const isRejected = AppState.rejectedItemIds.has(item.id);
-
-        return `
-          <div class="bg-slate-950/90 border ${isRejected ? 'border-slate-800 opacity-50 line-through' : 'border-rose-900/60 hover:border-rose-500'} p-4 rounded-lg transition-all">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="px-2 py-0.5 rounded bg-rose-900 text-rose-200 text-xs font-mono font-bold">[${item.priority}]</span>
-                <span class="text-xs font-mono font-bold text-cyan-300">${item.id}</span>
-                <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 text-[10px] font-mono border border-emerald-800/40">[${item.confidence}]</span>
-                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px] font-mono">[${item.dueDate}]</span>
-                <span class="text-xs font-mono text-slate-400">Owner: <strong class="text-slate-200">[${item.owner}]</strong></span>
-              </div>
-
-              <div class="flex items-center gap-2 font-mono text-xs">
-                <button onclick="openEditModal('${item.id}')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[13px]">edit</span>
-                  <span>[Edit Text]</span>
-                </button>
-                <button onclick="toggleRejectLine('${item.id}')" class="px-2.5 py-1 rounded ${isRejected ? 'bg-slate-800 text-slate-300' : 'bg-rose-950/80 text-rose-300 hover:bg-rose-900'} border border-rose-900/60 flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[13px]">${isRejected ? 'restore' : 'block'}</span>
-                  <span>[${isRejected ? 'Restore Line' : 'Reject Line'}]</span>
-                </button>
-              </div>
-            </div>
-
-            <h3 class="text-sm font-bold text-white mb-1.5">${item.title}</h3>
-            <p class="text-xs text-slate-300 mb-2 font-sans leading-relaxed">${getReviewText(item)}</p>
-
-            <div class="flex items-center justify-between text-xs font-mono border-t border-slate-800/80 pt-2">
-              <button onclick="openEvidenceDrawer('${item.id}')" class="text-cyan-400 hover:underline flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">link</span>
-                <span>[Source: ${item.source}]</span>
-              </button>
-              <span class="text-slate-500 text-[11px]">Click evidence link to open JSON drawer</span>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderReviewCompleted() {
-      const container = document.getElementById('review-completed-container');
-      if (!container) return;
-
-      container.innerHTML = MASTER_DATA.completed.map(item => {
-        const isRejected = AppState.rejectedItemIds.has(item.id);
-
-        return `
-          <div class="bg-slate-950/90 border ${isRejected ? 'border-slate-800 opacity-50 line-through' : 'border-slate-800 hover:border-emerald-500/80'} p-3.5 rounded-lg transition-all flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-mono font-bold text-cyan-400">${item.id}</span>
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/50 font-semibold">[High Confidence]</span>
-              </div>
-              <h3 class="text-xs font-bold text-slate-200 mb-1">${item.title}</h3>
-              <p class="text-[11px] text-slate-400 mb-2 font-sans">${getReviewText(item)}</p>
-            </div>
-
-            <div>
-              <div class="text-[10px] font-mono text-slate-500 border-t border-slate-800/80 pt-2 mb-2">
-                Owner: <strong class="text-slate-300">${item.owner}</strong>
-              </div>
-
-              <div class="flex items-center justify-between">
-                <button onclick="openEvidenceDrawer('${item.id}')" class="text-[11px] font-mono text-cyan-400 hover:underline">
-                  [${item.source}] &rarr;
-                </button>
-                <div class="flex gap-1.5 font-mono text-xs">
-                  <button onclick="openEditModal('${item.id}')" class="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">
-                    <span class="material-symbols-outlined text-[13px]">edit</span>
-                  </button>
-                  <button onclick="toggleRejectLine('${item.id}')" class="p-1 rounded bg-slate-800 hover:bg-rose-900 text-rose-300">
-                    <span class="material-symbols-outlined text-[13px]">${isRejected ? 'restore' : 'close'}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderReviewInProgress() {
-      const container = document.getElementById('review-inprogress-container');
-      if (!container) return;
-
-      container.innerHTML = MASTER_DATA.inProgress.map(item => {
-        const isRejected = AppState.rejectedItemIds.has(item.id);
-        const isUnassigned = item.owner.includes('[Not Specified]');
-
-        return `
-          <div class="bg-slate-950/90 border ${isRejected ? 'border-slate-800 opacity-50 line-through' : 'border-slate-800 hover:border-sky-500/80'} p-3.5 rounded-lg transition-all flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-mono font-bold text-cyan-400">${item.id}</span>
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800/50 font-semibold">[In Progress]</span>
-              </div>
-              <h3 class="text-xs font-bold text-slate-200 mb-1">${item.title}</h3>
-              <p class="text-[11px] text-slate-400 mb-2 font-sans">${getReviewText(item)}</p>
-            </div>
-
-            <div>
-              <div class="text-[10px] font-mono text-slate-500 border-t border-slate-800/80 pt-2 mb-2">
-                Owner: ${isUnassigned ? '<span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 font-bold border border-amber-800/50">[Not Specified]</span>' : '<strong class="text-slate-300">' + item.owner + '</strong>'}
-              </div>
-
-              <div class="flex items-center justify-between">
-                <button onclick="openEvidenceDrawer('${item.id}')" class="text-[11px] font-mono text-cyan-400 hover:underline">
-                  [${item.source}] &rarr;
-                </button>
-                <div class="flex gap-1.5 font-mono text-xs">
-                  <button onclick="openEditModal('${item.id}')" class="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">
-                    <span class="material-symbols-outlined text-[13px]">edit</span>
-                  </button>
-                  <button onclick="toggleRejectLine('${item.id}')" class="p-1 rounded bg-slate-800 hover:bg-rose-900 text-rose-300">
-                    <span class="material-symbols-outlined text-[13px]">${isRejected ? 'restore' : 'close'}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function toggleRejectLine(id) {
-      if (AppState.rejectedItemIds.has(id)) {
-        AppState.rejectedItemIds.delete(id);
-        showToast(`Restored line ${id} to active note`, 'info');
-      } else {
-        AppState.rejectedItemIds.add(id);
-        showToast(`Rejected line ${id} from final note`, 'warning');
-      }
-      renderReviewSections();
-    }
-
-    function regenerateSection(sectionKey) {
-      showToast(`Regenerating section [${sectionKey.toUpperCase()}] AST...`, 'info');
-      setTimeout(() => {
-        showToast(`Section [${sectionKey.toUpperCase()}] re-compiled with 100% grounding.`, 'success');
-        renderReviewSections();
-      }, 500);
-    }
-
-    // --- Slide-Out Evidence Drawer ---
-    function openEvidenceDrawer(ticketKey) {
-      const drawer = document.getElementById('drawer-grounding-evidence');
-      const idEl = document.getElementById('drawer-record-id');
-      const origEl = document.getElementById('drawer-origin');
-      const timeEl = document.getElementById('drawer-time');
-      const hashEl = document.getElementById('drawer-hash');
-      const jsonEl = document.getElementById('drawer-json-content');
-
-      let found = null;
-      for (const group of Object.values(MASTER_DATA)) {
-        const item = group.find(i => i.id === ticketKey);
-        if (item) { found = item; break; }
-      }
-
-      if (!found) {
-        found = {
-          id: ticketKey,
-          system: 'Operational Telemetry',
-          source: 'In-Window Event',
-          hash: 'sha256-9a81f0b4c8e',
-          rawPayload: { ticket: ticketKey, verified: true, timestamp: '2026-09-03T19:42:00+05:30' }
-        };
-      }
-
-      idEl.textContent = found.id;
-      origEl.textContent = found.system || 'Jira / PagerDuty Telemetry';
-      timeEl.textContent = found.source || '19:42:00 IST';
-      hashEl.textContent = found.hash || 'sha256-9a81f0b4c8e712a10';
-      jsonEl.textContent = JSON.stringify(found.rawPayload || {}, null, 2);
-
-      drawer.classList.remove('translate-x-full');
-    }
-
-    function closeEvidenceDrawer() {
-      document.getElementById('drawer-grounding-evidence').classList.add('translate-x-full');
-    }
-
-    function copyDrawerJson() {
-      const content = document.getElementById('drawer-json-content').textContent;
-      navigator.clipboard.writeText(content).then(() => {
-        const btn = document.getElementById('btn-copy-drawer');
-        btn.textContent = 'Copied! ✓';
-        setTimeout(() => { btn.textContent = 'Copy Payload'; }, 2000);
-        showToast('JSON evidence copied to clipboard', 'success');
-      });
-    }
-
-    // --- Test Scenarios Harness (4 Presets) ---
-    const TEST_SCENARIOS_DATA = {
-      quiet: {
-        title: 'Scenario 1: Quiet Shift (0 Events)',
-        meta: '0 events parsed. Clean empty state validation.',
-        items: [
-          { sec: '1. Priority Incidents & Blockers', body: 'Nothing to report' },
-          { sec: '2. Completed Work', body: 'Nothing to report' },
-          { sec: '3. In Progress', body: 'Nothing to report' },
-          { sec: '4. Watch-list', body: 'Nothing to report' }
-        ]
-      },
-      busy: {
-        title: 'Scenario 2: Busy Shift (24 Events)',
-        meta: '24 events across Jira, PagerDuty & Git. 100% Grounding score.',
-        items: [
-          { sec: '1. Priority Incidents & Blockers', body: '1 active escalation: JIRA-4821 (SMS OTP 502 Flapping)' },
-          { sec: '2. Completed Work', body: '3 resolved: INC-102 (CDN SSL), SEC-1092 (TLS Cert), INFRA-9023 (Kafka)' },
-          { sec: '3. In Progress', body: '3 ongoing tasks: OPS-4820 (DB Lag), DB-3301 (Postgres pg16), CDN-4190 (WAF)' },
-          { sec: '4. Watch-list', body: 'Nothing to report' }
-        ]
-      },
-      messy: {
-        title: 'Scenario 3: Messy Shift (De-dup & Out of Order)',
-        meta: 'Out-of-order logs & duplicates merged. 0 diff on repeated regeneration.',
-        items: [
-          { sec: '1. Priority Incidents & Blockers', body: '1 active escalation: JIRA-4821' },
-          { sec: '2. Completed Work', body: '5 collapsed tickets from 14 raw event traces' },
-          { sec: '3. In Progress', body: '3 tasks ongoing with normalized timestamps' },
-          { sec: '4. Watch-list', body: 'Nothing to report' }
-        ]
-      },
-      conflicting: {
-        title: 'Scenario 4: Conflicting Data Shift (INC-45)',
-        meta: 'Cross-source conflict detected. Lead arbitration active.',
-        items: [
-          { sec: '1. Priority Incidents & Blockers', body: 'INC-45 conflict active (Jira Resolved vs PagerDuty In Progress)' },
-          { sec: '2. Completed Work', body: '3 resolved items' },
-          { sec: '3. In Progress', body: '3 ongoing items' },
-          { sec: '4. Watch-list', body: 'Nothing to report' }
-        ]
-      }
-    };
-
-    function loadDemoScenario(scenKey) {
-      AppState.activeScenario = scenKey;
-
-      document.querySelectorAll('.scen-box').forEach(b => {
-        b.className = 'scen-box p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-left transition-all group';
-      });
-
-      const activeBox = document.getElementById(`scen-tab-${scenKey}`);
-      if (activeBox) {
-        activeBox.className = 'scen-box p-4 rounded-xl bg-slate-900 border-2 border-cyan-500 shadow-glow-primary text-left transition-all group';
-      }
-
-      const data = TEST_SCENARIOS_DATA[scenKey];
-      document.getElementById('scenario-active-title').textContent = data.title;
-      document.getElementById('scenario-active-meta').textContent = data.meta;
-
-      const container = document.getElementById('scenario-preview-container');
-      container.innerHTML = data.items.map(item => `
-        <div class="p-3.5 rounded bg-slate-950 border border-slate-800 font-mono text-xs">
-          <span class="text-cyan-400 block mb-1 font-bold uppercase">${item.sec}</span>
-          <span class="text-slate-300 ${item.body === 'Nothing to report' ? 'italic text-slate-500' : ''}">${item.body}</span>
-        </div>
-      `).join('');
-
-      if (scenKey === 'conflicting') {
-        reopenSplitConflict();
-        showToast('Loaded Conflicting Data Scenario (INC-45)', 'warning');
-      } else {
-        showToast(`Loaded ${data.title}`, 'info');
-      }
-    }
-
-    function runScenarioDiffTest() {
-      const btn = document.getElementById('btn-run-diff');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span><span>Verifying AST Repeatability...</span>';
-
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">replay</span><span>Re-run Generation Check</span>';
-        showToast('Deterministic AST match: 0 additions, 0 deletions (100% Repeatability)', 'success');
-      }, 600);
-    }
-
-    // --- Export Handlers & Modals ---
-    function handleDownloadFinalPdf() {
-      const btn = document.getElementById('btn-pub-pdf');
-      const text = document.getElementById('btn-pub-pdf-text');
-
-      btn.disabled = true;
-      btn.classList.add('opacity-80', 'cursor-wait');
-      text.textContent = 'Compiling Monolithic PDF...';
-      showToast('Compiling monolithic PDF with embedded evidence footnotes...', 'info');
-
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.classList.remove('opacity-80', 'cursor-wait');
-        text.textContent = '[Download Monolithic PDF (.pdf)]';
-        showToast('Downloaded: Handover-Note-2026-09-03.pdf (342 KB)', 'success');
-        window.print();
-      }, 1200);
-    }
-
-    function handleExportDocx() {
-      showToast('Generating Microsoft Word DOCX package...', 'info');
-      setTimeout(() => {
-        const blob = new Blob(['Shift Handover Note Document'], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Handover-Note-2026-09-03.docx';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast('Exported: Handover-Note-2026-09-03.docx', 'success');
+        text.textContent = 'Generate handover';
+        showToast('Shift note generated with 100% grounding', 'success');
+        navigateTo('note');
       }, 700);
     }
 
-    function handleExportMarkdown() {
-      const md = `# Engineering Shift Handover Note
-**Doc ID:** SH-20260903-EVN | **Lead SRE:** ${AppState.currentUser.displayName} | **Span:** 17:00:00 - 01:00:00 (Asia/Kolkata)
-**Audit Status:** 18/18 Grounded (100%) | **Version:** v1.2 Approved
+    function setSetupPreset(preset) {
+      const start = document.getElementById('setup-start-time');
+      const end = document.getElementById('setup-end-time');
 
-## 1. Priority Incidents & Blockers
-- [P1 BLOCKER] **JIRA-4821**: Login failure on iOS v4.2; needs backend on-call (Alex K.)
+      document.querySelectorAll('#view-setup button[id^="st-btn-"]').forEach(b => {
+        b.className = 'p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-left font-mono transition-all';
+      });
 
-## 2. Completed Work
-- **INC-102**: CDN certificate renewed (Sarah M.)
-- **SEC-1092**: Rotate TLS Certificates for API Gateway Pods (${AppState.currentUser.displayName})
-- **INFRA-9023**: Kafka Partition Rebalance on Cluster-C (NOC Infra Pod)
+      const active = document.getElementById(`st-btn-${preset}`);
+      if (active) active.className = 'p-3.5 rounded-xl bg-slate-950 border-2 border-cyan-500 shadow-glow-cyan text-left font-mono transition-all';
 
-## 3. In Progress
-- **OPS-4820**: Database replica replication lag mitigation ([Not Specified])
-- **DB-3301**: Postgres Read-Replica Upgrade (pg15 to pg16 ETA 02:30 IST)
-
-## 4. Watch-list
-Nothing to report
-
-## 5. Next-Shift Action Checklist
-- [ ] Verify DB replication lag drops below 20ms by 22:00 IST
-- [ ] Check mobile login error rates after payment service hotfix
-
-*Cryptographic SHA-256: 9a81f0b4c8e712a10*`;
-
-      const blob = new Blob([md], { type: 'text/markdown' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Handover-Note-2026-09-03.md';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      showToast('Exported: Handover-Note-2026-09-03.md', 'success');
+      if (preset === 'morning') {
+        start.value = '2026-09-03 09:00:00';
+        end.value = '2026-09-03 17:00:00';
+        document.getElementById('ov-shift-name').textContent = 'Shift 04-A (Morning)';
+      } else if (preset === 'evening') {
+        start.value = '2026-09-03 17:00:00';
+        end.value = '2026-09-04 01:00:00';
+        document.getElementById('ov-shift-name').textContent = 'Shift 04-B (Evening)';
+      } else if (preset === 'night') {
+        start.value = '2026-09-04 01:00:00';
+        end.value = '2026-09-04 09:00:00';
+        document.getElementById('ov-shift-name').textContent = 'Shift 05-A (Night)';
+      }
+      showToast(`Selected ${preset.toUpperCase()} shift preset`, 'info');
     }
 
-    function copySlackMarkdown() {
-      const draft = `*🚨 Shift Handover Summary — Evening Shift (17:00 - 01:00 IST)*
-*Doc ID:* \`SH-20260903-EVN\` | *Lead:* ${AppState.currentUser.displayName}
+    function handleSetupTz(tz) {
+      document.getElementById('ov-time-display').textContent = `18:50:00 (${tz})`;
+      showToast(`Timezone normalized to ${tz}`, 'info');
+    }
 
-*1. Priority Incidents & Blockers*
-• :rotating_light: *[P1 BLOCKER] \`JIRA-4821\`* - Login failure on iOS v4.2; needs backend on-call (Alex K.)
+    function toggleSetupSource(src) {
+      AppData.sources[src] = !AppData.sources[src];
+      const isOnline = AppData.sources[src];
+      const btn = document.getElementById(`tog-${src}`);
+      btn.querySelector('span:last-child').textContent = isOnline ? '● Online' : '○ Off';
+      btn.querySelector('span:last-child').className = isOnline ? 'text-[10px] text-emerald-400 font-semibold' : 'text-[10px] text-slate-500';
+      showToast(`Toggled ${src.toUpperCase()} source`, 'info');
+    }
+
+    function setNoteFormat(fmt) {
+      AppData.format = fmt;
+      document.querySelectorAll('#format-toggle-bar button').forEach(b => {
+        b.className = 'px-2.5 py-1 rounded text-slate-400 hover:text-white transition-all';
+      });
+      document.getElementById(`fmt-${fmt}`).className = 'px-2.5 py-1 rounded bg-cyan-500 text-slate-950 font-bold transition-all';
+      
+      const blocker = document.getElementById('note-blocker-desc');
+      if (fmt === 'detailed') {
+        blocker.textContent = 'Upstream transit telco BGP routing flapping at Mumbai IXP resulting in HTTP 502 Bad Gateway responses on Twilio OTP dispatch endpoints. Vendor Sev-1 ticket #TW-994102 active.';
+      } else if (fmt === 'executive') {
+        blocker.textContent = 'Customer SMS authentication delivery rate temporarily impacted by third-party telecom carrier routing. Secondary SMS failover bridge active.';
+      } else {
+        blocker.textContent = 'Twilio Indian transit carrier route degradation causing 14% failure in OTP deliveries. External Ticket #TW-994102 escalated to Sev-1.';
+      }
+      showToast(`Adapted note format to ${fmt.toUpperCase()}`, 'info');
+    }
+
+    function exportNotePdf() {
+      showToast('Compiling print-ready PDF...', 'info');
+      setTimeout(() => {
+        window.print();
+      }, 700);
+    }
+
+    function openEvidenceDrawer(ticketKey) {
+      const item = EVIDENCE_STORE[ticketKey] || { ticket: ticketKey, origin: 'Telemetry', time: '19:42 IST', raw: { verified: true } };
+      document.getElementById('drw-ticket').textContent = item.ticket;
+      document.getElementById('drw-origin').textContent = item.origin;
+      document.getElementById('drw-time').textContent = item.time;
+      document.getElementById('drw-json').textContent = JSON.stringify(item.raw, null, 2);
+      document.getElementById('drawer-evidence').classList.remove('translate-x-full');
+    }
+
+    function closeEvidenceDrawer() {
+      document.getElementById('drawer-evidence').classList.add('translate-x-full');
+    }
+
+    function editNoteLine(key) {
+      showToast(`Edit modal ready for ${key}`, 'info');
+    }
+
+    function toggleRejectNote(key) {
+      document.getElementById('blocker-item-box').classList.toggle('opacity-50');
+      document.getElementById('blocker-item-box').classList.toggle('line-through');
+      showToast(`Toggled exclusion for ${key}`, 'warning');
+    }
+
+    function resolveConflictDirect(status) {
+      const card = document.getElementById('act-conflict-card');
+      card.className = 'bg-emerald-950/80 border border-emerald-800 rounded-2xl p-4 shadow-panel flex items-center justify-between text-emerald-300 font-mono text-xs';
+      card.innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">check_circle</span>
+          <span>INC-45 conflict resolved to <strong>${status}</strong></span>
+        </div>
+        <span class="text-slate-400">Reconciled</span>
+      `;
+      showToast(`Arbitrated INC-45 to '${status}'`, 'success');
+    }
+
+    function renderStreamEvents() {
+      const list = document.getElementById('activity-events-list');
+      if (!list) return;
+
+      list.innerHTML = STREAM_EVENTS.map(ev => `
+        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-slate-900 border border-slate-700 text-cyan-400">${ev.source}</span>
+            <strong class="text-white">${ev.key}</strong>
+            <span class="text-slate-400 truncate max-w-[280px] sm:max-w-md">${ev.text}</span>
+          </div>
+          <span class="text-slate-500 text-[11px] shrink-0">${ev.time} IST</span>
+        </div>
+      `).join('');
+    }
+
+    function renderSlackDraft() {
+      const box = document.getElementById('slack-draft-box');
+      if (!box) return;
+      box.value = `*🚨 Shift Handover Summary — Evening Shift (17:00 - 01:00 IST)*
+*Doc ID:* \`SH-20260903-EVN\` | *Lead:* Thiraviaraj R.
+
+*1. Blockers & Escalations*
+• :rotating_light: *[P1 BLOCKER] \`JIRA-4821\`* - Login failure on iOS v4.2 (Alex K. in #war-room-otp)
 
 *2. Completed Work*
-• \`INC-102\` - CDN certificate renewed (Sarah M.)
-• \`SEC-1092\` - API Gateway TLS wildcard cert rotation complete
-• \`INFRA-9023\` - Kafka Cluster-C partition rebalance (lag < 150 msgs)
+• \`INC-102\` - CDN certificate renewed
+• \`SEC-1092\` - API Gateway TLS cert rotation complete
+• \`INFRA-9023\` - Kafka partition rebalance (< 150 msgs lag)
 
 *3. In Progress*
 • \`OPS-4820\` - DB replica lag mitigation [Not Specified]
-• \`DB-3301\` - Postgres pg16 read replica 75% complete (ETA 02:30 IST)
+• \`DB-3301\` - Postgres pg16 read replica upgrade (ETA 02:30 IST)
 
 *4. Watch-list*
 • Nothing to report
 
-*5. Next Actions:*
-• [ ] Verify DB replication lag drops below 20ms by 22:00 IST
-• [ ] Check mobile login error rates after payment service hotfix
+_Grounded 100% via ShiftSync Engine_`;
+    }
 
-_Grounded 100% (18/18 Verified) via ShiftSync Intelligence Engine_`;
-
-      navigator.clipboard.writeText(draft).then(() => {
-        const tooltip = document.getElementById('slack-tooltip');
-        if (tooltip) {
-          tooltip.classList.remove('opacity-0');
-          setTimeout(() => tooltip.classList.add('opacity-0'), 2200);
-        }
-        showToast('Copied to clipboard!', 'success');
+    function copySlackText() {
+      const box = document.getElementById('slack-draft-box');
+      navigator.clipboard.writeText(box.value).then(() => {
+        const btnText = document.getElementById('btn-copy-slack-text');
+        btnText.textContent = 'Copied to clipboard! ✓';
+        setTimeout(() => { btnText.textContent = 'Copy Slack Draft'; }, 2000);
+        showToast('Slack draft copied to clipboard', 'success');
       });
     }
 
-    function generateAuditUrlModal() {
-      document.getElementById('modal-audit-url').classList.remove('hidden');
-    }
-
-    function closeAuditUrlModal() {
-      document.getElementById('modal-audit-url').classList.add('hidden');
-    }
-
-    function copyAuditUrlLink() {
-      navigator.clipboard.writeText('https://shift-sync-a0b66.web.app/audit/sh-20260903-evn-9a81f0b4c8e712a10').then(() => {
-        showToast('Copied read-only audit permalink', 'success');
-        closeAuditUrlModal();
+    function copyAuditUrl() {
+      navigator.clipboard.writeText('https://shift-sync-a0b66.web.app/audit/sh-20260903-evn').then(() => {
+        showToast('Audit link copied', 'success');
       });
     }
 
-    // --- Edit Modal Handlers ---
-    function openEditModal(id) {
-      AppState.editingItemId = id;
-      let found = null;
-      for (const list of Object.values(MASTER_DATA)) {
-        const item = list.find(i => i.id === id);
-        if (item) { found = item; break; }
-      }
-      if (!found) return;
-
-      document.getElementById('edit-item-title').value = found.title;
-      document.getElementById('edit-item-owner').value = found.owner;
-      document.getElementById('edit-item-details').value = found.conciseText;
-      document.getElementById('modal-edit-item').classList.remove('hidden');
-    }
-
-    function closeEditModal() {
-      document.getElementById('modal-edit-item').classList.add('hidden');
-      AppState.editingItemId = null;
-    }
-
-    function saveEditModalItem() {
-      let found = null;
-      for (const list of Object.values(MASTER_DATA)) {
-        const item = list.find(i => i.id === AppState.editingItemId);
-        if (item) { found = item; break; }
-      }
-      if (found) {
-        found.title = document.getElementById('edit-item-title').value;
-        found.owner = document.getElementById('edit-item-owner').value;
-        found.conciseText = document.getElementById('edit-item-details').value;
-        found.detailedText = found.conciseText;
-        found.executiveText = found.conciseText;
-        showToast(`Updated ${found.id}`, 'success');
-      }
-      closeEditModal();
-      renderReviewSections();
-    }
-
-    // --- Checklist Sync ---
-    function toggleChecklistItem(idx, checked) {
-      AppState.checklistState[idx] = checked;
-      const pubChecklist = document.getElementById('pub-checklist-container');
-      if (pubChecklist) {
-        const rows = pubChecklist.querySelectorAll('div');
-        if (rows[idx]) {
-          rows[idx].querySelector('span').textContent = checked ? '[✓]' : '[ ]';
-          if (checked) {
-            rows[idx].classList.add('bg-purple-100', 'line-through', 'text-purple-900');
-          } else {
-            rows[idx].classList.remove('bg-purple-100', 'line-through', 'text-purple-900');
-          }
-        }
-      }
-      showToast(`Action item ${idx + 1} marked as ${checked ? 'Completed' : 'Pending'}`, 'info');
-    }
-
-    // --- Error Overlays & Banners ---
-    function toggleUnreachableBanner() {
-      document.getElementById('unreachable-source-banner').classList.toggle('hidden');
-    }
-
-    function triggerExportFailureModal() {
-      document.getElementById('modal-export-failure').classList.remove('hidden');
-    }
-
-    function dismissExportErrorModal() {
-      document.getElementById('modal-export-failure').classList.add('hidden');
-    }
-
-    function toggleDebugStacktrace() {
-      const box = document.getElementById('debug-stacktrace-box');
-      const text = document.getElementById('btn-debug-stack-text');
-      box.classList.toggle('hidden');
-      text.textContent = box.classList.contains('hidden') ? 'Debug Stacktrace' : 'Hide Stacktrace';
-    }
-
-    function retryExportProcess() {
-      const btn = document.getElementById('btn-retry-export');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span><span>Retrying...</span>';
-
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">refresh</span><span>Retry Export</span>';
-        dismissExportErrorModal();
-        showToast('Retry successful! Document rendered with fallback engine.', 'success');
-      }, 900);
-    }
-
-    // --- Auth Modal ---
-    function openAuthModal() {
-      document.getElementById('modal-firebase-auth').classList.remove('hidden');
-    }
-
-    function closeAuthModal() {
-      document.getElementById('modal-firebase-auth').classList.add('hidden');
-    }
-
-    function handleGoogleSignIn() {
-      showToast('Firebase Auth: Signed in via Google', 'success');
-      AppState.currentUser = {
-        displayName: 'Thiraviaraj R. (Google SRE)',
-        initials: 'TR',
-        email: 'thiraviaraj.r@gmail.com'
-      };
-      updateUserUI();
-      closeAuthModal();
-    }
-
-    function handleEmailSignIn() {
-      const email = document.getElementById('auth-email').value;
-      showToast(`Firebase Auth: Logged in as ${email}`, 'success');
-      AppState.currentUser = {
-        displayName: email.split('@')[0].toUpperCase() + ' - Lead SRE',
-        initials: email.substring(0, 2).toUpperCase(),
-        email: email
-      };
-      updateUserUI();
-      closeAuthModal();
-    }
-
-    function handleEmailSignUp() {
-      const email = document.getElementById('auth-email').value;
-      showToast(`Registered new operator in Firebase: ${email}`, 'success');
-      closeAuthModal();
-    }
-
-    function updateUserUI() {
-      document.getElementById('top-sre-lead-text').textContent = AppState.currentUser.displayName;
-      document.getElementById('user-avatar-initials').textContent = AppState.currentUser.initials;
-      const pubLead = document.getElementById('pub-lead-name');
-      if (pubLead) pubLead.textContent = AppState.currentUser.displayName;
-    }
-
-    // --- Toast Engine ---
     function showToast(message, type = 'info') {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
       
       const colors = {
-        success: 'bg-emerald-950 border-emerald-700 text-emerald-300 shadow-glow-secondary',
+        success: 'bg-emerald-950 border-emerald-700 text-emerald-300',
         warning: 'bg-amber-950 border-amber-700 text-amber-300',
-        error: 'bg-rose-950 border-rose-700 text-rose-300 shadow-glow-error',
+        error: 'bg-rose-950 border-rose-700 text-rose-300',
         info: 'bg-slate-900 border-slate-700 text-slate-200'
       };
 
-      const icons = {
-        success: 'check_circle',
-        warning: 'warning',
-        error: 'error',
-        info: 'info'
-      };
-
-      toast.className = `px-4 py-2.5 rounded border text-xs font-mono flex items-center gap-2 shadow-2xl transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto ${colors[type] || colors.info}`;
+      toast.className = `px-4 py-2.5 rounded-xl border text-xs font-mono flex items-center gap-2 shadow-2xl transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto ${colors[type] || colors.info}`;
       toast.innerHTML = `
-        <span class="material-symbols-outlined text-[16px]">${icons[type] || 'info'}</span>
+        <span class="material-symbols-outlined text-[16px]">${type === 'success' ? 'check_circle' : 'info'}</span>
         <span>${message}</span>
       `;
 
@@ -2369,29 +1118,13 @@ _Grounded 100% (18/18 Verified) via ShiftSync Intelligence Engine_`;
         setTimeout(() => {
           if (toast.parentNode) toast.parentNode.removeChild(toast);
         }, 300);
-      }, 3500);
+      }, 2800);
     }
 
-    // --- Clock Engine ---
-    function startClock() {
-      function tick() {
-        const now = new Date();
-        const istString = new Date(now.getTime() + (5.5 * 60 * 60 * 1000)).toUTCString().split(' ')[4];
-        const clockEl = document.getElementById('top-clock-ist');
-        if (clockEl) clockEl.textContent = `${istString} IST`;
-      }
-      tick();
-      setInterval(tick, 1000);
-    }
-
-    // --- Application Initialization ---
     document.addEventListener('DOMContentLoaded', () => {
-      startClock();
-      renderSplitRawStream();
-      renderSplitConsolidated();
-      renderReviewSections();
-      loadDemoScenario('busy');
-      navigateTo('dashboard');
+      renderStreamEvents();
+      renderSlackDraft();
+      navigateTo('overview');
     });
   </script>
 </body>
