@@ -1121,7 +1121,33 @@ _Grounded 100% via ShiftSync Engine_`;
       }, 2800);
     }
 
+    function loadActiveUser() {
+      try {
+        const saved = localStorage.getItem('shiftsync_user');
+        if (saved) {
+          const u = JSON.parse(saved);
+          if (u.name) {
+            document.getElementById('user-display').textContent = u.name;
+          }
+          if (u.initials) {
+            document.getElementById('user-initials').textContent = u.initials;
+          }
+        }
+      } catch(e) {
+        console.warn('LocalStorage error', e);
+      }
+    }
+
+    function signOutUser() {
+      localStorage.removeItem('shiftsync_user');
+      showToast('Signed out of session. Redirecting to login...', 'info');
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 600);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      loadActiveUser();
       renderStreamEvents();
       renderSlackDraft();
       navigateTo('overview');

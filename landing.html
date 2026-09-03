@@ -653,10 +653,31 @@
     }
 
     function handleMockAuthSuccess(provider) {
+      if (provider === 'Google') {
+        const userData = {
+          name: 'Thiraviaraj R.',
+          email: 'thiraviarajr2007@gmail.com',
+          initials: 'TR',
+          role: 'Lead SRE',
+          provider: 'Google',
+          loginTime: new Date().toISOString()
+        };
+        localStorage.setItem('shiftsync_user', JSON.stringify(userData));
+      } else {
+        const userData = {
+          name: 'SRE Operator',
+          email: 'operator@shiftsync.internal',
+          initials: 'OP',
+          role: 'Lead SRE',
+          provider: provider,
+          loginTime: new Date().toISOString()
+        };
+        localStorage.setItem('shiftsync_user', JSON.stringify(userData));
+      }
       showToast(`Authenticated with ${provider}! Opening SRE Operations Console...`, 'success');
       setTimeout(() => {
         window.location.href = 'index.html';
-      }, 900);
+      }, 800);
     }
 
     function showToast(message, type = 'info') {
